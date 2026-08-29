@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420" role="img" aria-label="Lyceum banner">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#172554"/><stop offset=".55" stop-color="#0b1020"/><stop offset="1" stop-color="#050811"/></linearGradient><linearGradient id="line"><stop stop-color="#67e8f9"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>
+  <rect width="1400" height="420" rx="28" fill="url(#bg)"/>
+  <g fill="none" stroke="url(#line)" stroke-width="3" opacity=".7"><path d="M80 310L210 190l120 80 130-170 120 150 125-90"/><circle cx="210" cy="190" r="9"/><circle cx="330" cy="270" r="9"/><circle cx="460" cy="100" r="9"/><circle cx="580" cy="250" r="9"/></g>
+  <text x="760" y="165" fill="#f8fafc" font-size="92" font-family="ui-sans-serif,system-ui" font-weight="800">Lyceum</text>
+  <text x="765" y="225" fill="#a5b4fc" font-size="30" font-family="ui-sans-serif,system-ui">Multiple minds. One market.</text>
+  <text x="765" y="280" fill="#67e8f9" font-size="34" font-family="ui-sans-serif,system-ui" font-weight="700">Trade the uncertainty.</text>
+</svg>
+
