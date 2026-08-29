@@ -16,6 +16,8 @@ An autonomous market of specialized AI minds that turns disagreement into define
 
 > Safety: Lyceum has no live mode. `READ_ONLY` is the default. No result in this repository is financial advice or a promise of profitability.
 
+![Lyceum dashboard](assets/dashboard.png)
+
 ## The Idea
 
 Most trading agents ask a model for a BUY or SELL label. Lyceum asks five independent minds for full probability distributions. It measures not only where the council points, but how much its members disagree.
@@ -48,6 +50,14 @@ The Alpaca integration is visible and current: the authenticated `paper` CLI pro
 - `BearAdvocateAgent` — strongest evidence-supported downside case
 
 Every mind returns the same Pydantic-validated schema: five probabilities summing to one, expected return, confidence, evidence, reasoning summary, horizon, and data freshness. Minds cannot submit orders.
+
+## Hybrid AI Council
+
+Lyceum is deterministic by default. `TechnicalQuantAgent` and `OptionsMarketAgent` always remain quantitative, deterministic agents. In optional `HYBRID` mode, the news, bull, and bear roles can use any configured OpenAI-compatible model—including Featherless through its [documented `https://api.featherless.ai/v1` base URL](https://featherless.ai/docs/quickstart-guide). The model ID remains a user choice.
+
+Model text is untrusted: Lyceum extracts JSON, validates the strict `AgentOpinion` schema, checks finite normalized probabilities, uses bounded timeouts/retries, and falls back to the deterministic implementation on any failure. Provider, model, prompt version, latency, implementation, and fallback state are journaled and shown in the dashboard. Consensus, strategy selection, the skeptic, risk, endpoint verification, and execution remain provider-independent and deterministic.
+
+![Lyceum market council](assets/council.png)
 
 ## From Disagreement to Options
 
@@ -97,6 +107,8 @@ pytest && ruff check .
 
 Optional SDK credentials belong only in a local `.env`; `.env` is ignored. CLI and hosted MCP authentication use browser OAuth and do not require copying secrets into this repository.
 
+For the eventual clean competition profile, follow [the judging-account runbook](docs/JUDGING_ACCOUNT.md). It does not create or switch accounts automatically.
+
 ## Architecture
 
 The package separates `agents`, `data`, `consensus`, `strategies`, `risk`, `execution`, `memory`, and `dashboard`. SQLite persists observations, opinions, decisions, rejections, orders, positions, P&L snapshots, counterfactuals, and errors. See [Architecture](docs/ARCHITECTURE.md).
@@ -126,11 +138,13 @@ See [the generated experiment report](docs/EXPERIMENT_RESULTS.md). Historical as
 - Alpaca Trading API and official `alpaca-py`
 - Alpaca Trading CLI and hosted Alpaca MCP (paper endpoint)
 - Python, Pydantic, SQLite, pandas, and Streamlit
-- Five deterministic probabilistic agent models; no paid LLM provider is required for the reproducible baseline
+- Five deterministic probabilistic agents, plus an optional provider-neutral hybrid council; no paid LLM provider is required
 
 ## Hackathon
 
 Built for the **Alpaca AI Trading Agents Hackathon 2026**. The final judging account is expected to be a fresh $100,000 paper account; the current account is development-only.
+
+See the concise [hackathon submission](docs/HACKATHON_SUBMISSION.md).
 
 ## Disclaimer
 
