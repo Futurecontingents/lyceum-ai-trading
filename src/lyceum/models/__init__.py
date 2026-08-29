@@ -1,4 +1,4 @@
-"""Typed contracts shared by all Lyceum layers."""
+"""Typed contracts shared by every Lyceum layer."""
 
 from __future__ import annotations
 
@@ -7,13 +7,18 @@ from datetime import UTC, datetime
 from enum import StrEnum
 from typing import Literal
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class ExecutionMode(StrEnum):
     READ_ONLY = "READ_ONLY"
     SIMULATED = "SIMULATED"
     PAPER_AUTONOMOUS = "PAPER_AUTONOMOUS"
+
+
+class CouncilMode(StrEnum):
+    DETERMINISTIC = "DETERMINISTIC"
+    HYBRID = "HYBRID"
 
 
 class StrategyType(StrEnum):
@@ -30,6 +35,8 @@ class RiskStatus(StrEnum):
 
 
 class ProbabilityDistribution(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     strong_down: float = Field(ge=0, le=1)
     down: float = Field(ge=0, le=1)
     flat: float = Field(ge=0, le=1)
@@ -60,6 +67,12 @@ class AgentOpinion(BaseModel):
     reasoning_summary: str = Field(min_length=1, max_length=500)
     evidence: list[str] = Field(default_factory=list)
     data_freshness: datetime
+    implementation: Literal["deterministic", "model"] = "deterministic"
+    provider: str = "deterministic"
+    model_name: str = "deterministic"
+    prompt_version: str = "deterministic-v1"
+    latency_ms: float = Field(default=0, ge=0)
+    fallback_used: bool = False
 
     @field_validator("expected_return")
     @classmethod
@@ -67,6 +80,31 @@ class AgentOpinion(BaseModel):
         if not math.isfinite(value):
             raise ValueError("expected_return must be finite")
         return value
+
+
+class ModelOpinionPayload(BaseModel):
+    """The only model-generated fields accepted at the trust boundary."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    probabilities: ProbabilityDistribution
+    expected_return: float
+    confidence: float = Field(ge=0, le=1)
+    reasoning_summary: str = Field(min_length=1, max_length=500)
+    evidence: list[str] = Field(default_factory=list, max_length=12)
+
+    @field_validator("expected_return")
+    @classmethod
+    def finite_return(cls, value: float) -> float:
+        if not math.isfinite(value):
+            raise ValueError("expected_return must be finite")
+        return value
+
+
+class MarketEvidence(BaseModel):
+    id: str = Field(min_length=1, max_length=40)
+    summary: str = Field(min_length=1, max_length=300)
+    timestamp: datetime
 
 
 class MarketSnapshot(BaseModel):
@@ -80,6 +118,7 @@ class MarketSnapshot(BaseModel):
     implied_volatility: float | None = Field(default=None, ge=0)
     news_sentiment: float = Field(default=0, ge=-1, le=1)
     catalyst_risk: float = Field(default=0, ge=0, le=1)
+    catalyst_evidence: list[MarketEvidence] = Field(default_factory=list)
 
 
 class ConsensusMetrics(BaseModel):
@@ -146,6 +185,7 @@ class PortfolioState(BaseModel):
     buying_power: float = Field(ge=0)
     daily_realized_pnl: float = 0
     open_positions: int = Field(default=0, ge=0)
+    open_orders: int = Field(default=0, ge=0)
     open_risk: float = Field(default=0, ge=0)
     symbol_exposure: dict[str, float] = Field(default_factory=dict)
 

@@ -48,7 +48,7 @@ def _demo_contracts(symbol: str, price: float) -> list[OptionContract]:
 
 class AutonomousRunner:
     def __init__(self, settings: Settings, *, gateway: AlpacaCliGateway | None = None, journal: Journal | None = None) -> None:
-        self.settings, self.gateway = settings, gateway or AlpacaCliGateway()
+        self.settings, self.gateway = settings, gateway or AlpacaCliGateway(settings.alpaca_profile)
         self.journal = journal or Journal(settings.database_path)
         self.executor = PaperExecutor(settings, self.gateway)
 
@@ -56,7 +56,7 @@ class AutonomousRunner:
         if demo:
             portfolio, symbols = PortfolioState(equity=100_000, buying_power=400_000), ("SPY",)
         else:
-            self.gateway.assert_paper()
+            self.gateway.validate_startup(expect_fresh=self.settings.expect_fresh_account)
             portfolio = self.gateway.account()
             self.journal.record_pnl(portfolio.equity, portfolio.buying_power)
             if not bool(self.gateway.clock().get("is_open")):
@@ -81,7 +81,7 @@ class AutonomousRunner:
                 )
                 contracts = _demo_contracts(symbol, snapshot.price) if demo else self.gateway.option_chain(symbol, snapshot.price)
                 self.journal.record_observation(symbol, snapshot)
-                opinions = [mind.evaluate(snapshot) for mind in market_council()]
+                opinions = [mind.evaluate(snapshot) for mind in market_council(self.settings)]
                 for opinion in opinions:
                     self.journal.record_opinion(symbol, opinion.agent, opinion)
                 consensus = calculate_consensus(opinions)
@@ -107,7 +107,16 @@ class AutonomousRunner:
                     "skeptic": skeptic.model_dump(mode="json"),
                     "risk": risk.model_dump(mode="json"),
                     "execution": None if result is None else {"mode": result.mode, "status": result.status, "payload": result.payload},
-                    "integration": {"alpaca_cli_profile": "paper", "alpaca_mcp": "https://paper-api.alpaca.markets/mcp"},
+                    "run_context": {
+                        "demo": demo,
+                        "configured_council_mode": self.settings.council_mode,
+                        "actual_council_mode": "HYBRID" if any(item.implementation == "model" for item in opinions) else "DETERMINISTIC",
+                        "execution_mode": self.settings.execution_mode,
+                    },
+                    "integration": {
+                        "alpaca_cli_profile": self.settings.alpaca_profile,
+                        "alpaca_mcp": "https://paper-api.alpaca.markets/mcp",
+                    },
                 }
                 decision_id = self.journal.record_decision(symbol, candidate.strategy, risk.status, payload)
                 decision_ids.append(decision_id)

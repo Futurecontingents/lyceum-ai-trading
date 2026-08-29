@@ -27,7 +27,7 @@ class AlpacaCliGateway:
         self.profile = profile
         self.timeout = timeout
 
-    def _json(self, *args: str) -> dict[str, Any]:
+    def _json(self, *args: str) -> Any:
         completed = subprocess.run(
             ["alpaca", "--profile", self.profile, *args], capture_output=True, text=True, timeout=self.timeout, check=False
         )
@@ -39,15 +39,53 @@ class AlpacaCliGateway:
             raise AlpacaCliError("Alpaca CLI returned malformed JSON") from exc
 
     def assert_paper(self) -> None:
-        completed = subprocess.run(["alpaca", "doctor"], capture_output=True, text=True, timeout=self.timeout, check=False)
+        completed = subprocess.run(
+            ["alpaca", "--profile", self.profile, "doctor"], capture_output=True, text=True, timeout=self.timeout, check=False
+        )
         if completed.returncode != 0 or f"Trading:  {PAPER_TRADING_URL}" not in completed.stdout:
-            raise AlpacaCliError("paper endpoint verification failed")
+            raise AlpacaCliError(f"profile {self.profile!r} did not resolve to the paper endpoint")
+
+    @staticmethod
+    def _collection_count(payload: Any) -> int:
+        if isinstance(payload, list):
+            return len(payload)
+        if isinstance(payload, dict):
+            for key in ("positions", "orders"):
+                if isinstance(payload.get(key), list):
+                    return len(payload[key])
+        raise AlpacaCliError("Alpaca CLI returned an unexpected collection")
+
+    def profile_summary(self) -> dict[str, Any]:
+        self.assert_paper()
+        account = self._json("account", "get")
+        positions = self._collection_count(self._json("position", "list"))
+        orders = self._collection_count(self._json("order", "list", "--status", "open"))
+        return {
+            "profile": self.profile,
+            "endpoint": PAPER_TRADING_URL,
+            "account_id": str(account["id"]),
+            "status": str(account["status"]),
+            "equity": float(account["equity"]),
+            "buying_power": float(account["buying_power"]),
+            "open_positions": positions,
+            "open_orders": orders,
+        }
+
+    def validate_startup(self, *, expect_fresh: bool = False) -> dict[str, Any]:
+        summary = self.profile_summary()
+        if expect_fresh and (summary["open_positions"] or summary["open_orders"]):
+            raise AlpacaCliError("FRESH ACCOUNT CHECK FAILED: expected zero open positions and zero open orders")
+        return summary
 
     def account(self) -> PortfolioState:
-        self.assert_paper()
-        data = self._json("account", "get")
+        data = self.profile_summary()
         return PortfolioState(
-            equity=float(data["equity"]), buying_power=float(data["buying_power"]), daily_realized_pnl=0.0, open_positions=0, open_risk=0.0
+            equity=data["equity"],
+            buying_power=data["buying_power"],
+            daily_realized_pnl=0.0,
+            open_positions=data["open_positions"],
+            open_orders=data["open_orders"],
+            open_risk=0.0,
         )
 
     def clock(self) -> dict[str, Any]:

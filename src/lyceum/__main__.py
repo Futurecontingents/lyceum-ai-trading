@@ -10,6 +10,7 @@ from pathlib import Path
 
 from lyceum.config import load_settings
 from lyceum.data import AlpacaCliGateway
+from lyceum.data.alpaca_cli import AlpacaCliError
 from lyceum.experiment import render_markdown, run_experiment
 from lyceum.runner import AutonomousRunner
 
@@ -37,7 +38,7 @@ def main() -> None:
         app = Path(__file__).with_name("dashboard") / "app.py"
         raise SystemExit(subprocess.call([sys.executable, "-m", "streamlit", "run", str(app)]))
     elif args.command == "experiment":
-        gateway = AlpacaCliGateway()
+        gateway = AlpacaCliGateway(settings.alpaca_profile)
         gateway.assert_paper()
         results = run_experiment(gateway.bars("SPY", timeframe="1Hour", days=120, limit=1000))
         output = Path(args.output)
@@ -45,8 +46,21 @@ def main() -> None:
         output.write_text(render_markdown(results), encoding="utf-8")
         print(f"Wrote {output}")
     else:
-        AlpacaCliGateway().assert_paper()
-        print("Alpaca CLI profile is authenticated to PAPER trading.")
+        try:
+            summary = AlpacaCliGateway(settings.alpaca_profile).validate_startup(expect_fresh=settings.expect_fresh_account)
+        except AlpacaCliError as exc:
+            print(f"WARNING — ALPACA PROFILE VALIDATION FAILED: {exc}", file=sys.stderr)
+            raise SystemExit(2) from exc
+        print(f"Profile: {summary['profile']}")
+        print(f"Endpoint: {summary['endpoint']}")
+        print(f"Account ID: {summary['account_id']}")
+        print(f"Status: {summary['status']}")
+        print(f"Equity: ${summary['equity']:,.2f}")
+        print(f"Open positions: {summary['open_positions']}")
+        print(f"Open orders: {summary['open_orders']}")
+        print(f"Execution mode: {settings.execution_mode}")
+        if settings.expect_fresh_account:
+            print("FRESH ACCOUNT CHECK: PASSED")
 
 
 if __name__ == "__main__":

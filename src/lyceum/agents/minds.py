@@ -3,9 +3,16 @@
 from __future__ import annotations
 
 import math
+from typing import TYPE_CHECKING
 
 from lyceum.agents.base import BaseMind
-from lyceum.models import MarketSnapshot
+from lyceum.agents.model_backed import ModelBackedMind
+from lyceum.models import CouncilMode, MarketSnapshot
+from lyceum.models.base import ModelProvider
+from lyceum.models.factory import create_model_provider
+
+if TYPE_CHECKING:
+    from lyceum.config import Settings
 
 
 class TechnicalQuantAgent(BaseMind):
@@ -73,5 +80,14 @@ class BearAdvocateAgent(BaseMind):
         )
 
 
-def market_council() -> tuple[BaseMind, ...]:
-    return (TechnicalQuantAgent(), OptionsMarketAgent(), NewsCatalystAgent(), BullAdvocateAgent(), BearAdvocateAgent())
+def market_council(settings: Settings | None = None, *, provider: ModelProvider | None = None) -> tuple[BaseMind | ModelBackedMind, ...]:
+    technical = TechnicalQuantAgent()
+    options = OptionsMarketAgent()
+    language: tuple[BaseMind, ...] = (NewsCatalystAgent(), BullAdvocateAgent(), BearAdvocateAgent())
+    if settings is None or settings.council_mode is CouncilMode.DETERMINISTIC:
+        return (technical, options, *language)
+    active_provider = provider or create_model_provider(settings)
+    if active_provider is None:
+        return (technical, options, *language)
+    wrapped = tuple(ModelBackedMind(agent, active_provider, retries=settings.model_retries) for agent in language)
+    return (technical, options, *wrapped)

@@ -68,7 +68,7 @@ class PaperExecutor:
         command = [
             "alpaca",
             "--profile",
-            "paper",
+            self.settings.alpaca_profile,
             "order",
             "submit",
             "--order-class",
