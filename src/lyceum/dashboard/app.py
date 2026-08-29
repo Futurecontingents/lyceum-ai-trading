@@ -111,7 +111,7 @@ with bottom_left:
             ]
         ),
         hide_index=True,
-        use_container_width=True,
+        width="stretch",
     )
 with bottom_right:
     st.subheader("Counterfactual journal")
@@ -128,7 +128,7 @@ with bottom_right:
             ]
         ),
         hide_index=True,
-        use_container_width=True,
+        width="stretch",
     )
 
 st.caption("Educational paper-trading experiment. No live mode exists. Historical and paper results do not imply future performance.")
