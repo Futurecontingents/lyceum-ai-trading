@@ -1,0 +1,16 @@
+import pytest
+
+from lyceum.memory import Journal
+
+
+def test_schema_and_decision_roundtrip(tmp_path):
+    journal = Journal(tmp_path / "lyceum.db")
+    decision_id = journal.record_decision("SPY", "NO_TRADE", "REJECTED", {"why": "test"})
+    journal.record_counterfactual(decision_id, "LONG_STRADDLE", {"status": "pending"})
+    assert journal.recent("decisions")[0]["action"] == "NO_TRADE"
+    assert journal.recent("counterfactuals")[0]["decision_id"] == decision_id
+
+
+def test_unsupported_table_is_rejected(tmp_path):
+    with pytest.raises(ValueError):
+        Journal(tmp_path / "lyceum.db").recent("orders; DROP TABLE decisions")

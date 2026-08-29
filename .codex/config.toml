@@ -1,0 +1,11 @@
+# Official Alpaca hosted MCP endpoint for PAPER trading only.
+# Authentication is OAuth-based and stored by Codex, not in this repository.
+[mcp_servers.alpaca-paper]
+url = "https://paper-api.alpaca.markets/mcp"
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+
+[mcp_servers.alpaca-paper.oauth]
+client_id = "PCIEJZTPCQEBUBAINMQOGDHF7I"
+
