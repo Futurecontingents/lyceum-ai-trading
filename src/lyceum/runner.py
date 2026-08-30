@@ -99,6 +99,8 @@ class AutonomousRunner:
                     last_symbol_trade_at=self.journal.last_symbol_decision(symbol),
                 )
                 result = self.executor.execute(candidate, risk) if risk.status is RiskStatus.APPROVED else None
+                if result is not None and result.status == "SUBMITTED":
+                    self.journal.record_order(candidate.client_order_id, result.status, result.payload)
                 payload = {
                     "market": snapshot.model_dump(mode="json"),
                     "opinions": [item.model_dump(mode="json") for item in opinions],

@@ -14,3 +14,10 @@ def test_schema_and_decision_roundtrip(tmp_path):
 def test_unsupported_table_is_rejected(tmp_path):
     with pytest.raises(ValueError):
         Journal(tmp_path / "lyceum.db").recent("orders; DROP TABLE decisions")
+
+
+def test_submitted_order_activates_duplicate_protection(tmp_path):
+    journal = Journal(tmp_path / "lyceum.db")
+    assert journal.has_client_order("lyceum-order-1") is False
+    journal.record_order("lyceum-order-1", "SUBMITTED", {"id": "paper-order"})
+    assert journal.has_client_order("lyceum-order-1") is True

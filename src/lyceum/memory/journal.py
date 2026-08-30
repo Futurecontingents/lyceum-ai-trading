@@ -78,6 +78,12 @@ class Journal:
             (self.now(), symbol, self.encode(reasons), self.encode(payload)),
         )
 
+    def record_order(self, client_order_id: str, status: str, payload: Any) -> int:
+        return self._insert(
+            "INSERT INTO orders(created_at,client_order_id,status,payload) VALUES(?,?,?,?)",
+            (self.now(), client_order_id, status, self.encode(payload)),
+        )
+
     def record_counterfactual(self, decision_id: int, action: str, payload: Any) -> int:
         return self._insert(
             "INSERT INTO counterfactuals(created_at,decision_id,action,payload) VALUES(?,?,?,?)",
