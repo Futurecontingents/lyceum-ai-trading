@@ -21,3 +21,13 @@ def test_submitted_order_activates_duplicate_protection(tmp_path):
     assert journal.has_client_order("lyceum-order-1") is False
     journal.record_order("lyceum-order-1", "SUBMITTED", {"id": "paper-order"})
     assert journal.has_client_order("lyceum-order-1") is True
+
+
+def test_order_intent_is_durable_and_terminal_rejection_can_be_retried(tmp_path):
+    journal = Journal(tmp_path / "lyceum.db")
+    first_id = journal.record_order("lyceum-order-1", "SUBMISSION_INTENT", {"request": "preview"})
+    assert journal.has_client_order("lyceum-order-1") is True
+    assert journal.record_order("lyceum-order-1", "UNKNOWN", {"error": "timeout"}) == first_id
+    assert journal.has_client_order("lyceum-order-1") is True
+    assert journal.record_order("lyceum-order-1", "REJECTED", {"error": "definitive"}) == first_id
+    assert journal.has_client_order("lyceum-order-1") is False

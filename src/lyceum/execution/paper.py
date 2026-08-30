@@ -16,6 +16,10 @@ class ExecutionBlocked(RuntimeError):
     pass
 
 
+class ExecutionUncertain(RuntimeError):
+    """Submission may have reached Alpaca and must be reconciled before retrying."""
+
+
 @dataclass(slots=True)
 class ExecutionResult:
     mode: ExecutionMode
@@ -38,19 +42,35 @@ class PaperExecutor:
             return ExecutionResult(ExecutionMode.SIMULATED, "SIMULATED_FILL", self.request_payload(candidate))
         if not self.settings.enable_paper_orders:
             raise ExecutionBlocked("explicit paper-order flag is disabled")
-        self.gateway.assert_paper()
-        completed = subprocess.run(self.command(candidate, dry_run=False), capture_output=True, text=True, timeout=30, check=False)
+        if self.settings.emergency_halt_file.exists():
+            raise ExecutionBlocked("emergency HALT appeared after risk evaluation")
+        self.gateway.validate_startup(expected_account_id=self.settings.expected_account_id)
+        if not bool(self.gateway.clock().get("is_open")):
+            raise ExecutionBlocked("Alpaca market clock is closed at the execution boundary")
+        try:
+            completed = subprocess.run(self.command(candidate, dry_run=False), capture_output=True, text=True, timeout=30, check=False)
+        except subprocess.TimeoutExpired as exc:
+            raise ExecutionUncertain("paper order submission timed out; broker state is uncertain") from exc
         if completed.returncode != 0:
             raise ExecutionBlocked(completed.stderr.strip() or "paper order rejected")
-        return ExecutionResult(ExecutionMode.PAPER_AUTONOMOUS, "SUBMITTED", json.loads(completed.stdout))
+        try:
+            payload = json.loads(completed.stdout)
+        except json.JSONDecodeError as exc:
+            raise ExecutionUncertain("paper order returned malformed acknowledgement; broker state is uncertain") from exc
+        return ExecutionResult(ExecutionMode.PAPER_AUTONOMOUS, "SUBMITTED", payload)
 
     @staticmethod
     def request_payload(candidate: TradeCandidate) -> dict[str, Any]:
+        net_price = sum(leg.contract.ask if leg.side == "buy" else -leg.contract.bid for leg in candidate.legs)
+        rounded_price = round(net_price, 2)
+        if rounded_price == 0:
+            rounded_price = -0.01 if net_price < 0 else 0.01
         return {
             "order_class": "mleg",
+            "qty": "1",
             "type": "limit",
             "time_in_force": "day",
-            "limit_price": round(max(0.01, candidate.estimated_debit / 100), 2),
+            "limit_price": rounded_price,
             "client_order_id": candidate.client_order_id,
             "legs": [
                 {
@@ -73,6 +93,8 @@ class PaperExecutor:
             "submit",
             "--order-class",
             "mleg",
+            "--qty",
+            str(payload["qty"]),
             "--type",
             "limit",
             "--time-in-force",

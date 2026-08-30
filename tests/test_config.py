@@ -22,6 +22,17 @@ def test_autonomous_requires_second_flag():
         Settings(execution_mode=ExecutionMode.PAPER_AUTONOMOUS)
 
 
+def test_autonomous_requires_pinned_account_id():
+    with pytest.raises(ValueError, match="LYCEUM_EXPECTED_ACCOUNT_ID"):
+        Settings(execution_mode=ExecutionMode.PAPER_AUTONOMOUS, enable_paper_orders=True)
+    settings = Settings(
+        execution_mode=ExecutionMode.PAPER_AUTONOMOUS,
+        enable_paper_orders=True,
+        expected_account_id="judging-api-account-id",
+    )
+    assert settings.expected_account_id == "judging-api-account-id"
+
+
 def test_false_paper_environment_rejected(monkeypatch, tmp_path):
     monkeypatch.setenv("ALPACA_PAPER", "false")
     with pytest.raises(ConfigurationError, match="no live mode"):

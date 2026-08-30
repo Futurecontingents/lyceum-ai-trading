@@ -21,6 +21,11 @@ def main() -> None:
     run = sub.add_parser("run", help="run the autonomous paper-only loop")
     run.add_argument("--once", action="store_true")
     run.add_argument("--demo", action="store_true", help="safe synthetic vertical slice; never submits")
+    run.add_argument(
+        "--read-only-rehearsal",
+        action="store_true",
+        help="run real-data analysis while closed; rejected unless execution mode is READ_ONLY",
+    )
     sub.add_parser("dashboard", help="launch the Streamlit dashboard")
     experiment = sub.add_parser("experiment", help="run historical disagreement sanity check")
     experiment.add_argument("--output", default="docs/EXPERIMENT_RESULTS.md")
@@ -31,7 +36,7 @@ def main() -> None:
     if args.command == "run":
         runner = AutonomousRunner(settings)
         if args.once:
-            print(f"Recorded decisions: {runner.run_cycle(demo=args.demo)}")
+            print(f"Recorded decisions: {runner.run_cycle(demo=args.demo, analyze_when_closed=args.read_only_rehearsal)}")
         else:
             runner.run_forever(demo=args.demo)
     elif args.command == "dashboard":

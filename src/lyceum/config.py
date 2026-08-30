@@ -28,12 +28,14 @@ class Settings(BaseModel):
     trading_base_url: str = PAPER_TRADING_URL
     data_feed: str = "iex"
     alpaca_profile: str = Field(default="paper", min_length=1, pattern=r"^[A-Za-z0-9_-]+$")
+    expected_account_id: str = Field(default="", pattern=r"^[A-Za-z0-9-]*$")
     expect_fresh_account: bool = False
     execution_mode: ExecutionMode = ExecutionMode.READ_ONLY
     enable_paper_orders: bool = False
     database_path: Path = Path("data/lyceum.db")
     emergency_halt_file: Path = Path("HALT")
     scan_interval_seconds: int = Field(default=900, ge=30)
+    market_closed_poll_seconds: int = Field(default=300, ge=30, le=900)
     universe: tuple[str, ...] = UNIVERSE
     max_loss_per_trade: float = Field(default=500.0, gt=0)
     max_daily_realized_loss: float = Field(default=1_500.0, gt=0)
@@ -65,6 +67,8 @@ class Settings(BaseModel):
             raise ValueError("Lyceum has no live mode; ALPACA_PAPER must remain true")
         if self.execution_mode is ExecutionMode.PAPER_AUTONOMOUS and not self.enable_paper_orders:
             raise ValueError("PAPER_AUTONOMOUS requires LYCEUM_ENABLE_PAPER_ORDERS=true")
+        if self.execution_mode is ExecutionMode.PAPER_AUTONOMOUS and not self.expected_account_id:
+            raise ValueError("PAPER_AUTONOMOUS requires LYCEUM_EXPECTED_ACCOUNT_ID")
         return self
 
     def assert_paper(self) -> None:
@@ -89,12 +93,14 @@ def load_settings(env_file: str | Path | None = ".env") -> Settings:
             trading_base_url=os.getenv("ALPACA_TRADING_BASE_URL", PAPER_TRADING_URL),
             data_feed=os.getenv("ALPACA_DATA_FEED", "iex").lower(),
             alpaca_profile=os.getenv("LYCEUM_ALPACA_PROFILE", "paper").strip(),
+            expected_account_id=os.getenv("LYCEUM_EXPECTED_ACCOUNT_ID", "").strip(),
             expect_fresh_account=_truthy(os.getenv("LYCEUM_EXPECT_FRESH_ACCOUNT", "false")),
             execution_mode=ExecutionMode(os.getenv("LYCEUM_EXECUTION_MODE", "READ_ONLY")),
             enable_paper_orders=_truthy(os.getenv("LYCEUM_ENABLE_PAPER_ORDERS", "false")),
             database_path=Path(os.getenv("LYCEUM_DATABASE_PATH", "data/lyceum.db")),
             emergency_halt_file=Path(os.getenv("LYCEUM_HALT_FILE", "HALT")),
             scan_interval_seconds=int(os.getenv("LYCEUM_SCAN_INTERVAL_SECONDS", "900")),
+            market_closed_poll_seconds=int(os.getenv("LYCEUM_MARKET_CLOSED_POLL_SECONDS", "300")),
             council_mode=CouncilMode(os.getenv("LYCEUM_COUNCIL_MODE", "DETERMINISTIC").upper()),
             model_provider=os.getenv("LYCEUM_MODEL_PROVIDER", "deterministic").lower(),
             model_base_url=os.getenv("LYCEUM_MODEL_BASE_URL", "").strip(),

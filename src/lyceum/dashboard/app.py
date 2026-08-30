@@ -64,10 +64,16 @@ market, consensus = detail["market"], detail["consensus"]
 candidate, skeptic, risk = detail["candidate"], detail["skeptic"], detail["risk"]
 context = detail.get("run_context", {})
 is_demo = bool(context.get("demo", not pnl))
+environment_label = "DEMO" if is_demo else ("JUDGING" if settings.alpaca_profile == "judging" else "DEVELOPMENT")
 direction = direction_label(float(consensus["expected_direction"]))
 
 if is_demo:
     st.markdown('<div class="demo">DEMO DATA · Synthetic market snapshot · No order or P&amp;L claim</div>', unsafe_allow_html=True)
+else:
+    st.markdown(
+        f'<div class="demo">{safe(environment_label)} · Alpaca Paper profile {safe(settings.alpaca_profile)} · Journal {safe(settings.database_path)}</div>',
+        unsafe_allow_html=True,
+    )
 
 equity_value = "DEMO $100K" if is_demo else (f"${float(pnl[0]['equity']):,.0f}" if pnl else "—")
 values = (

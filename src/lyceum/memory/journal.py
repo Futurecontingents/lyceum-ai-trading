@@ -79,10 +79,14 @@ class Journal:
         )
 
     def record_order(self, client_order_id: str, status: str, payload: Any) -> int:
-        return self._insert(
-            "INSERT INTO orders(created_at,client_order_id,status,payload) VALUES(?,?,?,?)",
-            (self.now(), client_order_id, status, self.encode(payload)),
-        )
+        with self.connection() as connection:
+            connection.execute(
+                """INSERT INTO orders(created_at,client_order_id,status,payload) VALUES(?,?,?,?)
+                ON CONFLICT(client_order_id) DO UPDATE SET status=excluded.status,payload=excluded.payload""",
+                (self.now(), client_order_id, status, self.encode(payload)),
+            )
+            row = connection.execute("SELECT id FROM orders WHERE client_order_id=?", (client_order_id,)).fetchone()
+        return int(row[0])
 
     def record_counterfactual(self, decision_id: int, action: str, payload: Any) -> int:
         return self._insert(
@@ -112,7 +116,10 @@ class Journal:
 
     def has_client_order(self, client_order_id: str) -> bool:
         with self.connection() as connection:
-            row = connection.execute("SELECT 1 FROM orders WHERE client_order_id=?", (client_order_id,)).fetchone()
+            row = connection.execute(
+                "SELECT 1 FROM orders WHERE client_order_id=? AND status NOT IN ('REJECTED','CANCELED','CANCELLED')",
+                (client_order_id,),
+            ).fetchone()
         return row is not None
 
     def last_symbol_decision(self, symbol: str) -> datetime | None:
