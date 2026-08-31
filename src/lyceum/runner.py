@@ -109,6 +109,9 @@ class AutonomousRunner:
                     else self.gateway.market_snapshot(symbol)
                 )
                 contracts = _demo_contracts(symbol, snapshot.price) if demo else self.gateway.option_chain(symbol, snapshot.price)
+                chain_ivs = [item.implied_volatility for item in contracts if item.implied_volatility is not None]
+                if chain_ivs:
+                    snapshot = snapshot.model_copy(update={"implied_volatility": sum(chain_ivs) / len(chain_ivs)})
                 self.journal.record_observation(symbol, snapshot)
                 opinions = [mind.evaluate(snapshot) for mind in market_council(self.settings)]
                 for opinion in opinions:
@@ -125,7 +128,7 @@ class AutonomousRunner:
                     skeptic,
                     self.settings,
                     duplicate=self.journal.has_client_order(candidate.client_order_id),
-                    last_symbol_trade_at=self.journal.last_symbol_decision(symbol),
+                    last_symbol_trade_at=self.journal.last_symbol_trade_at(symbol),
                 )
                 result = None
                 if risk.status is RiskStatus.APPROVED:

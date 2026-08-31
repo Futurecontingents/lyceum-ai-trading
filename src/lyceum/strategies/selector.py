@@ -64,13 +64,17 @@ def select_strategy(snapshot: MarketSnapshot, consensus: ConsensusMetrics, contr
                 rationale=f"Incomplete or duplicate legs for {strategy}",
             )
         chosen.append(OptionLeg(contract=contract, side=side))
-    debit = max(0.0, sum((leg.contract.ask if leg.side == "buy" else -leg.contract.bid) * 100 for leg in chosen))
-    width = max(leg.contract.strike for leg in chosen) - min(leg.contract.strike for leg in chosen)
-    max_loss = (
-        debit
-        if strategy in {StrategyType.LONG_STRADDLE, StrategyType.BULL_CALL_SPREAD, StrategyType.BEAR_PUT_SPREAD}
-        else max(0.0, width * 100 - max(0, -debit))
-    )
+    net_debit = sum((leg.contract.ask if leg.side == "buy" else -leg.contract.bid) * 100 for leg in chosen)
+    debit = max(0.0, net_debit)
+    if strategy is StrategyType.IRON_CONDOR:
+        wing_widths = [
+            max(leg.contract.strike for leg in chosen if leg.contract.option_type == option_type)
+            - min(leg.contract.strike for leg in chosen if leg.contract.option_type == option_type)
+            for option_type in ("put", "call")
+        ]
+        max_loss = max(0.0, max(wing_widths) * 100 + net_debit)
+    else:
+        max_loss = debit
     return TradeCandidate(
         symbol=snapshot.symbol,
         strategy=strategy,

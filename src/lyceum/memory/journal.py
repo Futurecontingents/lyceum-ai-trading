@@ -122,9 +122,13 @@ class Journal:
             ).fetchone()
         return row is not None
 
-    def last_symbol_decision(self, symbol: str) -> datetime | None:
+    def last_symbol_trade_at(self, symbol: str) -> datetime | None:
         with self.connection() as connection:
             row = connection.execute(
-                "SELECT created_at FROM decisions WHERE symbol=? ORDER BY created_at DESC LIMIT 1", (symbol,)
+                """SELECT created_at FROM decisions
+                WHERE symbol=? AND action!='NO_TRADE'
+                AND json_extract(payload,'$.execution.status') IN ('SUBMITTED','SIMULATED_FILL')
+                ORDER BY created_at DESC LIMIT 1""",
+                (symbol,),
             ).fetchone()
         return datetime.fromisoformat(row[0]) if row else None

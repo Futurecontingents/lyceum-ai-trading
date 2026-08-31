@@ -1,3 +1,5 @@
+from datetime import UTC, datetime
+
 import pytest
 
 from lyceum.memory import Journal
@@ -31,3 +33,13 @@ def test_order_intent_is_durable_and_terminal_rejection_can_be_retried(tmp_path)
     assert journal.has_client_order("lyceum-order-1") is True
     assert journal.record_order("lyceum-order-1", "REJECTED", {"error": "definitive"}) == first_id
     assert journal.has_client_order("lyceum-order-1") is False
+
+
+def test_cooldown_tracks_executed_trade_not_every_decision(tmp_path):
+    journal = Journal(tmp_path / "lyceum.db")
+    journal.record_decision("SPY", "NO_TRADE", "REJECTED", {"execution": None})
+    assert journal.last_symbol_trade_at("SPY") is None
+    journal.record_decision("SPY", "BULL_CALL_SPREAD", "APPROVED", {"execution": {"status": "SUBMITTED"}})
+    trade_at = journal.last_symbol_trade_at("SPY")
+    assert isinstance(trade_at, datetime)
+    assert trade_at.tzinfo is UTC
