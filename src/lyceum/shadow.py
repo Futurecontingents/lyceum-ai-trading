@@ -64,7 +64,12 @@ CREATE TABLE IF NOT EXISTS shadow_results (
  signal_quality TEXT NOT NULL, structure_quality TEXT NOT NULL, risk_quality TEXT NOT NULL,
  execution_quality TEXT NOT NULL, entry_mid REAL, forward_5m REAL, forward_15m REAL,
  forward_30m REAL, forward_60m REAL, direction_correct_60m INTEGER, vol_regime_correct_60m INTEGER,
- option_mark_change REAL,
+ option_mark_change REAL, decision_available_at TEXT, entry_executable REAL, entry_crossing_cost REAL,
+ option_mid_pnl_5m REAL, option_mid_pnl_15m REAL, option_mid_pnl_30m REAL, option_mid_pnl_60m REAL,
+ option_conservative_pnl_5m REAL, option_conservative_pnl_15m REAL,
+ option_conservative_pnl_30m REAL, option_conservative_pnl_60m REAL,
+ option_mid_mfe_60m REAL, option_mid_mae_60m REAL,
+ option_conservative_mfe_60m REAL, option_conservative_mae_60m REAL, option_excursion_minutes REAL,
  payload_json TEXT NOT NULL, UNIQUE(batch_id,symbol,config_id)
 );
 CREATE INDEX IF NOT EXISTS idx_underlying_symbol_time ON underlying_snapshots(symbol,captured_at);
@@ -126,8 +131,28 @@ class ShadowStore:
         with self.connect() as db:
             db.executescript(CAPTURE_SCHEMA)
             columns = {row[1] for row in db.execute("PRAGMA table_info(shadow_results)")}
-            if "vol_regime_correct_60m" not in columns:
-                db.execute("ALTER TABLE shadow_results ADD COLUMN vol_regime_correct_60m INTEGER")
+            migrations = {
+                "vol_regime_correct_60m": "INTEGER",
+                "decision_available_at": "TEXT",
+                "entry_executable": "REAL",
+                "entry_crossing_cost": "REAL",
+                "option_mid_pnl_5m": "REAL",
+                "option_mid_pnl_15m": "REAL",
+                "option_mid_pnl_30m": "REAL",
+                "option_mid_pnl_60m": "REAL",
+                "option_conservative_pnl_5m": "REAL",
+                "option_conservative_pnl_15m": "REAL",
+                "option_conservative_pnl_30m": "REAL",
+                "option_conservative_pnl_60m": "REAL",
+                "option_mid_mfe_60m": "REAL",
+                "option_mid_mae_60m": "REAL",
+                "option_conservative_mfe_60m": "REAL",
+                "option_conservative_mae_60m": "REAL",
+                "option_excursion_minutes": "REAL",
+            }
+            for column, data_type in migrations.items():
+                if column not in columns:
+                    db.execute(f"ALTER TABLE shadow_results ADD COLUMN {column} {data_type}")
 
     def connect(self) -> sqlite3.Connection:
         db = sqlite3.connect(self.path, timeout=30)
@@ -518,44 +543,177 @@ class ShadowHarness:
 
     def score_outcomes(self) -> None:
         with self.store.connect() as db:
-            rows = db.execute("SELECT id,symbol,captured_at,payload_json FROM shadow_results").fetchall()
+            batches = db.execute(
+                "SELECT id,captured_at,completed_at FROM capture_batches WHERE status='COMPLETE' ORDER BY completed_at"
+            ).fetchall()
+            batch_by_id = {int(item["id"]): item for item in batches}
+            rows = db.execute("SELECT id,batch_id,symbol,payload_json FROM shadow_results").fetchall()
             for row in rows:
-                at = datetime.fromisoformat(row["captured_at"])
+                batch_id = int(row["batch_id"])
+                batch = batch_by_id.get(batch_id)
+                if not batch or not batch["completed_at"]:
+                    continue
+                available_at = datetime.fromisoformat(batch["completed_at"])
                 values: dict[int, float | None] = {}
                 future_batch_ids: dict[int, int | None] = {}
+                current = db.execute(
+                    "SELECT trade_price,realized_volatility FROM underlying_snapshots WHERE symbol=? AND batch_id=?",
+                    (row["symbol"], batch_id),
+                ).fetchone()
                 for minutes in (5, 15, 30, 60):
-                    future = db.execute(
-                        "SELECT batch_id,trade_price FROM underlying_snapshots WHERE symbol=? AND captured_at>=? ORDER BY captured_at LIMIT 1",
-                        (row["symbol"], (at + timedelta(minutes=minutes)).isoformat()),
-                    ).fetchone()
-                    current = db.execute(
-                        "SELECT trade_price FROM underlying_snapshots WHERE symbol=? AND captured_at=?",
-                        (row["symbol"], row["captured_at"]),
-                    ).fetchone()
-                    future_batch_ids[minutes] = int(future["batch_id"]) if future else None
-                    values[minutes] = float(future["trade_price"]) / float(current[0]) - 1 if future and current and current[0] else None
+                    future_batch = next(
+                        (item for item in batches if datetime.fromisoformat(item["completed_at"]) >= available_at + timedelta(minutes=minutes)),
+                        None,
+                    )
+                    future_batch_ids[minutes] = int(future_batch["id"]) if future_batch else None
+                    future = (
+                        db.execute(
+                            "SELECT trade_price FROM underlying_snapshots WHERE symbol=? AND batch_id=?",
+                            (row["symbol"], future_batch["id"]),
+                        ).fetchone()
+                        if future_batch
+                        else None
+                    )
+                    values[minutes] = float(future[0]) / float(current[0]) - 1 if future and current and current[0] else None
                 payload = json.loads(row["payload_json"])
                 expected_direction = payload["consensus"]["expected_direction"]
                 correct = None if values[60] is None else int(expected_direction * values[60] > 0)
                 strategy = payload["candidate"]["strategy"]
                 predicted_regime = "HIGH" if strategy == StrategyType.LONG_STRADDLE else "LOW" if strategy == StrategyType.IRON_CONDOR else None
-                realized_volatility = db.execute(
-                    "SELECT realized_volatility FROM underlying_snapshots WHERE symbol=? AND captured_at=?",
-                    (row["symbol"], row["captured_at"]),
-                ).fetchone()
-                baseline_move = float(realized_volatility[0] or 0) * math.sqrt(60 / (252 * 390)) if realized_volatility else None
+                baseline_move = float(current["realized_volatility"] or 0) * math.sqrt(60 / (252 * 390)) if current else None
                 regime_correct = (
                     None
                     if values[60] is None or predicted_regime is None or baseline_move is None
                     else int((abs(values[60]) > baseline_move) == (predicted_regime == "HIGH"))
                 )
-                option_mark_change = self._option_mark_change(db, payload, future_batch_ids[5])
+                option_outcomes = {
+                    minutes: self._structure_outcome(
+                        db,
+                        payload,
+                        batch_id,
+                        future_batch_ids[minutes],
+                        available_at,
+                        batch_by_id,
+                    )
+                    for minutes in (5, 15, 30, 60)
+                }
+                excursions = []
+                for future_batch in batches:
+                    future_at = datetime.fromisoformat(future_batch["completed_at"])
+                    elapsed = (future_at - available_at).total_seconds() / 60
+                    if not 0 < elapsed <= 60:
+                        continue
+                    outcome = self._structure_outcome(
+                        db, payload, batch_id, int(future_batch["id"]), available_at, batch_by_id
+                    )
+                    if outcome:
+                        excursions.append((elapsed, outcome))
+                entry = next((item for item in option_outcomes.values() if item), None)
+                if entry is None and excursions:
+                    entry = excursions[0][1]
+                midpoint_excursions = [item[1]["midpoint_pnl"] for item in excursions]
+                conservative_excursions = [item[1]["conservative_pnl"] for item in excursions]
+                midpoint_outcomes = {
+                    minutes: outcome["midpoint_pnl"] if outcome else None for minutes, outcome in option_outcomes.items()
+                }
+                conservative_outcomes = {
+                    minutes: outcome["conservative_pnl"] if outcome else None for minutes, outcome in option_outcomes.items()
+                }
+
                 db.execute(
                     """UPDATE shadow_results SET forward_5m=?,forward_15m=?,forward_30m=?,forward_60m=?,
-                    direction_correct_60m=?,vol_regime_correct_60m=?,option_mark_change=? WHERE id=?""",
-                    (values[5], values[15], values[30], values[60], correct, regime_correct, option_mark_change, row["id"]),
+                    direction_correct_60m=?,vol_regime_correct_60m=?,option_mark_change=?,decision_available_at=?,
+                    entry_executable=?,entry_crossing_cost=?,
+                    option_mid_pnl_5m=?,option_mid_pnl_15m=?,option_mid_pnl_30m=?,option_mid_pnl_60m=?,
+                    option_conservative_pnl_5m=?,option_conservative_pnl_15m=?,
+                    option_conservative_pnl_30m=?,option_conservative_pnl_60m=?,
+                    option_mid_mfe_60m=?,option_mid_mae_60m=?,
+                    option_conservative_mfe_60m=?,option_conservative_mae_60m=?,option_excursion_minutes=?
+                    WHERE id=?""",
+                    (
+                        values[5],
+                        values[15],
+                        values[30],
+                        values[60],
+                        correct,
+                        regime_correct,
+                        midpoint_outcomes[5],
+                        available_at.isoformat(),
+                        entry["entry_executable"] if entry else None,
+                        entry["crossing_cost"] if entry else None,
+                        midpoint_outcomes[5],
+                        midpoint_outcomes[15],
+                        midpoint_outcomes[30],
+                        midpoint_outcomes[60],
+                        conservative_outcomes[5],
+                        conservative_outcomes[15],
+                        conservative_outcomes[30],
+                        conservative_outcomes[60],
+                        max(midpoint_excursions) if midpoint_excursions else None,
+                        min(midpoint_excursions) if midpoint_excursions else None,
+                        max(conservative_excursions) if conservative_excursions else None,
+                        min(conservative_excursions) if conservative_excursions else None,
+                        max((item[0] for item in excursions), default=None),
+                        row["id"],
+                    ),
                 )
             db.commit()
+
+    @staticmethod
+    def _quote_is_trustworthy(row: sqlite3.Row | None, available_at: datetime) -> bool:
+        if (
+            row is None
+            or not row["quote_timestamp"]
+            or not (float(row["bid"]) > 0 and float(row["ask"]) > float(row["bid"]))
+            or min(float(row["bid_size"] or 0), float(row["ask_size"] or 0)) < 1
+        ):
+            return False
+        quote_at = _iso(row["quote_timestamp"])
+        age = (available_at.astimezone(UTC) - quote_at).total_seconds() if quote_at else math.inf
+        return 0 <= age <= 180
+
+    @classmethod
+    def _structure_outcome(
+        cls,
+        db: sqlite3.Connection,
+        payload: dict[str, Any],
+        current_batch_id: int,
+        future_batch_id: int | None,
+        available_at: datetime,
+        batch_by_id: dict[int, sqlite3.Row],
+    ) -> dict[str, float] | None:
+        legs = payload["candidate"]["legs"]
+        future_batch = batch_by_id.get(future_batch_id) if future_batch_id is not None else None
+        if not legs or future_batch is None:
+            return None
+        future_available_at = datetime.fromisoformat(future_batch["completed_at"])
+        entry_midpoint = entry_executable = future_midpoint = future_executable = crossing_cost = 0.0
+        for leg in legs:
+            contract_symbol = leg["contract"]["symbol"]
+            current = db.execute(
+                "SELECT * FROM option_snapshots WHERE batch_id=? AND contract_symbol=?",
+                (current_batch_id, contract_symbol),
+            ).fetchone()
+            future = db.execute(
+                "SELECT * FROM option_snapshots WHERE batch_id=? AND contract_symbol=?",
+                (future_batch_id, contract_symbol),
+            ).fetchone()
+            if not cls._quote_is_trustworthy(current, available_at) or not cls._quote_is_trustworthy(future, future_available_at):
+                return None
+            sign = 1 if leg["side"] == "buy" else -1
+            ratio = int(leg.get("ratio", 1))
+            entry_midpoint += sign * ratio * float(current["mid"]) * 100
+            entry_executable += sign * ratio * float(current["ask"] if sign > 0 else current["bid"]) * 100
+            future_midpoint += sign * ratio * float(future["mid"]) * 100
+            future_executable += sign * ratio * float(future["bid"] if sign > 0 else future["ask"]) * 100
+            crossing_cost += ratio * (float(current["ask"]) - float(current["bid"])) * 50
+        return {
+            "entry_midpoint": entry_midpoint,
+            "entry_executable": entry_executable,
+            "crossing_cost": crossing_cost,
+            "midpoint_pnl": future_midpoint - entry_midpoint,
+            "conservative_pnl": future_executable - entry_executable,
+        }
 
     @staticmethod
     def _option_mark_change(db: sqlite3.Connection, payload: dict[str, Any], future_batch_id: int | None) -> float | None:
@@ -592,7 +750,20 @@ class ShadowHarness:
                 avg(skeptic_veto) skeptic_veto_rate,avg(strategy='NO_TRADE') no_trade_rate,
                 avg(direction_correct_60m) direction_hit_rate,
                 avg(vol_regime_correct_60m) vol_regime_hit_rate,
-                avg(abs(forward_60m)) avg_abs_return_60m,avg(option_mark_change) avg_option_mark_change_5m
+                avg(abs(forward_60m)) avg_abs_return_60m,
+                avg(option_mid_pnl_5m) avg_option_mid_pnl_5m,
+                avg(option_mid_pnl_15m) avg_option_mid_pnl_15m,
+                avg(option_mid_pnl_30m) avg_option_mid_pnl_30m,
+                avg(option_mid_pnl_60m) avg_option_mid_pnl_60m,
+                avg(option_conservative_pnl_5m) avg_option_conservative_pnl_5m,
+                avg(option_conservative_pnl_15m) avg_option_conservative_pnl_15m,
+                avg(option_conservative_pnl_30m) avg_option_conservative_pnl_30m,
+                avg(option_conservative_pnl_60m) avg_option_conservative_pnl_60m,
+                avg(option_mid_mfe_60m) avg_option_mid_mfe_60m,
+                avg(option_mid_mae_60m) avg_option_mid_mae_60m,
+                avg(option_conservative_mfe_60m) avg_option_conservative_mfe_60m,
+                avg(option_conservative_mae_60m) avg_option_conservative_mae_60m,
+                avg(entry_crossing_cost) avg_entry_crossing_cost
                 FROM shadow_results GROUP BY config_id,is_production ORDER BY is_production DESC,config_id"""
             ).fetchall()
         return {

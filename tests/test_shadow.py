@@ -120,6 +120,63 @@ def test_option_mark_change_requires_complete_future_leg_set(tmp_path):
         assert ShadowHarness._option_mark_change(db, payload, 999) is None
 
 
+def test_structure_outcome_requires_fresh_complete_two_sided_legs(tmp_path, monkeypatch):
+    now = datetime.now(UTC).replace(microsecond=0)
+    monkeypatch.setattr("lyceum.shadow.UNIVERSE", ("SPY",))
+    store = ShadowStore(tmp_path / "shadow.db")
+    collector = MarketCollector(store, FakeMarketData(now))
+    first = collector.collect_once()["batch_id"]
+    second = collector.collect_once()["batch_id"]
+    future_at = now + timedelta(minutes=5, seconds=30)
+    with store.connect() as db:
+        db.execute("UPDATE capture_batches SET completed_at=? WHERE id=?", ((now + timedelta(seconds=30)).isoformat(), first))
+        db.execute("UPDATE capture_batches SET completed_at=? WHERE id=?", (future_at.isoformat(), second))
+        db.execute("UPDATE option_snapshots SET quote_timestamp=? WHERE batch_id=?", ((now + timedelta(seconds=20)).isoformat(), first))
+        db.execute("UPDATE option_snapshots SET quote_timestamp=? WHERE batch_id=?", ((future_at - timedelta(seconds=10)).isoformat(), second))
+        batches = {row["id"]: row for row in db.execute("SELECT * FROM capture_batches")}
+        contract_symbol = db.execute("SELECT contract_symbol FROM option_snapshots WHERE batch_id=? LIMIT 1", (first,)).fetchone()[0]
+        payload = {"candidate": {"legs": [{"side": "buy", "ratio": 1, "contract": {"symbol": contract_symbol}}]}}
+        outcome = ShadowHarness._structure_outcome(
+            db, payload, first, second, datetime.fromisoformat(batches[first]["completed_at"]), batches
+        )
+        assert outcome == {
+            "entry_midpoint": pytest.approx(105),
+            "entry_executable": pytest.approx(110),
+            "crossing_cost": pytest.approx(5),
+            "midpoint_pnl": pytest.approx(0),
+            "conservative_pnl": pytest.approx(-10),
+        }
+        db.execute("DELETE FROM option_snapshots WHERE batch_id=? AND contract_symbol=?", (second, contract_symbol))
+        assert ShadowHarness._structure_outcome(
+            db, payload, first, second, datetime.fromisoformat(batches[first]["completed_at"]), batches
+        ) is None
+
+
+def test_forward_scoring_uses_batch_completion_time(tmp_path, monkeypatch):
+    now = datetime.now(UTC).replace(microsecond=0)
+    monkeypatch.setattr("lyceum.shadow.UNIVERSE", ("SPY",))
+    store = ShadowStore(tmp_path / "shadow.db")
+    collector = MarketCollector(store, FakeMarketData(now))
+    first = collector.collect_once()["batch_id"]
+    second = collector.collect_once()["batch_id"]
+    harness = ShadowHarness(store)
+    harness.run(latest_batches=2)
+    with store.connect() as db:
+        db.execute("UPDATE capture_batches SET completed_at=? WHERE id=?", (now.isoformat(), first))
+        db.execute("UPDATE capture_batches SET completed_at=? WHERE id=?", ((now + timedelta(minutes=4, seconds=59)).isoformat(), second))
+    harness.score_outcomes()
+    with store.connect() as db:
+        assert db.execute(
+            "SELECT forward_5m FROM shadow_results WHERE batch_id=? AND config_id='production'", (first,)
+        ).fetchone()[0] is None
+        db.execute("UPDATE capture_batches SET completed_at=? WHERE id=?", ((now + timedelta(minutes=5, seconds=1)).isoformat(), second))
+    harness.score_outcomes()
+    with store.connect() as db:
+        assert db.execute(
+            "SELECT forward_5m FROM shadow_results WHERE batch_id=? AND config_id='production'", (first,)
+        ).fetchone()[0] == pytest.approx(0)
+
+
 def test_shadow_payload_is_json_serializable(tmp_path):
     store = ShadowStore(tmp_path / "shadow.db")
     assert json.dumps(ShadowHarness(store).summary())
