@@ -399,6 +399,10 @@ def metrics(rows: list[dict[str, Any]], horizon: int = 5) -> dict[str, Any]:
         "median_pnl": median(values) if values else None, "positive_rate": sum(v > 0 for v in values) / len(values) if values else None,
         "max_drawdown": drawdown, "worst_trade": min(values, default=None), "best_trade": max(values, default=None),
         "crossing_cost": sum(r["candidate"].crossing_cost * 2 for r in ordered),
+        "mean_crossing_cost": mean([r["candidate"].crossing_cost * 2 for r in ordered]) if ordered else None,
+        "total_max_risk": sum(r["candidate"].max_loss for r in ordered),
+        "mean_max_risk": mean([r["candidate"].max_loss for r in ordered]) if ordered else None,
+        "largest_max_risk": max((r["candidate"].max_loss for r in ordered), default=None),
         "return_per_max_risk": sum(values) / sum(r["candidate"].max_loss for r in ordered) if ordered else None,
         "stress_total": sum(stress), "adverse_total": sum(adverse), "remove_best_trade_total": sum(values) - best_trade,
         "best_symbol": best_symbol, "remove_best_symbol_total": sum(v["total"] for s, v in per_symbol.items() if s != best_symbol),
@@ -582,16 +586,62 @@ def run(db_path: Path, output_root: Path, cutoff: str | None = None) -> Path:
     (out / "experiment_ledger.json").write_text(json.dumps(ledger, indent=2) + "\n")
     (out / "ranked_candidates.json").write_text(json.dumps(serializable, indent=2) + "\n")
     (out / "research_log.json").write_text(json.dumps(sources, indent=2) + "\n")
-    report = ["# Lyceum quant research tournament", "", f"Run `{timestamp}`; data cutoff `{cutoff}`; seed `{SEED}`.", "", "## Ranked holdout candidates", ""]
+    report = [
+        "# Lyceum quant research tournament", "", f"Run `{timestamp}`; data cutoff `{cutoff}`; seed `{SEED}`.",
+        "", f"Git commit: `{head}`", "", "Primary rank: untouched holdout five-minute ask-to-bid executable P&L.",
+        "", "## Ranked holdout candidates", "",
+    ]
     for rank, item in enumerate(serializable[:5], 1):
         s, m = item["system"], item["holdout"]
+        symbol_text = "; ".join(
+            f"{symbol} n={values['n']} total=${values['total']:.2f}"
+            for symbol, values in m["per_symbol"].items()
+        ) or "none"
+        horizon_text = "; ".join(
+            f"{h}m n={values['decisions']} total=${values['total_pnl']:.2f}"
+            for h, values in item["horizon_breakdown"].items()
+        )
+        sensitivity_text = "; ".join(
+            f"{name}: n={values['decisions']} total=${values['total_pnl']:.2f}"
+            for name, values in item["parameter_sensitivity"].items()
+        )
         report += [
             f"### {rank}. {s['name']}", "",
-            f"- Track: {s['track']}", f"- Signal: {s['signal']}", f"- Target: {s['target']}", f"- Model: {s['model']}",
-            f"- Holdout decisions: {m['decisions']}", f"- Total / mean / median P&L: ${m['total_pnl']:.2f} / ${m['mean_pnl'] or 0:.2f} / ${m['median_pnl'] or 0:.2f}",
-            f"- Positive rate: {(m['positive_rate'] or 0):.1%}", f"- Stress / adverse total: ${m['stress_total']:.2f} / ${m['adverse_total']:.2f}",
-            f"- Remove best trade / best symbol: ${m['remove_best_trade_total']:.2f} / ${m['remove_best_symbol_total']:.2f}", "",
+            f"- Classification: **{item['classification']}**", f"- Experiment: `{s['experiment_id']}`; parent `{s['parent']}`",
+            f"- Hypothesis: {s['hypothesis']}", f"- Source/failure motivation: {s['motivation']}",
+            f"- Exact signal: {s['signal']}", f"- Exact target: {s['target']}", f"- Features: {', '.join(s['feature_set'])}",
+            f"- Model/rule: {s['model']}", f"- Supported structures used: {json.dumps(item['structure_breakdown'], sort_keys=True)}",
+            f"- Entry filter: {item['entry_filter']}", f"- DTE range: {item['dte_range'][0]}–{item['dte_range'][1]}",
+            f"- Train window: {item['windows']['train'][0]} through {item['windows']['train'][1]} ({item['training_examples']} examples)",
+            f"- Validation window: {item['windows']['validation'][0]} through {item['windows']['validation'][1]}",
+            f"- Untouched holdout: {item['windows']['holdout'][0]} through {item['windows']['holdout'][1]}",
+            f"- Purge/embargo: batches {list(split.purged)} / {list(split.embargoed)}; two complete batches per boundary",
+            f"- Holdout decisions / feasible trades: {m['decisions']} / {m['feasible_trades']}",
+            f"- Total / mean / median P&L: ${m['total_pnl']:.2f} / ${m['mean_pnl'] or 0:.2f} / ${m['median_pnl'] or 0:.2f}",
+            f"- Positive rate / max drawdown / worst trade: {(m['positive_rate'] or 0):.1%} / ${m['max_drawdown']:.2f} / ${m['worst_trade'] or 0:.2f}",
+            f"- Estimated round-trip crossing: ${m['crossing_cost']:.2f} total; ${m['mean_crossing_cost'] or 0:.2f} mean",
+            f"- Maximum risk: ${m['total_max_risk']:.2f} total; ${m['mean_max_risk'] or 0:.2f} mean; ${m['largest_max_risk'] or 0:.2f} largest",
+            f"- Return per unit max risk: {(m['return_per_max_risk'] or 0):.4f}", f"- MFE / MAE proxy: ${m['mean_mfe'] or 0:.2f} / ${m['mean_mae'] or 0:.2f}",
+            f"- Stress / adverse total: ${m['stress_total']:.2f} / ${m['adverse_total']:.2f}",
+            f"- Remove best trade / best symbol: ${m['remove_best_trade_total']:.2f} / ${m['remove_best_symbol_total']:.2f}",
+            f"- Per symbol: {symbol_text}", f"- Horizon breakdown: {horizon_text}", f"- Parameter sensitivity: {sensitivity_text}",
+            f"- Baseline: {item['baseline_comparison']['relevant_baseline']} total ${item['baseline_comparison']['relevant_baseline_total']:.2f}; incremental ${item['baseline_comparison']['incremental_total']:.2f}",
+            "",
         ]
+    best = serializable[0]
+    report += [
+        "## Best available candidate", "", f"**{best['system']['name']}** is {best['classification']}.", "",
+        f"It is ${best['holdout']['total_pnl']:.2f} above observed executable break-even and ${best['holdout']['stress_total']:.2f} above modest-stress break-even, but removing its best trade leaves ${best['holdout']['remove_best_trade_total']:.2f}. Its economics are destroyed by concentration in {best['holdout']['best_symbol']} and a single ${best['holdout']['best_trade']:.2f} trade.",
+        "", "## Synthesis", "",
+        "- What we started with: production-selected structures with severe spreads, zero approvals, and negative executable outcomes.",
+        "- What failed: unfiltered momentum, reversal, council, IV/RV condors, long-volatility structures, and execution-only ranking.",
+        "- Why it failed: option crossing/mark instability dominated the small underlying move; signals did not generalize across symbols.",
+        "- What research changed: direct executable labels, chronological purge/embargo, liquidity-first enumeration, hard crossing filters, and regularized direct-P&L models.",
+        "- What works better: a $1 half-spread ceiling reduces losses drastically and creates one positive but fragile SPY-only holdout result.",
+        "- Evidence of edge: NO. The only positive rule fails best-trade and best-symbol removal.",
+        "- Worth shadow forward testing: YES — the crossing-filtered momentum rule and direct-P&L ridge, with no production promotion.",
+        "",
+    ]
     (out / "REPORT.md").write_text("\n".join(report) + "\n")
     return out
 
