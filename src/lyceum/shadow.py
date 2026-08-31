@@ -549,7 +549,7 @@ class ShadowHarness:
                     if values[60] is None or predicted_regime is None or baseline_move is None
                     else int((abs(values[60]) > baseline_move) == (predicted_regime == "HIGH"))
                 )
-                option_mark_change = self._option_mark_change(db, payload, future_batch_ids[60])
+                option_mark_change = self._option_mark_change(db, payload, future_batch_ids[5])
                 db.execute(
                     """UPDATE shadow_results SET forward_5m=?,forward_15m=?,forward_30m=?,forward_60m=?,
                     direction_correct_60m=?,vol_regime_correct_60m=?,option_mark_change=? WHERE id=?""",
@@ -559,7 +559,7 @@ class ShadowHarness:
 
     @staticmethod
     def _option_mark_change(db: sqlite3.Connection, payload: dict[str, Any], future_batch_id: int | None) -> float | None:
-        """Return the 60-minute structure midpoint change, only with a complete leg set."""
+        """Return the 5-minute structure midpoint change, only with a complete leg set."""
         legs = payload["candidate"]["legs"]
         if not legs or future_batch_id is None:
             return None
@@ -592,7 +592,7 @@ class ShadowHarness:
                 avg(skeptic_veto) skeptic_veto_rate,avg(strategy='NO_TRADE') no_trade_rate,
                 avg(direction_correct_60m) direction_hit_rate,
                 avg(vol_regime_correct_60m) vol_regime_hit_rate,
-                avg(abs(forward_60m)) avg_abs_return_60m,avg(option_mark_change) avg_option_mark_change_60m
+                avg(abs(forward_60m)) avg_abs_return_60m,avg(option_mark_change) avg_option_mark_change_5m
                 FROM shadow_results GROUP BY config_id,is_production ORDER BY is_production DESC,config_id"""
             ).fetchall()
         return {

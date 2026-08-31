@@ -26,13 +26,13 @@ The allowlisted CLI adapter accepts only `clock`, `data snapshot`, `data bars`, 
 
 Each snapshot is evaluated against the exact production selector plus 32 deterministic threshold combinations spanning direction, disagreement, DTE, spread, and maximum-loss bounds. The production selector is only a comparison row. Research uses READ_ONLY settings and the deterministic council so broad sweeps neither call a local LLM nor inherit the autonomous execution mode.
 
-Every result stores signal, structure, skeptic, risk, and execution-quality stages separately. Once later captures exist, outcomes are filled using the first observation at or after 5, 15, 30, and 60 minutes. Long straddles are classified as high-volatility predictions and iron condors as low-volatility predictions; the 60-minute absolute move is compared with the snapshot's annualized realized-volatility baseline. Directional structures are left unscored for volatility regime. The option result is calculated only when all original legs exist in the 60-minute batch; it is the signed structure midpoint change per contract. Missing or partial future option data remains null.
+Every result stores signal, structure, skeptic, risk, and execution-quality stages separately. Once later captures exist, outcomes are filled using the first observation at or after 5, 15, 30, and 60 minutes. Long straddles are classified as high-volatility predictions and iron condors as low-volatility predictions; the 60-minute absolute move is compared with the snapshot's annualized realized-volatility baseline. Directional structures are left unscored for volatility regime. The option result is calculated only when all original legs exist in the 5-minute outcome batch; it is the signed structure midpoint change per contract. Missing or partial future option data remains null.
 
 This is research evidence, not a strategy auto-tuner. No shadow setting is promoted to production automatically.
 
 ## Operations and containment
 
-The local launch agent `com.lyceum.shadow-collector` runs one sequential capture every five minutes. It is deliberately a separate short-lived process. Typical memory is below 100 MB plus short CLI subprocesses; full-chain network/CPU work occurs sequentially, not in parallel. Stop it without affecting judging:
+The local launch agent `com.lyceum.shadow-collector` uses a four-minute launch interval. Including a typical 30-second collection run, observed snapshots remain inside the requested five-minute cadence. It is deliberately a separate short-lived process. Typical memory is below 100 MB plus short CLI subprocesses; full-chain network/CPU work occurs sequentially, not in parallel. Stop it without affecting judging:
 
 ```bash
 launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.lyceum.shadow-collector.plist
