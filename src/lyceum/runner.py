@@ -168,7 +168,7 @@ class AutonomousRunner:
                 }
                 decision_id = self.journal.record_decision(symbol, candidate.strategy, risk.status, payload)
                 decision_ids.append(decision_id)
-                if risk.status is RiskStatus.REJECTED:
+                if risk.status is RiskStatus.REJECTED and candidate.strategy is not StrategyType.NO_TRADE:
                     self.journal.record_rejection(symbol, risk.reason_codes, payload)
                 for alternative in [
                     StrategyType.NO_TRADE,

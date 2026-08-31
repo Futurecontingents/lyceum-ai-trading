@@ -72,3 +72,11 @@ def test_runner_supplies_chain_iv_to_options_agent(tmp_path):
     AutonomousRunner(settings, gateway=OptionIvGateway(), journal=journal).run_cycle()
     opinion = next(row for row in journal.recent("agent_opinions") if row["agent"] == "OptionsMarketAgent")
     assert "IV=50.0%" in json.loads(opinion["payload"])["evidence"]
+
+
+def test_no_trade_decision_is_not_recorded_as_rejected_candidate(tmp_path):
+    settings = Settings(universe=("SPY",), database_path=tmp_path / "trace.db", emergency_halt_file=tmp_path / "HALT")
+    journal = Journal(settings.database_path)
+    AutonomousRunner(settings, gateway=OptionIvGateway(), journal=journal).run_cycle()
+    assert journal.recent("decisions")[0]["action"] == "NO_TRADE"
+    assert journal.recent("rejected_trades") == []
