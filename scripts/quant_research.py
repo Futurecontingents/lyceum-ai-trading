@@ -440,6 +440,26 @@ def run(db_path: Path, output_root: Path, cutoff: str | None = None) -> Path:
         "cost_filtered_momentum": "transaction costs destroyed the raw directional branches",
         "execution_min_cost": "execution-first redesign after signal-correct trades still lost to option costs",
     }
+    feature_sets = {
+        "direction_momentum": ("return_15m", "candidate_crossing_cost"),
+        "direction_reversal": ("return_15m", "candidate_crossing_cost"),
+        "council": ("consensus_direction", "candidate_crossing_cost"),
+        "short_vol": ("atm_iv", "realized_volatility", "iv_rv_ratio", "candidate_crossing_cost"),
+        "long_vol": ("atm_iv", "realized_volatility", "iv_rv_ratio", "candidate_crossing_cost"),
+        "index_momentum": ("symbol", "return_15m", "candidate_crossing_cost"),
+        "cost_filtered_momentum": ("return_15m", "candidate_crossing_cost"),
+        "execution_min_cost": ("candidate_crossing_cost", "worst_leg_spread", "volume", "DTE", "max_loss"),
+    }
+    signal_definitions = {
+        "direction_momentum": lambda p: f"if abs(return_15m)>={p:g}: buy min-crossing bull call spread when return_15m>0, else bear put spread",
+        "direction_reversal": lambda p: f"if abs(return_15m)>={p:g}: buy min-crossing bear put spread when return_15m>0, else bull call spread",
+        "council": lambda p: f"if abs(consensus_direction)>={p:g}: buy min-crossing bull call spread when positive, else bear put spread",
+        "short_vol": lambda p: f"if ATM_IV/realized_volatility>={p:g}: enter min-crossing iron condor",
+        "long_vol": lambda p: f"if ATM_IV/realized_volatility<={p:g}: buy min-crossing long straddle",
+        "index_momentum": lambda p: f"SPY/QQQ only; if abs(return_15m)>={p:g}: buy min-crossing bull call spread when positive, else bear put spread",
+        "cost_filtered_momentum": lambda p: f"direction=sign(return_15m); buy matching min-crossing vertical only when one-way quoted half-spread cost<=${p:g}",
+        "execution_min_cost": lambda p: f"choose the supported structure with lowest entry crossing cost when one-way quoted half-spread cost<=${p:g}; no directional forecast",
+    }
     ledger = []
     finalists: list[dict[str, Any]] = []
     for track, label, parameters in specs:
@@ -448,8 +468,8 @@ def run(db_path: Path, output_root: Path, cutoff: str | None = None) -> Path:
             system = System(
                 f"{track}-{index:02d}", f"{track}-{index - 1:02d}" if index > 1 else None, track, f"{label} p={parameter:g}",
                 f"A causal {label.lower()} signal can exceed full quoted crossing costs after liquidity-first construction.",
-                motivation[track], f"{track} entry rule with threshold {parameter:g}", "five-minute conservative executable structure P&L",
-                FEATURES if track in {"short_vol", "long_vol", "execution_min_cost"} else ("return_15m", "consensus_direction", "realized_volatility"),
+                motivation[track], signal_definitions[track](parameter), "five-minute conservative executable structure P&L",
+                feature_sets[track],
                 "deterministic rule", parameter,
             )
             systems.append(system)
