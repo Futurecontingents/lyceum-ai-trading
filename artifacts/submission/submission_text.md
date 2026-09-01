@@ -14,8 +14,9 @@ Alpaca Trading API, Alpaca MCP, Alpaca CLI, Python, Streamlit, SQLite, Ollama, Q
 
 ## Links
 
-- Project URL: https://github.com/Futurecontingents/lyceum-ai-trading
+- Project URL: https://lablab.ai/ai-hackathons/alpaca-ai-trading-agents-hackathon/lyceum/lyceum-a-market-of-ai-minds
 - GitHub URL: https://github.com/Futurecontingents/lyceum-ai-trading
+- Demo URL: https://futurecontingents.github.io/lyceum-ai-trading/
 
 ## One-line pitch
 

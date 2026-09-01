@@ -1,56 +1,24 @@
-# Judging Account Runbook
+# Judging Paper Account
 
-The currently authenticated `paper` profile is development-only. Lyceum never creates or switches Alpaca accounts automatically.
+Lyceum uses a dedicated, fresh **$100,000 Alpaca paper account** authenticated as the local CLI profile `judging`. The account was validated as `ACTIVE`, with zero initial positions and orders, before the autonomous paper service was armed. Account identifiers and OAuth credentials are machine-local and are not committed.
 
-## One-time preparation
+## Safety invariants
 
-1. Create a brand-new Alpaca paper account for judging.
-2. Before any trade, verify the account begins with the hackathon-required **$100,000** equity.
-3. Authenticate it as a separate CLI profile:
+- Endpoint must equal `https://paper-api.alpaca.markets`.
+- Live endpoints and live execution modes are rejected by configuration validation.
+- Autonomous paper execution requires both `PAPER_AUTONOMOUS` and `LYCEUM_ENABLE_PAPER_ORDERS=true`.
+- A missing/active `HALT` switch, stale data, failed model, skeptic veto, or deterministic risk rejection cannot be bypassed by an LLM.
+- Development databases, positions, orders, and account identity are never copied into judging state.
 
-   ```bash
-   alpaca profile login --paper --name judging
-   ```
+## Local verification
 
-4. Compare it with the development profile and verify all of the following:
+```bash
+alpaca profile list
+alpaca --profile judging account get
+python -m lyceum doctor
+python -m lyceum run --once
+```
 
-   - the trading endpoint is `https://paper-api.alpaca.markets`;
-   - the judging account ID differs from the development account ID;
-   - starting equity is fresh;
-   - open positions are zero;
-   - open orders are zero.
+The final command may stop at the market-clock check outside trading hours. For a non-trading validation, keep `LYCEUM_EXECUTION_MODE=READ_ONLY` and `LYCEUM_ENABLE_PAPER_ORDERS=false`.
 
-5. Use a separate journal so development decisions never leak into judging state:
-
-   ```dotenv
-   LYCEUM_ALPACA_PROFILE=judging
-   LYCEUM_DATABASE_PATH=data/judging.db
-   LYCEUM_EXPECT_FRESH_ACCOUNT=true
-   LYCEUM_EXECUTION_MODE=READ_ONLY
-   LYCEUM_ENABLE_PAPER_ORDERS=false
-   ```
-
-6. Run the explicit validation:
-
-   ```bash
-   python -m lyceum doctor
-   ```
-
-   Confirm the printed profile, paper endpoint, distinct account ID, `ACTIVE` status, equity, zero positions, zero orders, and `READ_ONLY` mode.
-
-7. Run a real-data, read-only smoke test:
-
-   ```bash
-   python -m lyceum run --once
-   ```
-
-   It may stop at the market-clock check outside trading hours. It must not submit an order.
-
-8. After the initial freshness check passes, set `LYCEUM_EXPECT_FRESH_ACCOUNT=false`. Only after deliberate review may both execution controls be changed to:
-
-   ```dotenv
-   LYCEUM_EXECUTION_MODE=PAPER_AUTONOMOUS
-   LYCEUM_ENABLE_PAPER_ORDERS=true
-   ```
-
-Never copy the development database, journal records, positions, orders, or account identifiers into judging state. Never point Lyceum at a live endpoint; the application rejects one.
+Before every judged autonomous session, confirm the profile, paper endpoint, account status, account state, `HALT` absence, service health, and current risk configuration. Never paste credentials into documentation, logs, issues, or submission prose.

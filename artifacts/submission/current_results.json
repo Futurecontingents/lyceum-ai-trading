@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-01T12:39:28.554412+00:00",
+  "claim_policy": "Historical association, development diagnostics, sealed forward evidence, and paper execution are separate layers. No profitability claim.",
+  "historical": {
+    "label": "HISTORICAL",
+    "status": "COMPLETED",
+    "dataset": {
+      "start": "2024-01-02",
+      "end": "2026-08-28",
+      "bars": 361439,
+      "sessions": 666,
+      "symbols": [
+        "SPY",
+        "QQQ",
+        "AAPL",
+        "NVDA",
+        "AMD",
+        "META",
+        "TSLA"
+      ],
+      "timeframe": "5Min IEX raw",
+      "contaminated_excluded": "2026-08-31"
+    },
+    "walk_forward": "expanding monthly tests from 2025-01; 12 five-minute bars purged per symbol at every boundary",
+    "direction": {
+      "best_momentum_hit_rate": 0.4942147384443414,
+      "best_reversal_hit_rate": 0.5047316038505466,
+      "conclusion": "Directional performance is weak and not an executable edge claim."
+    },
+    "volatility": {
+      "horizon_minutes": 60,
+      "correlation": 0.7799867463044836,
+      "mae": 0.001403222233553735,
+      "without_disagreement_correlation": 0.7739984842459688,
+      "without_disagreement_mae": 0.0014274104954309554,
+      "incremental_correlation_from_disagreement": 0.0059882620585147706,
+      "conclusion": "Realized volatility is more predictable; disagreement adds modest information."
+    }
+  },
+  "development": {
+    "label": "DEVELOPMENT DIAGNOSTIC \u2014 NOT HOLDOUT",
+    "status": "FROZEN_PREMARKET",
+    "data_cutoff_exclusive": "2026-09-01T00:00:00+00:00",
+    "sample": "2026-08-31 captured option quotes; one late-session date",
+    "diagnostic": {
+      "signal": "five-minute reversal",
+      "holding_minutes": 60,
+      "structure_observations": 460,
+      "mean_midpoint_pnl_usd": 3.225869565217392,
+      "mean_entry_crossing_cost_usd": 29.049565217391308,
+      "mean_exit_crossing_cost_usd": 40.77043478260869,
+      "mean_round_trip_crossing_cost_usd": 69.82,
+      "mean_conservative_executable_pnl_usd": -66.59413043478261,
+      "conclusion": "A positive midpoint diagnostic became strongly negative at quoted sides."
+    },
+    "limitations": [
+      "One late-session date cannot establish statistical significance or generalize across regimes.",
+      "Quoted-side execution is conservative; effective fills may improve, but improvement is not assumed.",
+      "Greek attribution is a first-order/second-order local approximation; residual includes higher-order Greeks, changing Greeks, quote noise, and model error.",
+      "Theta is prorated over calendar minutes and vega uses entry vega; both are estimates.",
+      "90-minute results are sparse because the capture spans only about 103 minutes."
+    ]
+  },
+  "sealed_forward": {
+    "label": "SEALED FORWARD",
+    "status": "IN_PROGRESS",
+    "session": "2026-09-01",
+    "manifest_status": "FROZEN",
+    "candidates": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "signals": 0,
+    "trades": 0,
+    "scored_decisions": 0,
+    "orders": "PROHIBITED",
+    "interpretation": "No scored observation is not a zero return; the test remains in progress."
+  },
+  "paper_execution": {
+    "label": "PAPER EXECUTION",
+    "status": "NO_PUBLIC_PERFORMANCE_RESULT_CLAIMED",
+    "fresh_account_initial_equity_usd": 100000,
+    "submitted_during_submission_validation": 0,
+    "interpretation": "Validation submitted no orders; broker credentials and account state remain private."
+  },
+  "sources": {
+    "manifest": "research/forward_test_2026-09-01.json",
+    "historical": "artifacts/forward_test/historical_signal_results.json (machine-local input)",
+    "development": "artifacts/nextgen_research/option_economics_preopen_freeze_2026-09-01.json (machine-local input)",
+    "leaderboard": "artifacts/forward_test/live_leaderboard.json (machine-local input)"
+  }
+}
