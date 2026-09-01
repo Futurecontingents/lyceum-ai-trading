@@ -1,0 +1,442 @@
+{
+  "schema_version": 1,
+  "status": "FROZEN",
+  "generated_at": "2026-09-01T09:36:00.364972+00:00",
+  "sealed_session": "2026-09-01",
+  "training_cutoff": "2026-08-30T23:59:59-04:00",
+  "excluded_development_session": "2026-08-31",
+  "random_seed": 20260901,
+  "dataset": {
+    "start": "2024-01-02",
+    "end": "2026-08-28",
+    "bars": 361439,
+    "sessions": 666,
+    "symbols": [
+      "SPY",
+      "QQQ",
+      "AAPL",
+      "NVDA",
+      "AMD",
+      "META",
+      "TSLA"
+    ],
+    "timeframe": "5Min IEX raw",
+    "contaminated_excluded": "2026-08-31"
+  },
+  "data_sha256": {
+    "SPY-2024-01-01-2026-08-31-iex-raw-5Min.json": "d13cf5cfbf95db53cd36beaab5c6d3c2210c5937f98d627dbb2c1405afa39e46",
+    "QQQ-2024-01-01-2026-08-31-iex-raw-5Min.json": "e3c816b4edcfb4345ee69b4ff4ff5d8cdceeb02517e73494edca2e3584812cff",
+    "AAPL-2024-01-01-2026-08-31-iex-raw-5Min.json": "e402a256065a4598321a62af123ae8c04c74d2520ef4c46df7d37813a1613813",
+    "NVDA-2024-01-01-2026-08-31-iex-raw-5Min.json": "211804d0cec171da9c5b3f3e6ce08c2c0e625907d6a54108fe901e08ba7d4e65",
+    "AMD-2024-01-01-2026-08-31-iex-raw-5Min.json": "744a2d7d7060036e001707b72d63f55603ed48d8637b634b16bf51d6d1acdf6a",
+    "META-2024-01-01-2026-08-31-iex-raw-5Min.json": "589b171aecf3d27fa8ff7045719c81d7df2049c9d801ef4f83f7e64a986c95cd",
+    "TSLA-2024-01-01-2026-08-31-iex-raw-5Min.json": "ead61e5ff93708c7d979381bbcc474738a6374e0c0bd45772133505283c39e24"
+  },
+  "walk_forward": "expanding monthly tests from 2025-01; 12 five-minute bars purged per symbol at every boundary",
+  "historical_option_quotes": "UNAVAILABLE; no historical option P&L fabricated",
+  "candidates": [
+    {
+      "id": "A",
+      "name": "cost_filtered_momentum",
+      "signal": "sign(return_60m) when abs(return)>0.5*RV_1d*sqrt(60/390)",
+      "features": [
+        "return_60m",
+        "rv_1d",
+        "option_crossing_cost"
+      ],
+      "model": "deterministic",
+      "model_hash": "054ee0605d041f4e747f8f34717feba582be169a0f176d781e8649acb54c4ab8",
+      "holding_minutes": 60,
+      "structures": [
+        "BULL_CALL_SPREAD",
+        "BEAR_PUT_SPREAD"
+      ],
+      "direction_mapping": "positive->bull call; negative->bear put",
+      "maximum_entry_crossing_cost": 2.0,
+      "historical": {
+        "lookback": 60,
+        "holding": 60,
+        "decisions": 84093,
+        "directional_hit_rate": 0.4942147384443414,
+        "total_signed_return": 5.136414584207332,
+        "mean_signed_return": 6.108016819720228e-05,
+        "median_signed_return": -3.731900283621137e-05,
+        "worst_signed_return": -0.07345305062743401
+      },
+      "max_loss": 500,
+      "dte": [
+        7,
+        35
+      ],
+      "quote_age_seconds": 180,
+      "minimum_displayed_size": 1,
+      "minimum_volume": 1,
+      "maximum_leg_spread_pct": 0.15,
+      "entry_rank": "minimum crossing cost, then worst-leg spread, then max loss",
+      "strike_delta_rules": {
+        "directional_vertical": "long leg nearest ATM; short leg 0<width<=5 points",
+        "long_straddle": "same-strike call and put nearest ATM",
+        "iron_condor": "short deltas abs 0.10-0.40; each wing 0<width<=5 points"
+      },
+      "exit_marks_minutes": [
+        5,
+        15,
+        30,
+        60
+      ],
+      "exit_condition": "evaluate/close at candidate holding_minutes; retain 5/15/30/60 diagnostic executable marks",
+      "crossing_cost_units": "USD per one-contract structure from midpoint to quoted executable entry",
+      "orders": "PROHIBITED"
+    },
+    {
+      "id": "B",
+      "name": "cost_filtered_mean_reversion",
+      "signal": "-sign(return_5m) when abs(return)>0.5*RV_1d*sqrt(5/390)",
+      "features": [
+        "return_5m",
+        "rv_1d",
+        "option_crossing_cost"
+      ],
+      "model": "deterministic",
+      "model_hash": "dcfa3cb083ca79377e4137fb993d3f647bbc4d08901ea319cd64f8b9c0ce47be",
+      "holding_minutes": 30,
+      "structures": [
+        "BULL_CALL_SPREAD",
+        "BEAR_PUT_SPREAD"
+      ],
+      "direction_mapping": "positive reversal->bull call; negative->bear put",
+      "maximum_entry_crossing_cost": 2.0,
+      "historical": {
+        "lookback": 5,
+        "holding": 30,
+        "decisions": 110322,
+        "directional_hit_rate": 0.5047316038505466,
+        "total_signed_return": 2.292652380454077,
+        "mean_signed_return": 2.078146136268448e-05,
+        "median_signed_return": 4.07005958684703e-05,
+        "worst_signed_return": -0.08970210866897244
+      },
+      "max_loss": 500,
+      "dte": [
+        7,
+        35
+      ],
+      "quote_age_seconds": 180,
+      "minimum_displayed_size": 1,
+      "minimum_volume": 1,
+      "maximum_leg_spread_pct": 0.15,
+      "entry_rank": "minimum crossing cost, then worst-leg spread, then max loss",
+      "strike_delta_rules": {
+        "directional_vertical": "long leg nearest ATM; short leg 0<width<=5 points",
+        "long_straddle": "same-strike call and put nearest ATM",
+        "iron_condor": "short deltas abs 0.10-0.40; each wing 0<width<=5 points"
+      },
+      "exit_marks_minutes": [
+        5,
+        15,
+        30,
+        60
+      ],
+      "exit_condition": "evaluate/close at candidate holding_minutes; retain 5/15/30/60 diagnostic executable marks",
+      "crossing_cost_units": "USD per one-contract structure from midpoint to quoted executable entry",
+      "orders": "PROHIBITED"
+    },
+    {
+      "id": "C",
+      "name": "lyceum_volatility_disagreement",
+      "signal": "ridge forecast of forward realized move; disagreement is volatility input; compare forecast with ATM IV implied move",
+      "features": [
+        "return_5m",
+        "return_15m",
+        "return_30m",
+        "return_60m",
+        "rv_15m",
+        "rv_60m",
+        "range_pct",
+        "volume_ratio",
+        "vwap_deviation",
+        "disagreement",
+        "entropy",
+        "minute_sin",
+        "minute_cos"
+      ],
+      "model": "ridge",
+      "parameters": {
+        "mean": [
+          5.326612272670012e-06,
+          1.458958629566287e-05,
+          3.069214317153097e-05,
+          6.581647830150042e-05,
+          0.0023006368664556472,
+          0.005502646978904159,
+          0.001965895315832391,
+          1.0505424536308878,
+          0.0001671133126609886,
+          0.10689050819877331,
+          0.8195512582920916,
+          0.017926799195120226,
+          -0.3772843356457917
+        ],
+        "scale": [
+          0.0017980718243467897,
+          0.003122970963668723,
+          0.004527704061954544,
+          0.006928833811933525,
+          0.002203198830514798,
+          0.004250245794316817,
+          0.0017757006052079628,
+          0.8657224221528196,
+          0.006067427937757645,
+          0.06433667734915131,
+          0.015562822335224184,
+          0.7795228314665312,
+          0.4996792122645622
+        ],
+        "weights": [
+          0.004742016897044211,
+          -1.7173072683095057e-05,
+          -1.678204230737409e-05,
+          -8.090295465677015e-05,
+          -5.554908749288586e-06,
+          1.6635320894599097e-05,
+          0.0017456390290431923,
+          0.0009502860569136761,
+          -0.00012392158889277502,
+          -1.5374885194720396e-05,
+          0.0003207806211071321,
+          0.00010193452901782434,
+          -0.00018882342837040844,
+          -3.0666292030278534e-05
+        ],
+        "penalty": 10.0
+      },
+      "model_hash": "4934cf5e1eb31b4b0d3a45214e03f7f309ad695ce509717e77fec36e8db03ae0",
+      "holding_minutes": 60,
+      "structures": [
+        "LONG_STRADDLE",
+        "IRON_CONDOR"
+      ],
+      "entry_condition": "long straddle if forecast/implied move>=1.10; iron condor if implied/forecast>=1.25; otherwise NO_TRADE",
+      "maximum_entry_crossing_cost": 4.0,
+      "historical": {
+        "observations": 155620,
+        "correlation": 0.7799867463044836,
+        "mae": 0.001403222233553735
+      },
+      "max_loss": 500,
+      "dte": [
+        7,
+        35
+      ],
+      "quote_age_seconds": 180,
+      "minimum_displayed_size": 1,
+      "minimum_volume": 1,
+      "maximum_leg_spread_pct": 0.15,
+      "entry_rank": "minimum crossing cost, then worst-leg spread, then max loss",
+      "strike_delta_rules": {
+        "directional_vertical": "long leg nearest ATM; short leg 0<width<=5 points",
+        "long_straddle": "same-strike call and put nearest ATM",
+        "iron_condor": "short deltas abs 0.10-0.40; each wing 0<width<=5 points"
+      },
+      "exit_marks_minutes": [
+        5,
+        15,
+        30,
+        60
+      ],
+      "exit_condition": "evaluate/close at candidate holding_minutes; retain 5/15/30/60 diagnostic executable marks",
+      "crossing_cost_units": "USD per one-contract structure from midpoint to quoted executable entry",
+      "orders": "PROHIBITED"
+    },
+    {
+      "id": "D",
+      "name": "direct_economic_ridge",
+      "signal": "ridge forward-return forecast mapped to candidate delta; trade only when predicted gross option move exceeds estimated round-trip crossing by 25%",
+      "features": [
+        "return_5m",
+        "return_15m",
+        "return_30m",
+        "return_60m",
+        "rv_15m",
+        "rv_60m",
+        "range_pct",
+        "volume_ratio",
+        "vwap_deviation",
+        "disagreement",
+        "entropy",
+        "minute_sin",
+        "minute_cos"
+      ],
+      "model": "ridge",
+      "parameters": {
+        "mean": [
+          4.621209889924525e-06,
+          3.434233734359355e-06,
+          2.8305606764514886e-06,
+          2.2934013755090495e-05,
+          0.0022546962440755268,
+          0.005298257353102439,
+          0.0019516349640876657,
+          1.140720914590125,
+          0.00012483519097135405,
+          0.10677362004807026,
+          0.8196411801598597,
+          -0.07217990958303477,
+          -0.1764056277013755
+        ],
+        "scale": [
+          0.00178440484939878,
+          0.0030684720989817425,
+          0.004417740599133587,
+          0.00666648216855925,
+          0.0021704670899212863,
+          0.0041194483703591595,
+          0.0017581002329365518,
+          0.9803752529971466,
+          0.005741926150378773,
+          0.06435715430896181,
+          0.015572508772128584,
+          0.7430726316497237,
+          0.6414937094477409
+        ],
+        "weights": [
+          3.3080657781569496e-06,
+          -4.587675453589993e-05,
+          2.5945599422353296e-05,
+          -2.5332289939500242e-05,
+          4.590589669871378e-05,
+          2.2053127573752046e-05,
+          -1.808350221624935e-05,
+          2.7322979114619717e-05,
+          -6.8287866234524876e-06,
+          -3.18741529620662e-05,
+          5.011314432034483e-05,
+          -5.817254114966696e-05,
+          -1.6222747377789756e-06,
+          -6.508449624599707e-06
+        ],
+        "penalty": 10.0
+      },
+      "model_hash": "5b7e8d412e2d51a7446e6eb09b3e7a0f057ae777520fa271e4745d6b283102e0",
+      "holding_minutes": 5,
+      "structures": [
+        "BULL_CALL_SPREAD",
+        "BEAR_PUT_SPREAD"
+      ],
+      "entry_condition": "abs(predicted_return)*spot*50 > 1.25*estimated_roundtrip_crossing",
+      "maximum_entry_crossing_cost": 4.0,
+      "historical": {
+        "observations": 187498,
+        "correlation": 0.012852506742580712,
+        "mae": 0.001163871428183528
+      },
+      "max_loss": 500,
+      "dte": [
+        7,
+        35
+      ],
+      "quote_age_seconds": 180,
+      "minimum_displayed_size": 1,
+      "minimum_volume": 1,
+      "maximum_leg_spread_pct": 0.15,
+      "entry_rank": "minimum crossing cost, then worst-leg spread, then max loss",
+      "strike_delta_rules": {
+        "directional_vertical": "long leg nearest ATM; short leg 0<width<=5 points",
+        "long_straddle": "same-strike call and put nearest ATM",
+        "iron_condor": "short deltas abs 0.10-0.40; each wing 0<width<=5 points"
+      },
+      "exit_marks_minutes": [
+        5,
+        15,
+        30,
+        60
+      ],
+      "exit_condition": "evaluate/close at candidate holding_minutes; retain 5/15/30/60 diagnostic executable marks",
+      "crossing_cost_units": "USD per one-contract structure from midpoint to quoted executable entry",
+      "orders": "PROHIBITED"
+    },
+    {
+      "id": "E",
+      "name": "vwap_reversion_baseline",
+      "signal": "-sign(price/VWAP_120m-1) when abs(VWAP_120m_deviation/RV_1d)>=1.0",
+      "features": [
+        "vwap_deviation",
+        "rv_1d",
+        "option_crossing_cost"
+      ],
+      "model": "deterministic",
+      "model_hash": "8b8346e5561456979d7472540958fcf42b14aab7423cf2e09ec6c84367df2501",
+      "holding_minutes": 30,
+      "structures": [
+        "BULL_CALL_SPREAD",
+        "BEAR_PUT_SPREAD"
+      ],
+      "direction_mapping": "below VWAP->bull call; above VWAP->bear put",
+      "maximum_entry_crossing_cost": 2.0,
+      "historical": {
+        "threshold": 1.0,
+        "holding": 30,
+        "decisions": 6853,
+        "directional_hit_rate": 0.48343791040420253,
+        "total_signed_return": 1.0021709308991702,
+        "mean_signed_return": 0.0001462382797167912,
+        "median_signed_return": -0.00012851199177532635,
+        "worst_signed_return": -0.05017222330538762
+      },
+      "max_loss": 500,
+      "dte": [
+        7,
+        35
+      ],
+      "quote_age_seconds": 180,
+      "minimum_displayed_size": 1,
+      "minimum_volume": 1,
+      "maximum_leg_spread_pct": 0.15,
+      "entry_rank": "minimum crossing cost, then worst-leg spread, then max loss",
+      "strike_delta_rules": {
+        "directional_vertical": "long leg nearest ATM; short leg 0<width<=5 points",
+        "long_straddle": "same-strike call and put nearest ATM",
+        "iron_condor": "short deltas abs 0.10-0.40; each wing 0<width<=5 points"
+      },
+      "exit_marks_minutes": [
+        5,
+        15,
+        30,
+        60
+      ],
+      "exit_condition": "evaluate/close at candidate holding_minutes; retain 5/15/30/60 diagnostic executable marks",
+      "crossing_cost_units": "USD per one-contract structure from midpoint to quoted executable entry",
+      "orders": "PROHIBITED"
+    }
+  ],
+  "forward_test": {
+    "source": "shared COMPLETE batches in data/shadow_market.db",
+    "database": "data/forward_test.db",
+    "leaderboard": "artifacts/forward_test/live_leaderboard.json",
+    "first_observation_not_before": "2026-09-01T09:30:00-04:00",
+    "candidate_modification_during_session": "PROHIBITED",
+    "order_submission": "PROHIBITED"
+  },
+  "sources": [
+    {
+      "url": "https://academic.oup.com/rof/article/27/1/289/6510952",
+      "hypothesis": "full bid/ask crossing can erase option-return signals; rank executable economics"
+    },
+    {
+      "url": "https://academic.oup.com/rfs/article/38/6/1783/8010873",
+      "hypothesis": "DTE, moneyness, IV/RV and spread characteristics predict option returns; avoid five-minute-only conclusions"
+    },
+    {
+      "url": "https://papers.ssrn.com/abstract=3393464",
+      "hypothesis": "HAR volatility forecasts should include intraday periodicity"
+    },
+    {
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4022147",
+      "hypothesis": "pooled cross-symbol information can improve intraday volatility forecasts"
+    },
+    {
+      "url": "https://academic.oup.com/rfs/article/39/3/783/8193725",
+      "hypothesis": "quoted option spreads are a conservative upper-bound cost; keep explicit cost decomposition"
+    }
+  ]
+}
