@@ -53,7 +53,7 @@ Every mind returns the same Pydantic-validated schema: five probabilities summin
 
 ## Hybrid AI Council
 
-Lyceum is deterministic by default. `TechnicalQuantAgent` and `OptionsMarketAgent` always remain quantitative, deterministic agents. In optional `HYBRID` mode, the news, bull, and bear roles can use any configured OpenAI-compatible model—including Featherless through its [documented `https://api.featherless.ai/v1` base URL](https://featherless.ai/docs/quickstart-guide). The model ID remains a user choice.
+Lyceum is deterministic by default. `TechnicalQuantAgent` and `OptionsMarketAgent` always remain quantitative, deterministic agents. In `HYBRID` mode, the news, bull, and bear roles use distinct prompts through the existing OpenAI-compatible provider abstraction. The judging configuration runs one local Qwen3 model through Ollama; another compatible provider can be configured without changing council or safety logic.
 
 Model text is untrusted: Lyceum extracts JSON, validates the strict `AgentOpinion` schema, checks finite normalized probabilities, uses bounded timeouts/retries, and falls back to the deterministic implementation on any failure. Provider, model, prompt version, latency, implementation, and fallback state are journaled and shown in the dashboard. Consensus, strategy selection, the skeptic, risk, endpoint verification, and execution remain provider-independent and deterministic.
 
@@ -132,6 +132,12 @@ No paper P&L is claimed yet. Setup validation placed no orders. Results will app
 ### Historical experiment
 
 See [the generated experiment report](docs/EXPERIMENT_RESULTS.md). Historical association is not execution performance and is not evidence of profitability.
+
+### Cost-aware research and sealed forward test
+
+The expanded historical dataset contains **361,439 five-minute bars across 666 sessions** for seven liquid symbols. Chronological walk-forward research found modest predictive structure in underlying returns and realized movement, but the executable option analysis exposed the harder problem: entry and exit crossing costs can overwhelm the gross signal.
+
+Five candidates were preregistered before the 2026-09-01 session and run in a sealed, shared-data shadow forward test. Candidate definitions, thresholds, models, option construction, and scoring behavior are frozen for the session. Results are evaluated with quoted-side execution costs rather than midpoint-only P&L. No profitable edge is claimed.
 
 ## Built With
 
