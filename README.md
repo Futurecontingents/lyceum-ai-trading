@@ -79,6 +79,8 @@ There is no live mode or live endpoint.
 
 ## Demo
 
+Public read-only sample: **https://futurecontingents.github.io/lyceum-ai-trading/**
+
 Generate a safe end-to-end demo decision and launch the dashboard:
 
 ```bash
