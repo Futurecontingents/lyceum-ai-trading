@@ -80,11 +80,11 @@ values = (
     ("Mode", str(context.get("execution_mode", settings.execution_mode))),
     ("Symbol", selected),
     ("Council", direction),
-    ("Disagreement", f"{consensus['disagreement']:.3f}"),
+    ("JSD disagreement", f"{consensus['disagreement']:.3f}"),
     ("Strategy", candidate["strategy"].replace("_", " ")),
     ("Risk", risk["status"]),
+    ("Entropy", f"{float(consensus['entropy']):.3f}"),
     ("Equity", equity_value),
-    ("P&L", "NOT TRACKED" if is_demo else (f"${float(pnl[0]['pnl']):,.0f}" if pnl else "—")),
 )
 for row_values in (values[:4], values[4:]):
     metric_columns = st.columns(4)
@@ -117,9 +117,15 @@ st.subheader("Why this decision?")
 iv = market.get("implied_volatility")
 iv_context = "Unavailable" if iv is None else f"{float(iv):.1%} implied vs {float(market['realized_volatility']):.1%} realized"
 st.markdown(
-    f'<div class="why"><b>Consensus:</b> {direction} ({float(consensus["directional_conviction"]):.0%} conviction) &nbsp;·&nbsp; <b>Disagreement:</b> {float(consensus["disagreement"]):.3f} &nbsp;·&nbsp; <b>IV context:</b> {iv_context}<br><b>Skeptic:</b> {safe(skeptic["strongest_argument_against"])}<br><b>Final risk decision:</b> {safe(risk["status"])} — {safe(", ".join(risk["reason_codes"]))}</div>',
+    f'<div class="why"><b>Consensus:</b> {direction} ({float(consensus["directional_conviction"]):.0%} conviction) &nbsp;·&nbsp; <b>Entropy:</b> {float(consensus["entropy"]):.3f} &nbsp;·&nbsp; <b>Jensen–Shannon disagreement:</b> {float(consensus["disagreement"]):.3f} &nbsp;·&nbsp; <b>IV context:</b> {iv_context}<br><b>Skeptic:</b> {safe(skeptic["strongest_argument_against"])}<br><b>Final risk decision:</b> {safe(risk["status"])} — {safe(", ".join(risk["reason_codes"]))}</div>',
     unsafe_allow_html=True,
 )
+
+if is_demo:
+    st.caption(
+        "Research context: 361,439 five-minute bars across 666 sessions · chronological walk-forward analysis · "
+        "sealed forward testing · execution-cost-aware option construction · no profitability claim."
+    )
 
 left, middle, right = st.columns([1.15, 1, 1])
 with left:
