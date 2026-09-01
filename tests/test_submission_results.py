@@ -42,7 +42,8 @@ def test_submission_results_keep_evidence_layers_separate() -> None:
 
     result = build_results(manifest, historical, economics, leaderboard)
 
-    assert result["sealed_forward"]["status"] == "IN_PROGRESS"
+    assert result["sealed_forward"]["status"] == "INVALID_INCIDENT_PRESERVED"
+    assert result["sealed_forward"]["scored_decisions"] is None
     assert result["development"]["diagnostic"]["mean_round_trip_crossing_cost_usd"] == 25
     incremental = result["historical"]["volatility"]["incremental_correlation_from_disagreement"]
     assert incremental == pytest.approx(0.01)

@@ -42,7 +42,7 @@ Verified on **2026-09-01** against the current public challenge page and lablab.
 
 | Item | Official wording / meaning | Lyceum status |
 |---|---|---|
-| P&L Performance | Evaluates hackathon paper-account performance | NEEDS WORK — sealed/paper session still in progress; no profitability claim |
+| P&L Performance | Evaluates hackathon paper-account performance | NEEDS WORK — Sep-01 sealed test invalidated; no clean rerun or profitability claim |
 | Technology Implementation | Quality and correctness of the implementation | PASS |
 | Creativity & Originality | Novelty of the concept and approach | PASS |
 | Presentation & Execution | Clarity and delivery of the submission | PASS |

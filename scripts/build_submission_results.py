@@ -27,10 +27,6 @@ def build_results(
         for row in economics["directional_by_signal_horizon"]
         if row["signal"] == "rev5" and row["horizon"] == 60
     )
-    candidates = leaderboard.get("leaderboard", [])
-    scored = sum(int(candidate.get("scored_trades", 0)) for candidate in candidates)
-    signals = sum(int(candidate.get("signals", 0)) for candidate in candidates)
-    trades = sum(int(candidate.get("trades", 0)) for candidate in candidates)
     n = int(diagnostic["n"])
     entry = float(diagnostic["entry_crossing"])
     exit_ = float(diagnostic["exit_crossing"])
@@ -84,18 +80,17 @@ def build_results(
         },
         "sealed_forward": {
             "label": "SEALED FORWARD",
-            "status": "IN_PROGRESS" if scored == 0 else "OBSERVATIONS_AVAILABLE",
+            "status": "INVALID_INCIDENT_PRESERVED",
             "session": manifest["sealed_session"],
             "manifest_status": manifest["status"],
             "candidates": [candidate["id"] for candidate in manifest["candidates"]],
-            "signals": signals,
-            "trades": trades,
-            "scored_decisions": scored,
+            "signals": None,
+            "trades": None,
+            "scored_decisions": None,
             "orders": "PROHIBITED",
             "interpretation": (
-                "No scored observation is not a zero return; the test remains in progress."
-                if scored == 0
-                else "See the sealed leaderboard for candidate-level quoted-side results."
+                "The complete A-E comparison is invalid: C/D lacked required live council features, "
+                "and sub-60-minute MFE/MAE contained lookahead. The failed run is not reranked."
             ),
         },
         "paper_execution": {
@@ -159,12 +154,11 @@ Conclusion: {diag['conclusion']} The sample is too narrow for a production claim
 
 - Session: {forward['session']}
 - Candidates: {', '.join(forward['candidates'])}
-- Signals observed: {forward['signals']}
-- Shadow trades constructed: {forward['trades']}
-- Scored decisions: {forward['scored_decisions']}
 - Order submission: {forward['orders']}
 
 {forward['interpretation']}
+
+The original artifacts are preserved. Infrastructure repairs do not repair the failed experiment, and no clean sealed rerun has completed.
 
 ## PAPER EXECUTION — {paper['status']}
 

@@ -6,7 +6,7 @@ Lyceum is a paper-only autonomous AI options system that measures disagreement a
 
 ## Long description
 
-Lyceum is an Alpaca paper-only autonomous research and trading system. Five specialized agents produce probability distributions; consensus mathematics turns entropy and Jensen-Shannon disagreement into measurable uncertainty. A local Qwen3 hybrid council supports news, bull, and bear perspectives, while strategy selection, skepticism, risk, and execution remain deterministic. Historical research spans 361,439 five-minute bars across 666 sessions. Lyceum makes no profitability claim: its key finding is that option execution costs can overwhelm predictive underlying signals. A sealed shadow forward test evaluates defined-risk candidates with conservative, executable pricing and complete SQLite audit trails.
+Lyceum is an Alpaca paper-only autonomous research and trading system. Five specialized agents produce probability distributions; consensus mathematics turns entropy and Jensen-Shannon disagreement into measurable uncertainty. A local Qwen3 hybrid council supports news, bull, and bear perspectives, while strategy selection, skepticism, risk, and execution remain deterministic. Historical research spans 361,439 five-minute bars across 666 sessions. Lyceum makes no profitability claim: option execution costs overwhelmed tested signals, and its first sealed shadow test was invalidated and preserved as an incident.
 
 ## Technology tags
 
@@ -26,10 +26,10 @@ Lyceum turns disagreement among AI market minds into measurable uncertainty, the
 
 - Five probabilistic market agents with entropy and Jensen-Shannon disagreement measurement.
 - Paper-only Alpaca workflow with deterministic risk, defined maximum loss, and auditable SQLite decisions.
-- Cost-aware research across 361,439 five-minute bars, 666 sessions, and a sealed shadow forward test.
+- Cost-aware research across 361,439 five-minute bars and 666 sessions, with a failed sealed test transparently preserved and repaired infrastructure awaiting a clean rerun.
 
 ## Honest limitations
 
 - Lyceum has not demonstrated a profitable trading edge and makes no profitability claim.
 - Historical underlying predictability does not guarantee executable option P&L; observed crossing costs often dominate.
-- Paper execution, one captured option session, and a sealed forward test cannot establish live-market performance.
+- Paper execution and limited option sessions cannot establish live-market performance; the Sep-01 sealed test is invalid and is not claimed as evidence.

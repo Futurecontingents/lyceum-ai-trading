@@ -76,15 +76,17 @@ Chronological walk-forward tests found:
 
 Historical association is not executable performance. Midpoint P&L is not treated as attainable. Lyceum reports quoted-side crossing costs and makes **no profitability or proven-edge claim**.
 
-## Sealed forward test
+## Sep-01 forward-test incident
 
-Candidates A–E were preregistered and frozen before the 2026-09-01 market session. Their manifest, thresholds, model parameters, option-construction rules, and runner behavior are immutable for the session. The test uses a shared market snapshot and conservative quoted-side scoring; it is shadow-only and cannot place orders.
+Candidates A–E were preregistered and frozen before the 2026-09-01 market session, but the complete experiment is **invalid**. The deployed raw collector never invoked the council producer; the runner silently replaced missing disagreement and entropy with zero, invalidating C and D. Sub-60-minute MFE/MAE also reused a 60-minute excursion window. The original code, manifest, database, logs, and artifacts are preserved rather than rewritten.
 
 - [Frozen manifest](research/forward_test_2026-09-01.json)
-- [Forward-test runner](scripts/forward_test_runner.py)
+- [Incident report](research/incidents/SEP01_FORWARD_TEST_FAILURE.md)
+- [Diagnostic reconstruction](research/sep01_reconstruction.md)
+- [Strategy recovery](research/strategy_recovery.md)
 - [Current public status](artifacts/submission/current_results.md)
 
-Until the session produces scored observations, the forward result is **in progress**, not zero performance and not evidence for or against an edge.
+The infrastructure has since gained fail-closed feature contracts, five-agent provenance, horizon-bounded scoring, a producer-aware preflight, and a real-data read-only canary. Those repairs validate plumbing only; they do not repair Sep-01 or demonstrate an executable edge. Cash/`NO_TRADE` remains the best current policy.
 
 ## Safety
 

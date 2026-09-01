@@ -1,6 +1,6 @@
 # Lyceum Current Results
 
-Generated from frozen or append-only machine artifacts at `2026-09-01T12:39:28.554412+00:00`.
+Generated from frozen or append-only machine artifacts at `2026-09-01T18:01:47.821732+00:00`.
 
 > Historical association, development diagnostics, sealed forward evidence, and paper execution are separate layers. No profitability claim.
 
@@ -31,16 +31,15 @@ This is an execution-economics diagnostic from one captured late-session option 
 
 Conclusion: A positive midpoint diagnostic became strongly negative at quoted sides. The sample is too narrow for a production claim.
 
-## SEALED FORWARD — IN_PROGRESS
+## SEALED FORWARD — INVALID_INCIDENT_PRESERVED
 
 - Session: 2026-09-01
 - Candidates: A, B, C, D, E
-- Signals observed: 0
-- Shadow trades constructed: 0
-- Scored decisions: 0
 - Order submission: PROHIBITED
 
-No scored observation is not a zero return; the test remains in progress.
+The complete A-E comparison is invalid: C/D lacked required live council features, and sub-60-minute MFE/MAE contained lookahead. The failed run is not reranked.
+
+The original artifacts are preserved. Infrastructure repairs do not repair the failed experiment, and no clean sealed rerun has completed.
 
 ## PAPER EXECUTION — NO_PUBLIC_PERFORMANCE_RESULT_CLAIMED
 

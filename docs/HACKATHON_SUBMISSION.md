@@ -22,7 +22,7 @@ The deterministic gate checks maximum loss, daily loss, portfolio heat, concentr
 
 Historical work covers **361,439 five-minute bars**, **666 sessions**, seven liquid symbols, and 2024-01-02 through 2026-08-28. Chronological walk-forward tests indicate that direction is weak, realized volatility is more predictable, and disagreement adds modest incremental volatility information. The harder result is economic: quoted-side entry and exit costs often overwhelm gross option movement.
 
-Five candidates were preregistered before the 2026-09-01 session and run as a sealed, shadow-only forward test. Definitions, thresholds, models, construction rules, and scoring are frozen. Lyceum deliberately distinguishes statistical prediction, development diagnostics, untouched forward evidence, and paper execution. It makes no profitability or proven-edge claim.
+Five candidates were preregistered before the 2026-09-01 session, but the complete shadow experiment was invalidated by missing council-feature production for C/D and a sub-60-minute excursion-metric lookahead bug. The failed run is preserved as an incident, not presented as untouched forward evidence. Lyceum now has fail-closed provenance and temporal-causality gates, but has not yet completed a clean sealed rerun. It makes no profitability or proven-edge claim.
 
 ## Judge links
 
@@ -30,5 +30,6 @@ Five candidates were preregistered before the 2026-09-01 session and run as a se
 - [Public repository](https://github.com/Futurecontingents/lyceum-ai-trading)
 - [Current results](../artifacts/submission/current_results.md)
 - [Frozen manifest](../research/forward_test_2026-09-01.json)
+- [Sep-01 incident](../research/incidents/SEP01_FORWARD_TEST_FAILURE.md)
 - [Architecture](ARCHITECTURE.md)
 - [Official requirement audit](HACKATHON_FINAL_REQUIREMENTS.md)
