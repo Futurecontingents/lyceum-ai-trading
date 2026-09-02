@@ -1,4 +1,6 @@
-# Sep-01 Sealed Forward Test — Interim Quantitative Audit
+# Archived Sep-01 sealed forward test — pre-incident interim audit
+
+> This report predates discovery of the complete experiment-integrity failure. It is preserved for provenance and superseded by the [incident report](../incidents/SEP01_FORWARD_TEST_FAILURE.md). Do not use its leaderboard as forward evidence.
 
 **Audit cutoff:** 2026-09-01 17:14:53 UTC / 13:14:53 ET
 

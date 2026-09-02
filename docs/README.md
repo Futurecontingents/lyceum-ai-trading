@@ -1,29 +1,21 @@
-# Lyceum Documentation Map
+# Lyceum documentation map
 
-## Public judge path
+## Judge path
 
-Start here for the shortest truthful evaluation path:
-
-1. [Hackathon submission overview](HACKATHON_SUBMISSION.md)
-2. [Official requirement audit](HACKATHON_FINAL_REQUIREMENTS.md)
-3. [Current layered results](../artifacts/submission/current_results.md)
-4. [Architecture](ARCHITECTURE.md)
-5. [Strategy mathematics](STRATEGY.md)
-6. [Frozen forward-test design](../research/forward_test_2026-09-01.json)
-7. [Public read-only demo](https://futurecontingents.github.io/lyceum-ai-trading/)
+1. [Project README](../README.md)
+2. [Final research report](../research/FINAL_RESEARCH_REPORT.md)
+3. [Hackathon submission overview](HACKATHON_SUBMISSION.md)
+4. [Current layered results](../artifacts/submission/current_results.md)
+5. [Architecture](ARCHITECTURE.md)
+6. [Public read-only demo](https://futurecontingents.github.io/lyceum-ai-trading/)
 
 ## Operations and safety
 
 - [Judging account](JUDGING_ACCOUNT.md)
 - [Paper trading operations](OPERATIONS.md)
 - [Shadow research operations](SHADOW_RESEARCH.md)
+- [Official requirement audit](HACKATHON_FINAL_REQUIREMENTS.md)
 
-## Research archive
+## Research
 
-The archive records how hypotheses evolved; it is not a claim of production profitability.
-
-- [Historical experiment report](EXPERIMENT_RESULTS.md)
-- [Frozen candidate manifest](../research/forward_test_2026-09-01.json)
-- [Quant research plan](QUANT_RESEARCH_PLAN.md)
-
-Files under `artifacts/`, local databases, credentials, service logs, and account-specific state are ignored unless a deliberately sanitized public artifact is explicitly tracked.
+The [research index](../research/README.md) separates canonical evidence, immutable forward specifications, and archived development material. Archive documents preserve reproducibility but are not current performance claims.

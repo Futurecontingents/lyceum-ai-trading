@@ -1,4 +1,6 @@
-# Quant research map
+# Archived quantitative research plan
+
+> Superseded by the [final research report](../FINAL_RESEARCH_REPORT.md). This is a planning record, not a completed-result claim.
 
 This program is read-only research. It never imports Lyceum's execution module, changes production configuration, or uses an Alpaca trading command.
 
@@ -35,4 +37,3 @@ Longer horizons are reported as diagnostics where labels exist. Each horizon use
 - Execution: current selector baseline -> minimum crossing -> liquidity-adjusted return/risk.
 
 A branch is pruned after two related variants fail for the same diagnosed reason. A positive result is marked fragile unless it survives holdout, cost stress, nearby parameters, symbol decomposition, removal of its best trade, removal of its best symbol, and its relevant simple baseline.
-

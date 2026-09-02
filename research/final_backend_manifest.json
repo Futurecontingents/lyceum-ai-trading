@@ -1,0 +1,48 @@
+{
+  "schema_version": "final-backend-freeze-v1",
+  "frozen_at": "2026-09-02T14:47:05Z",
+  "source_commit": "33aed0c247c591cda4cd04dc1cbcaec106008387",
+  "scope": "Canonical repaired V2 backend; documentation and submission assets may change after this source freeze",
+  "pipeline": [
+    "market_data",
+    "five_probabilistic_agents",
+    "consensus_entropy_jsd",
+    "quantitative_signals",
+    "option_construction",
+    "execution_cost_evaluation",
+    "skeptic",
+    "deterministic_risk_gate",
+    "alpaca_paper_execution",
+    "provenance_journal_counterfactual_scoring"
+  ],
+  "invariants": {
+    "missing_required_features": "FAIL_CLOSED",
+    "default_when_economics_do_not_clear": "NO_TRADE",
+    "live_trading_mode": "ABSENT",
+    "execution_endpoint": "ALPACA_PAPER_ONLY",
+    "llm_may_bypass_risk": false,
+    "invalid_observations_enter_scoring": false,
+    "frozen_forward_test_definitions_modified": false
+  },
+  "files_sha256": {
+    "src/lyceum/market_data.py": "af56d9f558772cc1cea6e105d3a39d0c36cc9f228a0a6de61ea31d094a0be4cf",
+    "src/lyceum/agents/minds.py": "823272f5594203f1979b46f5798c4310e0f1c8d2cd1be1a62f2bd6bcce36603a",
+    "src/lyceum/agents/model_backed.py": "41561bc06b1f0cd4ba7641bdead9987fdedb49f0bb7097ef379d2d47644b05b9",
+    "src/lyceum/consensus/engine.py": "9b8090b96bae78b48aeb0c4fef0f889419a5293d4b62bb07f35a475db8e45448",
+    "src/lyceum/strategies/selector.py": "fef2b635cf710a8bf44a03d7c6c70e1f918f8323e2c1e7d3e3cb6f76720a2fb4",
+    "src/lyceum/strategies/skeptic.py": "dbe2e5d20325d3a654e06f4bae64b8815e7eee2ce7d4772385de465c3198daf1",
+    "src/lyceum/risk/gate.py": "6d59fbfab58d9177a43ec99948369f168d1225d36689049394ddeff117dcf7d8",
+    "src/lyceum/execution/paper.py": "5d95628aaf5cbbaf751945f7a99585fc579e982a1244c450d87516315992e170",
+    "src/lyceum/memory/journal.py": "4678510d30a3f312d799cd630520e4916e82d19d4ec2529c42a81eaaacf6722c",
+    "src/lyceum/forward_integrity.py": "dc50ce584bee9b2f8725ca6aaa97c9de20d0383243810a2916bf02f716ca552f",
+    "src/lyceum/runner.py": "bcc9d0f80714fad85ae842ce70e70e75235ad416c84fd5e6ea565531f0747b4a",
+    "scripts/forward_test_runner_v2.py": "19a70d814704b127e6fd50e5d1397fb2f5c2ba782330f132725e8aa9e9c876f9"
+  },
+  "excluded_from_this_freeze": [
+    "research/forward_test_2026-09-01.json",
+    "research/forward_test_2026-09-03.json",
+    "machine-local production configuration",
+    "credentials",
+    "account state"
+  ]
+}

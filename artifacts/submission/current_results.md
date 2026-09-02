@@ -1,8 +1,18 @@
 # Lyceum Current Results
 
-Generated from frozen or append-only machine artifacts at `2026-09-01T18:01:47.821732+00:00`.
+Generated from frozen or append-only machine artifacts at `2026-09-02T12:46:30Z`.
 
 > Historical association, development diagnostics, sealed forward evidence, and paper execution are separate layers. No profitability claim.
+
+## LONG-HISTORY — COMPLETED
+
+- SPY: **8,453** sessions / **33.58 years**, 1993-01-29 through 2026-08-28
+- S&P 500 proxy: **14,286** sessions / **56.65 years** (Regime context only; not tradeable option history.)
+- Registered hypotheses: **19**
+- Close-to-open SPY drift: N=8,452, mean 0.0403%, HAC t=5.82, supported=TRUE
+- HAR ridge volatility forecast: OOS N=2,674, correlation 0.676, OOS R² 0.464
+
+Conclusion: Underlying drift and volatility predictability are supported. Neither is automatically executable option alpha.
 
 ## HISTORICAL — COMPLETED
 
@@ -31,6 +41,17 @@ This is an execution-economics diagnostic from one captured late-session option 
 
 Conclusion: A positive midpoint diagnostic became strongly negative at quoted sides. The sample is too narrow for a production claim.
 
+## OPTION EXECUTION — DEVELOPMENT_DIAGNOSTIC
+
+- Point-in-time option structures: **9,627**
+- Directional structures: **4,878**
+- Median delta-adjusted spot hurdle: **$4.44**
+- A01 expected recent SPY move: **$0.44**
+- Expected move / cost hurdle: **0.098**
+- Economically clears: **FALSE**
+
+Conclusion: Statistical predictability did not survive the observed quoted-side option hurdle.
+
 ## SEALED FORWARD — INVALID_INCIDENT_PRESERVED
 
 - Session: 2026-09-01
@@ -40,6 +61,13 @@ Conclusion: A positive midpoint diagnostic became strongly negative at quoted si
 The complete A-E comparison is invalid: C/D lacked required live council features, and sub-60-minute MFE/MAE contained lookahead. The failed run is not reranked.
 
 The original artifacts are preserved. Infrastructure repairs do not repair the failed experiment, and no clean sealed rerun has completed.
+
+## FORWARD EVIDENCE AFTER THE INCIDENT
+
+- Sep-02: Pre-open execution-economics diagnostic only; no trade-producing sealed candidate promoted.
+- Sep-03: **FROZEN / READ_ONLY_SHADOW**, frozen 2026-09-02T12:46:30Z; trade-producing candidates: 0; orders: PROHIBITED.
+
+Observation-only future evidence; static preflight passed and live canary remains session-time evidence. One or two sessions remain anecdotal evidence, not statistical proof.
 
 ## PAPER EXECUTION — NO_PUBLIC_PERFORMANCE_RESULT_CLAIMED
 
@@ -53,4 +81,4 @@ The original artifacts are preserved. Infrastructure repairs do not repair the f
 python scripts/build_submission_results.py
 ```
 
-The three source result files under ignored `artifacts/` are machine-local and preserved for audit. The frozen public manifest is tracked. This generated, sanitized summary contains no credentials or account identifiers.
+Machine-local source artifacts are preserved for audit; deliberately sanitized long-history summaries and frozen public manifests are tracked. This generated summary contains no credentials or account identifiers.

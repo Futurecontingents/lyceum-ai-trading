@@ -1,12 +1,12 @@
-# Lyceum - A Market of AI Minds
+# Lyceum — A Market of AI Minds
 
 ## Short description
 
-Lyceum is a paper-only autonomous AI options system that measures disagreement among five market agents, converts uncertainty into defined-risk candidates, and tests them against deterministic risk and execution costs.
+Lyceum turns five probabilistic AI beliefs into cost-aware, defined-risk Alpaca paper decisions—then lets deterministic math, skepticism, and risk controls say NO_TRADE.
 
 ## Long description
 
-Lyceum is an Alpaca paper-only autonomous research and trading system. Five specialized agents produce probability distributions; consensus mathematics turns entropy and Jensen-Shannon disagreement into measurable uncertainty. A local Qwen3 hybrid council supports news, bull, and bear perspectives, while strategy selection, skepticism, risk, and execution remain deterministic. Historical research spans 361,439 five-minute bars across 666 sessions. Lyceum makes no profitability claim: option execution costs overwhelmed tested signals, and its first sealed shadow test was invalidated and preserved as an incident.
+Lyceum is an autonomous, paper-only AI/options system. Five specialized agents emit probabilistic beliefs; entropy and Jensen–Shannon disagreement quantify uncertainty. Deterministic code maps signals to defined-risk options only after execution costs, skepticism, and risk gates. Research spans 33.58 years and 8,453 SPY sessions, plus 361,439 recent five-minute observations. Lyceum detected and invalidated its own failed forward test, repaired the pipeline to fail closed, and preserves full provenance. No profitable executable option edge is claimed.
 
 ## Technology tags
 
@@ -20,16 +20,16 @@ Alpaca Trading API, Alpaca MCP, Alpaca CLI, Python, Streamlit, SQLite, Ollama, Q
 
 ## One-line pitch
 
-Lyceum turns disagreement among AI market minds into measurable uncertainty, then asks whether defined-risk options can monetize it after real execution costs.
+AI proposes. Math validates. Alpaca executes—and Lyceum refuses option trades whose real economics do not clear the hurdle.
 
 ## Highlights
 
-- Five probabilistic market agents with entropy and Jensen-Shannon disagreement measurement.
-- Paper-only Alpaca workflow with deterministic risk, defined maximum loss, and auditable SQLite decisions.
-- Cost-aware research across 361,439 five-minute bars and 666 sessions, with a failed sealed test transparently preserved and repaired infrastructure awaiting a clean rerun.
+- Five probabilistic market minds with explicit entropy and Jensen–Shannon disagreement.
+- 33.58 years of SPY evidence, causal walk-forward tests, and real quoted-side option-cost analysis.
+- Paper-only execution, deterministic risk, fail-closed feature contracts, and auditable provenance for decisions and rejections.
 
 ## Honest limitations
 
-- Lyceum has not demonstrated a profitable trading edge and makes no profitability claim.
-- Historical underlying predictability does not guarantee executable option P&L; observed crossing costs often dominate.
-- Paper execution and limited option sessions cannot establish live-market performance; the Sep-01 sealed test is invalid and is not claimed as evidence.
+- No profitable executable option edge has been demonstrated.
+- The real option-quote sample is recent but narrow and cannot substitute for decades of point-in-time option history.
+- The full LLM council has not demonstrated incremental directional or executable value; current forward evidence is anecdotal.

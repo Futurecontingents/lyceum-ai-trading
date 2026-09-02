@@ -18,6 +18,10 @@ def build_results(
     historical: dict[str, Any],
     economics: dict[str, Any],
     leaderboard: dict[str, Any],
+    long_history: dict[str, Any],
+    option_bridge: dict[str, Any],
+    data_manifest: dict[str, Any],
+    sep03_manifest: dict[str, Any],
 ) -> dict[str, Any]:
     vol = historical["volatility_models"][str(historical["best_vol_horizon"])]
     vol_full = vol["walk_forward"]
@@ -30,10 +34,15 @@ def build_results(
     n = int(diagnostic["n"])
     entry = float(diagnostic["entry_crossing"])
     exit_ = float(diagnostic["exit_crossing"])
+    spy = next(item for item in data_manifest["instruments"] if item["symbol"] == "SPY")
+    sp500 = next(item for item in data_manifest["instruments"] if item["symbol"] == "^GSPC")
+    a01 = next(item for item in long_history["signals"] if item["experiment_id"] == "A01")
+    har = long_history["volatility_campaign"]["models"]["har_ridge"]
+    bridge = option_bridge["option_economics"]
 
     return {
         "schema_version": 1,
-        "generated_at": leaderboard.get("updated_at", manifest["generated_at"]),
+        "generated_at": sep03_manifest["frozen_at"],
         "claim_policy": (
             "Historical association, development diagnostics, sealed forward evidence, "
             "and paper execution are separate layers. No profitability claim."
@@ -59,6 +68,47 @@ def build_results(
                 ),
                 "conclusion": "Realized volatility is more predictable; disagreement adds modest information.",
             },
+        },
+        "long_history": {
+            "label": "LONG-HISTORY EVIDENCE",
+            "status": "COMPLETED",
+            "spy": {
+                "sessions": spy["sessions"],
+                "calendar_years": spy["calendar_years"],
+                "start": spy["start"],
+                "end": spy["end"],
+            },
+            "sp500_proxy": {
+                "sessions": sp500["sessions"],
+                "calendar_years": sp500["calendar_years"],
+                "start": sp500["start"],
+                "end": sp500["end"],
+                "limitation": "Regime context only; not tradeable option history.",
+            },
+            "registered_hypotheses": len(long_history["signals"]) + len(long_history["volatility_event_hypotheses"]),
+            "a01": {
+                "n": a01["full_history_metrics"]["n"],
+                "mean_return": a01["full_history_metrics"]["mean_return"],
+                "hac_t_stat": a01["full_history_metrics"]["hac_t_stat"],
+                "supported": a01["long_history_supported"],
+            },
+            "har": {
+                "n": har["n"],
+                "correlation": har["correlation"],
+                "mae": har["mae"],
+                "oos_r2": har["oos_r2_vs_pre2016_unconditional_mean"],
+            },
+        },
+        "option_execution": {
+            "label": "REAL OPTION EXECUTION ECONOMICS",
+            "status": "DEVELOPMENT_DIAGNOSTIC",
+            "observations": bridge["observations"],
+            "directional_structures": bridge["pnl_diagnostics_by_structure"]["directional_vertical"]["n"],
+            "median_spot_hurdle_usd": bridge["directional_break_even"]["median_spot_move_dollars"],
+            "a01_expected_move_usd": bridge["best_supported_signal_comparison"]["recent_underlying_mean_move_dollars_at_recent_median_spot"],
+            "a01_move_to_cost_ratio": bridge["best_supported_signal_comparison"]["magnitude_to_cost_hurdle_ratio"],
+            "plausibly_clears": bridge["best_supported_signal_comparison"]["plausibly_clears"],
+            "conclusion": "Statistical predictability did not survive the observed quoted-side option hurdle.",
         },
         "development": {
             "label": "DEVELOPMENT DIAGNOSTIC — NOT HOLDOUT",
@@ -93,6 +143,17 @@ def build_results(
                 "and sub-60-minute MFE/MAE contained lookahead. The failed run is not reranked."
             ),
         },
+        "forward_after_incident": {
+            "sep02": "Pre-open execution-economics diagnostic only; no trade-producing sealed candidate promoted.",
+            "sep03": {
+                "status": sep03_manifest["status"],
+                "mode": sep03_manifest["mode"],
+                "frozen_at": sep03_manifest["frozen_at"],
+                "order_submission": sep03_manifest["order_submission"],
+                "trade_producing_candidates": sum(item["trade_producing"] for item in sep03_manifest["candidates"]),
+                "interpretation": "Observation-only future evidence; static preflight passed and live canary remains session-time evidence.",
+            },
+        },
         "paper_execution": {
             "label": "PAPER EXECUTION",
             "status": "NO_PUBLIC_PERFORMANCE_RESULT_CLAIMED",
@@ -105,16 +166,23 @@ def build_results(
             "historical": "artifacts/forward_test/historical_signal_results.json (machine-local input)",
             "development": "artifacts/nextgen_research/option_economics_preopen_freeze_2026-09-01.json (machine-local input)",
             "leaderboard": "artifacts/forward_test/live_leaderboard.json (machine-local input)",
+            "long_history": "artifacts/long_history/signal_leaderboard.json",
+            "option_bridge": "artifacts/long_history/option_bridge.json",
+            "data_manifest": "artifacts/long_history/data_manifest.json",
+            "sep03_manifest": "research/forward_test_2026-09-03.json",
         },
     }
 
 
 def render_markdown(result: dict[str, Any]) -> str:
     hist = result["historical"]
+    long = result["long_history"]
+    execution = result["option_execution"]
     dev = result["development"]
     diag = dev["diagnostic"]
     forward = result["sealed_forward"]
     paper = result["paper_execution"]
+    after = result["forward_after_incident"]
     dataset = hist["dataset"]
     vol = hist["volatility"]
     return f"""# Lyceum Current Results
@@ -122,6 +190,16 @@ def render_markdown(result: dict[str, Any]) -> str:
 Generated from frozen or append-only machine artifacts at `{result['generated_at']}`.
 
 > {result['claim_policy']}
+
+## LONG-HISTORY — {long['status']}
+
+- SPY: **{long['spy']['sessions']:,}** sessions / **{long['spy']['calendar_years']:.2f} years**, {long['spy']['start']} through {long['spy']['end']}
+- S&P 500 proxy: **{long['sp500_proxy']['sessions']:,}** sessions / **{long['sp500_proxy']['calendar_years']:.2f} years** ({long['sp500_proxy']['limitation']})
+- Registered hypotheses: **{long['registered_hypotheses']}**
+- Close-to-open SPY drift: N={long['a01']['n']:,}, mean {long['a01']['mean_return']:.4%}, HAC t={long['a01']['hac_t_stat']:.2f}, supported={str(long['a01']['supported']).upper()}
+- HAR ridge volatility forecast: OOS N={long['har']['n']:,}, correlation {long['har']['correlation']:.3f}, OOS R² {long['har']['oos_r2']:.3f}
+
+Conclusion: Underlying drift and volatility predictability are supported. Neither is automatically executable option alpha.
 
 ## HISTORICAL — {hist['status']}
 
@@ -150,6 +228,17 @@ This is an execution-economics diagnostic from one captured late-session option 
 
 Conclusion: {diag['conclusion']} The sample is too narrow for a production claim.
 
+## OPTION EXECUTION — {execution['status']}
+
+- Point-in-time option structures: **{execution['observations']:,}**
+- Directional structures: **{execution['directional_structures']:,}**
+- Median delta-adjusted spot hurdle: **${execution['median_spot_hurdle_usd']:.2f}**
+- A01 expected recent SPY move: **${execution['a01_expected_move_usd']:.2f}**
+- Expected move / cost hurdle: **{execution['a01_move_to_cost_ratio']:.3f}**
+- Economically clears: **{str(execution['plausibly_clears']).upper()}**
+
+Conclusion: {execution['conclusion']}
+
 ## SEALED FORWARD — {forward['status']}
 
 - Session: {forward['session']}
@@ -159,6 +248,13 @@ Conclusion: {diag['conclusion']} The sample is too narrow for a production claim
 {forward['interpretation']}
 
 The original artifacts are preserved. Infrastructure repairs do not repair the failed experiment, and no clean sealed rerun has completed.
+
+## FORWARD EVIDENCE AFTER THE INCIDENT
+
+- Sep-02: {after['sep02']}
+- Sep-03: **{after['sep03']['status']} / {after['sep03']['mode']}**, frozen {after['sep03']['frozen_at']}; trade-producing candidates: {after['sep03']['trade_producing_candidates']}; orders: {after['sep03']['order_submission']}.
+
+{after['sep03']['interpretation']} One or two sessions remain anecdotal evidence, not statistical proof.
 
 ## PAPER EXECUTION — {paper['status']}
 
@@ -172,7 +268,7 @@ The original artifacts are preserved. Infrastructure repairs do not repair the f
 python scripts/build_submission_results.py
 ```
 
-The three source result files under ignored `artifacts/` are machine-local and preserved for audit. The frozen public manifest is tracked. This generated, sanitized summary contains no credentials or account identifiers.
+Machine-local source artifacts are preserved for audit; deliberately sanitized long-history summaries and frozen public manifests are tracked. This generated summary contains no credentials or account identifiers.
 """
 
 
@@ -182,6 +278,10 @@ def main() -> None:
     parser.add_argument("--historical", type=Path, default=Path("artifacts/forward_test/historical_signal_results.json"))
     parser.add_argument("--economics", type=Path, default=Path("artifacts/nextgen_research/option_economics_preopen_freeze_2026-09-01.json"))
     parser.add_argument("--leaderboard", type=Path, default=Path("artifacts/forward_test/live_leaderboard.json"))
+    parser.add_argument("--long-history", type=Path, default=Path("artifacts/long_history/signal_leaderboard.json"))
+    parser.add_argument("--option-bridge", type=Path, default=Path("artifacts/long_history/option_bridge.json"))
+    parser.add_argument("--data-manifest", type=Path, default=Path("artifacts/long_history/data_manifest.json"))
+    parser.add_argument("--sep03-manifest", type=Path, default=Path("research/forward_test_2026-09-03.json"))
     parser.add_argument("--json-output", type=Path, default=Path("artifacts/submission/current_results.json"))
     parser.add_argument("--markdown-output", type=Path, default=Path("artifacts/submission/current_results.md"))
     args = parser.parse_args()
@@ -191,6 +291,10 @@ def main() -> None:
         load_json(args.historical),
         load_json(args.economics),
         load_json(args.leaderboard),
+        load_json(args.long_history),
+        load_json(args.option_bridge),
+        load_json(args.data_manifest),
+        load_json(args.sep03_manifest),
     )
     args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")

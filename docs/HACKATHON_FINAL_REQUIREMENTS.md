@@ -25,18 +25,18 @@ Verified on **2026-09-01** against the current public challenge page and lablab.
 | Field / artifact | Official requirement | Lyceum status | Evidence / action |
 |---|---|---|---|
 | Project title | Required | PASS | Final copy sheet |
-| Short description | Required | PASS | 218 characters |
-| Long description | Required | PASS | Under 100 words |
+| Short description | Required | PASS | 169 characters |
+| Long description | Required | PASS | 73 words |
 | Technology/category tags | Required | NEEDS WORK | Submission exists; organizer UI tags should be manually reconciled with Qwen3/Ollama if editable |
 | Cover image | Required | PASS | `artifacts/submission/lyceum_cover.png` |
-| Video presentation | Required | PASS | Public submission lists a video; local MP4 is 53 seconds, 1920×1080 |
-| Slide presentation | Required | PASS | Public submission links a seven-page PDF |
+| Video presentation | Required | PASS | Public submission lists a video; local MP4 is 55 seconds, 1920×1080 |
+| Slide presentation | Required | PASS | Public submission links a nine-page PDF aligned to the final research report |
 | Public GitHub repository | Required | PASS | Public main branch verified |
 | Demo application platform | Required | PASS | GitHub Pages |
 | Demo application URL | Required | PASS | Unauthenticated credential-free read-only demo verified |
 | Online working prototype | General lablab.ai submission guidance | PASS | Public static demo shows a complete sanitized decision |
 | Exact video duration/file-size limit | Not stated on public event/guide pages | UNKNOWN | Current video is concise and already accepted by the submission page |
-| Exact slide count/file-size limit | Not stated on public event/guide pages | UNKNOWN | Current seven-slide PDF is readable and already accepted |
+| Exact slide count/file-size limit | Not stated on public event/guide pages | UNKNOWN | Current nine-slide PDF is readable and concise |
 
 ## Judging and optional promotion
 

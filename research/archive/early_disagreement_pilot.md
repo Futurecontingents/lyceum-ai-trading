@@ -1,4 +1,6 @@
-# Historical Experiment
+# Archived early disagreement pilot
+
+> Superseded by the [final research report](../FINAL_RESEARCH_REPORT.md). This small sanity check is preserved for provenance only.
 
 This is a pragmatic historical sanity check, not evidence of profitability. Signals use only information available before each forward window.
 

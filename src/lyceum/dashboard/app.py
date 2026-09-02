@@ -123,8 +123,8 @@ st.markdown(
 
 if is_demo:
     st.caption(
-        "Research context: 361,439 five-minute bars across 666 sessions · chronological walk-forward analysis · "
-        "sealed forward testing · execution-cost-aware option construction · no profitability claim."
+        "Research context: 33.58 years / 8,453 SPY sessions · 361,439 five-minute observations / 666 recent sessions · "
+        "9,627 real option structures · fail-closed forward validation · no profitability claim."
     )
 
 left, middle, right = st.columns([1.15, 1, 1])

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-01T18:01:47.821732+00:00",
+  "generated_at": "2026-09-02T12:46:30Z",
   "claim_policy": "Historical association, development diagnostics, sealed forward evidence, and paper execution are separate layers. No profitability claim.",
   "historical": {
     "label": "HISTORICAL",
@@ -37,6 +37,47 @@
       "incremental_correlation_from_disagreement": 0.0059882620585147706,
       "conclusion": "Realized volatility is more predictable; disagreement adds modest information."
     }
+  },
+  "long_history": {
+    "label": "LONG-HISTORY EVIDENCE",
+    "status": "COMPLETED",
+    "spy": {
+      "sessions": 8453,
+      "calendar_years": 33.57769153370706,
+      "start": "1993-01-29",
+      "end": "2026-08-28"
+    },
+    "sp500_proxy": {
+      "sessions": 14286,
+      "calendar_years": 56.6527717886062,
+      "start": "1970-01-02",
+      "end": "2026-08-28",
+      "limitation": "Regime context only; not tradeable option history."
+    },
+    "registered_hypotheses": 19,
+    "a01": {
+      "n": 8452,
+      "mean_return": 0.0004033225203889724,
+      "hac_t_stat": 5.819805148370663,
+      "supported": true
+    },
+    "har": {
+      "n": 2674,
+      "correlation": 0.6758118251407493,
+      "mae": 0.007225847043651249,
+      "oos_r2": 0.46412921023590425
+    }
+  },
+  "option_execution": {
+    "label": "REAL OPTION EXECUTION ECONOMICS",
+    "status": "DEVELOPMENT_DIAGNOSTIC",
+    "observations": 9627,
+    "directional_structures": 4878,
+    "median_spot_hurdle_usd": 4.437848733372668,
+    "a01_expected_move_usd": 0.4363528397977523,
+    "a01_move_to_cost_ratio": 0.09832530715082162,
+    "plausibly_clears": false,
+    "conclusion": "Statistical predictability did not survive the observed quoted-side option hurdle."
   },
   "development": {
     "label": "DEVELOPMENT DIAGNOSTIC \u2014 NOT HOLDOUT",
@@ -80,6 +121,17 @@
     "orders": "PROHIBITED",
     "interpretation": "The complete A-E comparison is invalid: C/D lacked required live council features, and sub-60-minute MFE/MAE contained lookahead. The failed run is not reranked."
   },
+  "forward_after_incident": {
+    "sep02": "Pre-open execution-economics diagnostic only; no trade-producing sealed candidate promoted.",
+    "sep03": {
+      "status": "FROZEN",
+      "mode": "READ_ONLY_SHADOW",
+      "frozen_at": "2026-09-02T12:46:30Z",
+      "order_submission": "PROHIBITED",
+      "trade_producing_candidates": 0,
+      "interpretation": "Observation-only future evidence; static preflight passed and live canary remains session-time evidence."
+    }
+  },
   "paper_execution": {
     "label": "PAPER EXECUTION",
     "status": "NO_PUBLIC_PERFORMANCE_RESULT_CLAIMED",
@@ -91,6 +143,10 @@
     "manifest": "research/forward_test_2026-09-01.json",
     "historical": "artifacts/forward_test/historical_signal_results.json (machine-local input)",
     "development": "artifacts/nextgen_research/option_economics_preopen_freeze_2026-09-01.json (machine-local input)",
-    "leaderboard": "artifacts/forward_test/live_leaderboard.json (machine-local input)"
+    "leaderboard": "artifacts/forward_test/live_leaderboard.json (machine-local input)",
+    "long_history": "artifacts/long_history/signal_leaderboard.json",
+    "option_bridge": "artifacts/long_history/option_bridge.json",
+    "data_manifest": "artifacts/long_history/data_manifest.json",
+    "sep03_manifest": "research/forward_test_2026-09-03.json"
   }
 }

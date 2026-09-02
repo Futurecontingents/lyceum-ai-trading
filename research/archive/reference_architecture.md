@@ -1,4 +1,6 @@
-# Reference Architecture Review
+# Archived reference architecture survey
+
+> Superseded by the current [architecture](../../docs/ARCHITECTURE.md) and [final research report](../FINAL_RESEARCH_REPORT.md).
 
 Research date: 2026-08-29. The repositories below were inspected at their default branches. Review covered each README and tree plus representative orchestration, risk, persistence, test, and dashboard code where present. Lyceum reuses ideas, not source code.
 
@@ -43,4 +45,3 @@ Alpaca PAPER CLI / hosted MCP
   -> SQLite journal
   -> dashboard, experiment, and counterfactual marks
 ```
-

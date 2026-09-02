@@ -1,4 +1,6 @@
-# Judging results
+# Archived judging rehearsal — 2026-08-30
+
+> This closed-market setup rehearsal predates the Sep-01 incident and later research. It is preserved as operational provenance, not current forward evidence.
 
 ## Account baseline
 
