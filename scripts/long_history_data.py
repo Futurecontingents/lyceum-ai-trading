@@ -152,16 +152,31 @@ def build(output: Path, *, force: bool = False) -> dict[str, Any]:
             "overlap_sessions": len(merged), "max_absolute_close_difference": float(differences.max()),
             "median_absolute_close_difference": float(differences.median()),
             "sessions_with_difference_gt_0_01": int((differences > 0.01).sum()),
-            "anomalies": [
-                {
-                    "date": row.date.date().isoformat(),
-                    "yahoo_raw_close": float(row.close_raw),
-                    "nasdaq_close": float(row.close_nasdaq),
-                }
-                for row in anomalies.itertuples()
-            ],
+            "anomalies": [],
             "status": "PASS" if strict_pass else "FAIL",
         }
+        for row in anomalies.itertuples():
+            nasdaq_row = nasdaq.loc[nasdaq["date"] == row.date].iloc[0]
+            prior_yahoo = yahoo.loc[yahoo["date"] < row.date].iloc[-1]
+            placeholder = (
+                str(nasdaq_row["volume"]) == "N/A"
+                and len({float(nasdaq_row[field]) for field in ("open", "high", "low", "close")}) == 1
+                and abs(float(nasdaq_row["close"]) - float(prior_yahoo["close_raw"])) <= 0.0001
+            )
+            manifest["reconciliation"][symbol]["anomalies"].append(
+                {
+                    "date": row.date.date().isoformat(),
+                    "field": "raw_close",
+                    "yahoo_raw_close": float(row.close_raw),
+                    "nasdaq_close": float(row.close_nasdaq),
+                    "absolute_difference": abs(float(row.close_raw) - float(row.close_nasdaq)),
+                    "nasdaq_ohlc": {field: float(nasdaq_row[field]) for field in ("open", "high", "low", "close")},
+                    "nasdaq_volume_raw": str(nasdaq_row["volume"]),
+                    "prior_session_yahoo_raw_close": float(prior_yahoo["close_raw"]),
+                    "classification": "NASDAQ_PLACEHOLDER_DUPLICATING_PRIOR_CLOSE" if placeholder else "UNEXPLAINED_PROVIDER_DISAGREEMENT",
+                    "evidence_modified": False,
+                }
+            )
     manifest["independent_reconciliation_status"] = (
         "PASS" if all(item["status"] == "PASS" for item in manifest["reconciliation"].values()) else "FAIL"
     )
