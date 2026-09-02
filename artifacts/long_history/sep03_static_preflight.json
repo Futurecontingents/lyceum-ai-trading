@@ -1,0 +1,96 @@
+{
+  "status": "PASS",
+  "preflight_type": "STATIC_PRE_MARKET",
+  "checked_at": "2026-09-02T12:49:09.240102+00:00",
+  "quote_freshness_checked": false,
+  "orders_submitted": 0,
+  "checks": [
+    {
+      "check": "frozen_git_commit",
+      "status": "PASS",
+      "detail": {
+        "commit": "1cea74314043ca9a35eaa3a0ebd335ef443db541",
+        "frozen_at": "2026-09-02T12:46:30+00:00",
+        "market_open": "2026-09-03T13:30:00+00:00"
+      }
+    },
+    {
+      "check": "candidate_hashes",
+      "status": "PASS",
+      "detail": {
+        "CONTROL": "c71ee15eae99bded173cfdabf513bea4d66ea8865ab7f7273c17edea76b930e8",
+        "NEXTGEN_A": "00373dd4fc8cccd14e0da09ece30d6c413afa740d81da4692934d80a23eefc3a"
+      }
+    },
+    {
+      "check": "model_hashes",
+      "status": "PASS",
+      "detail": "NO_MODEL_CANDIDATES"
+    },
+    {
+      "check": "data_cutoff",
+      "status": "PASS",
+      "detail": {
+        "manifest": "2026-08-28",
+        "source": "2026-08-28"
+      }
+    },
+    {
+      "check": "database_schema",
+      "status": "PASS",
+      "detail": {
+        "quick_check": "ok",
+        "missing": []
+      }
+    },
+    {
+      "check": "paper_only_enforcement",
+      "status": "PASS",
+      "detail": "paper endpoint verified"
+    },
+    {
+      "check": "runner_configuration",
+      "status": "PASS",
+      "detail": {
+        "sha256": "57154fc6553e2ffe298c8fc3b77289426c8d61811e90d6be34ec6a6695df544c",
+        "forbidden": [],
+        "mode": "READ_ONLY_SHADOW"
+      }
+    },
+    {
+      "check": "no_future_data",
+      "status": "PASS",
+      "detail": {
+        "last_data_date": "2026-08-28",
+        "cutoff": "2026-08-28"
+      }
+    },
+    {
+      "check": "scoring_logic",
+      "status": "PASS",
+      "detail": {
+        "trade_producing_candidates": [],
+        "maximum": 3
+      }
+    },
+    {
+      "check": "persistence_paths",
+      "status": "PASS",
+      "detail": {
+        "decisions": "data/sep03_forward_test.db",
+        "static_preflight": "artifacts/long_history/sep03_static_preflight.json",
+        "live_canary": "artifacts/long_history/sep03_live_canary.json"
+      }
+    },
+    {
+      "check": "scorer_static_probe",
+      "status": "PASS",
+      "detail": {
+        "batch_id": 367,
+        "decisions_created": 2,
+        "database_quick_check": "ok",
+        "orders_submitted": 0
+      }
+    }
+  ]
+}

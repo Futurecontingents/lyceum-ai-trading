@@ -1,0 +1,64 @@
+{
+  "schema_version": "sep03-read-only-v1",
+  "status": "FROZEN",
+  "mode": "READ_ONLY_SHADOW",
+  "frozen_at": "2026-09-02T12:46:30Z",
+  "first_observation_not_before": "2026-09-03T09:30:00-04:00",
+  "data_cutoff": "2026-08-28",
+  "frozen_git_commit": "1cea74314043ca9a35eaa3a0ebd335ef443db541",
+  "runner_path": "scripts/sep03_forward_scorer.py",
+  "runner_sha256": "57154fc6553e2ffe298c8fc3b77289426c8d61811e90d6be34ec6a6695df544c",
+  "data_manifest_path": "artifacts/long_history/data_manifest.json",
+  "data_manifest_sha256": "b7b06270e875935e771f2f62c597f8a6702358fcfc6fe05086c720c667585c9a",
+  "high_magnitude_screen_path": "artifacts/long_history/high_magnitude_states.json",
+  "high_magnitude_screen_sha256": "8eb8ef2900c748bdcbee682b32110ca0ae5c3fc6b414d83b49776fec3df52267",
+  "models": [],
+  "model_hashes": {},
+  "candidate_hashes": {
+    "CONTROL": "c71ee15eae99bded173cfdabf513bea4d66ea8865ab7f7273c17edea76b930e8",
+    "NEXTGEN_A": "00373dd4fc8cccd14e0da09ece30d6c413afa740d81da4692934d80a23eefc3a"
+  },
+  "candidates": [
+    {
+      "id": "CONTROL",
+      "name": "cash_no_trade",
+      "trade_producing": false,
+      "requires_five_agent_council": false,
+      "universe": ["SPY"],
+      "signal_definition": "No signal; persist one cash observation per complete SPY batch",
+      "target": "zero executable P&L",
+      "parameters": {},
+      "holding_horizon": "none",
+      "option_construction": "none",
+      "execution_rule": "NO_TRADE",
+      "risk_rule": "zero order quantity and zero max loss",
+      "frozen_decision_reason": "CASH_CONTROL"
+    },
+    {
+      "id": "NEXTGEN_A",
+      "name": "spy_capitulation_observer",
+      "trade_producing": false,
+      "requires_five_agent_council": false,
+      "universe": ["SPY"],
+      "signal_definition": "Prior adjusted SPY close-to-close return <= -2.0%; observe next regular-session open-to-close return",
+      "target": "next-session SPY open-to-close signed return and absolute movement",
+      "parameters": {
+        "prior_return_threshold": -0.02,
+        "minimum_move_to_cost_ratio_for_trade_production": 1.25,
+        "frozen_observed_signed_move_to_cost_ratio": 0.9577435313312268
+      },
+      "holding_horizon": "regular-session open to close",
+      "option_construction": "none while frozen ratio is below 1.25",
+      "execution_rule": "NO_TRADE",
+      "risk_rule": "zero order quantity and zero max loss",
+      "frozen_decision_reason": "EXPECTED_SIGNED_MOVE_BELOW_REQUIRED_OPTION_COST_BUFFER"
+    }
+  ],
+  "persistence_paths": {
+    "decisions": "data/sep03_forward_test.db",
+    "static_preflight": "artifacts/long_history/sep03_static_preflight.json",
+    "live_canary": "artifacts/long_history/sep03_live_canary.json"
+  },
+  "parameter_modification_after_freeze": "PROHIBITED",
+  "order_submission": "PROHIBITED"
+}

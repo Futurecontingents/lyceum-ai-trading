@@ -1,0 +1,62 @@
+{
+  "status": "FAIL",
+  "preflight_type": "LIVE_MARKET_CANARY",
+  "checked_at": "2026-09-02T12:49:09.368773+00:00",
+  "max_age_seconds": 600,
+  "orders_submitted": 0,
+  "stages": [
+    {
+      "stage": "fresh_underlying_quotes",
+      "status": "FAIL",
+      "detail": {
+        "batch_id": 367,
+        "batch_age_seconds": 60740.811407,
+        "required_symbols": [
+          "SPY"
+        ],
+        "rows": 1,
+        "max_quote_age_seconds": 60788.438857
+      }
+    },
+    {
+      "stage": "fresh_option_quotes",
+      "status": "FAIL",
+      "detail": {
+        "rows": 13402,
+        "valid": 11797,
+        "fresh_valid": 0,
+        "fresh_symbols": [],
+        "newest_quote_age_seconds": 60741.743575
+      }
+    },
+    {
+      "stage": "five_agent_rows_where_required",
+      "status": "PASS",
+      "detail": "NOT_REQUIRED_BY_FROZEN_CANDIDATES"
+    },
+    {
+      "stage": "causal_timestamps",
+      "status": "PASS",
+      "detail": {
+        "future_quote_timestamp_violations": 0
+      }
+    },
+    {
+      "stage": "option_snapshot",
+      "status": "PASS",
+      "detail": {
+        "valid_option_snapshots": 11797
+      }
+    },
+    {
+      "stage": "scorer_health",
+      "status": "PASS",
+      "detail": {
+        "batch_id": 367,
+        "decisions_created": 2,
+        "database_quick_check": "ok",
+        "orders_submitted": 0
+      }
+    }
+  ]
+}

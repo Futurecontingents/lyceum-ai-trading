@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "fetched_at": "2026-09-02T12:26:46.839694+00:00",
+  "fetched_at": "2026-09-02T12:41:01.340712+00:00",
   "cutoff": "2026-08-28",
   "provider_splicing": "PROHIBITED",
   "instruments": [
@@ -124,8 +124,20 @@
       "anomalies": [
         {
           "date": "2026-04-20",
+          "field": "raw_close",
           "yahoo_raw_close": 708.719970703125,
-          "nasdaq_close": 710.14
+          "nasdaq_close": 710.14,
+          "absolute_difference": 1.4200292968749864,
+          "nasdaq_ohlc": {
+            "open": 710.14,
+            "high": 710.14,
+            "low": 710.14,
+            "close": 710.14
+          },
+          "nasdaq_volume_raw": "N/A",
+          "prior_session_yahoo_raw_close": 710.1400146484375,
+          "classification": "NASDAQ_PLACEHOLDER_DUPLICATING_PRIOR_CLOSE",
+          "evidence_modified": false
         }
       ],
       "status": "FAIL"
