@@ -31,6 +31,7 @@ def run(manifest_path: Path, shadow_path: Path, max_age_seconds: int) -> dict[st
     manifest = json.loads(manifest_path.read_text())
     stages: list[dict[str, Any]] = []
     now = datetime.now(UTC)
+    required_symbols = {symbol for item in manifest["candidates"] for symbol in item.get("universe", [])}
     with sqlite3.connect(shadow_path) as db:
         db.row_factory = sqlite3.Row
         batch = db.execute("SELECT * FROM capture_batches WHERE status='COMPLETE' ORDER BY completed_at DESC LIMIT 1").fetchone()
@@ -43,14 +44,17 @@ def run(manifest_path: Path, shadow_path: Path, max_age_seconds: int) -> dict[st
         else:
             batch_age = (now - parse_time(batch["completed_at"])).total_seconds()
             underlyings = db.execute("SELECT * FROM underlying_snapshots WHERE batch_id=?", (batch["id"],)).fetchall()
-            underlying_ages = [(now - parse_time(row["quote_timestamp"])).total_seconds() for row in underlyings if row["quote_timestamp"]]
-            underlying_ok = len(underlyings) >= 1 and underlying_ages and max(underlying_ages) <= max_age_seconds and batch_age <= max_age_seconds
-            stages.append(stage("fresh_underlying_quotes", bool(underlying_ok), {"batch_id": batch["id"], "batch_age_seconds": batch_age, "rows": len(underlyings), "max_quote_age_seconds": max(underlying_ages, default=None)}))
+            required_underlyings = [row for row in underlyings if row["symbol"] in required_symbols]
+            underlying_ages = [(now - parse_time(row["quote_timestamp"])).total_seconds() for row in required_underlyings if row["quote_timestamp"]]
+            underlying_ok = len(required_underlyings) == len(required_symbols) and underlying_ages and max(underlying_ages) <= max_age_seconds and batch_age <= max_age_seconds
+            stages.append(stage("fresh_underlying_quotes", bool(underlying_ok), {"batch_id": batch["id"], "batch_age_seconds": batch_age, "required_symbols": sorted(required_symbols), "rows": len(required_underlyings), "max_quote_age_seconds": max(underlying_ages, default=None)}))
             options = db.execute("SELECT * FROM option_snapshots WHERE batch_id=?", (batch["id"],)).fetchall()
-            option_ages = [(now - parse_time(row["quote_timestamp"])).total_seconds() for row in options if row["quote_timestamp"]]
             valid_options = [row for row in options if row["bid"] and row["ask"] and row["ask"] > row["bid"]]
-            option_ok = valid_options and option_ages and max(option_ages) <= max_age_seconds
-            stages.append(stage("fresh_option_quotes", bool(option_ok), {"rows": len(options), "valid": len(valid_options), "max_quote_age_seconds": max(option_ages, default=None)}))
+            fresh_options = [row for row in valid_options if row["quote_timestamp"] and (now - parse_time(row["quote_timestamp"])).total_seconds() <= max_age_seconds]
+            fresh_symbols = {row["underlying"] for row in fresh_options}
+            newest_age = min(((now - parse_time(row["quote_timestamp"])).total_seconds() for row in valid_options if row["quote_timestamp"]), default=None)
+            option_ok = required_symbols <= fresh_symbols and batch_age <= max_age_seconds
+            stages.append(stage("fresh_option_quotes", option_ok, {"rows": len(options), "valid": len(valid_options), "fresh_valid": len(fresh_options), "fresh_symbols": sorted(fresh_symbols), "newest_quote_age_seconds": newest_age}))
             requires_council = any(item.get("requires_five_agent_council", False) for item in manifest["candidates"])
             council_failures = {}
             if requires_council:
