@@ -43,4 +43,4 @@ The SPY discrepancy is 2026-04-20: Yahoo raw close $708.71997 versus Nasdaq $710
 .venv/bin/python scripts/long_history_bridge.py
 ```
 
-Random seed: `20260902`. Data cutoff: `2026-08-28`. Starting repository HEAD before this research work: `62002e3a9607a86286f4a4a433eb872db8b21dc6`; the final research commit is recorded in the preregistration document after commit.
+Random seed: `20260902`. Data cutoff: `2026-08-28`. Starting repository HEAD before this research work: `62002e3a9607a86286f4a4a433eb872db8b21dc6`; frozen research implementation and result commit: `e05b75d`.

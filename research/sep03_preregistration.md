@@ -52,7 +52,7 @@ The evidence does not justify another option strategy. Sep-03 is therefore prere
 - Research scripts: `scripts/long_history_data.py`, `scripts/long_history_campaign.py`, `scripts/long_history_regimes.py`, `scripts/long_history_bridge.py`.
 - Machine manifests: `artifacts/long_history/*.json`.
 - Starting HEAD: `62002e3a9607a86286f4a4a433eb872db8b21dc6`.
-- Final research commit/hash: inserted after the clean research-only commit.
+- Frozen research implementation/result commit: `e05b75d`.
 
 ## Fail-closed preflight
 
