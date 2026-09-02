@@ -1,0 +1,109 @@
+{
+  "status": "FAIL",
+  "checked_at": "2026-09-02T12:30:09.783813+00:00",
+  "profile": "judging",
+  "paper_only": true,
+  "manifest_hash": "1658477538d34a241c0522f26e37187294e70df4f08c7e0c8fe30c2a1c7f1750",
+  "runner_hash": "19a70d814704b127e6fd50e5d1397fb2f5c2ba782330f132725e8aa9e9c876f9",
+  "candidate_hashes": {
+    "A": "222ee1338a2e2cddca01dfec3eae9e74ae1b97c6f0e73fec7aa640fcf5a48d12",
+    "B": "2a1b6cd94022f3b456a460e7c9029acc509487f5c328441ba9c1208ee537d97e",
+    "C": "1aca21a79db7a8d89af66e46ad6567ee2448a07455485333c0c72023ea49b556",
+    "D": "39b308157b2dc3309287a1d79a41d4dcffb819809dfdadd7c4f512899b85f3cc",
+    "E": "e3d639e62519699edb4e8d023911b57b1a8956dcbae45d8e7c20f52991dbf0f0"
+  },
+  "checks": [
+    {
+      "check": "manifest_frozen",
+      "status": "PASS",
+      "detail": "1658477538d34a241c0522f26e37187294e70df4f08c7e0c8fe30c2a1c7f1750"
+    },
+    {
+      "check": "manifest_hash",
+      "status": "PASS",
+      "detail": "1658477538d34a241c0522f26e37187294e70df4f08c7e0c8fe30c2a1c7f1750"
+    },
+    {
+      "check": "runner_hash",
+      "status": "PASS",
+      "detail": "19a70d814704b127e6fd50e5d1397fb2f5c2ba782330f132725e8aa9e9c876f9"
+    },
+    {
+      "check": "candidate_hashes",
+      "status": "PASS",
+      "detail": {
+        "A": "222ee1338a2e2cddca01dfec3eae9e74ae1b97c6f0e73fec7aa640fcf5a48d12",
+        "B": "2a1b6cd94022f3b456a460e7c9029acc509487f5c328441ba9c1208ee537d97e",
+        "C": "1aca21a79db7a8d89af66e46ad6567ee2448a07455485333c0c72023ea49b556",
+        "D": "39b308157b2dc3309287a1d79a41d4dcffb819809dfdadd7c4f512899b85f3cc",
+        "E": "e3d639e62519699edb4e8d023911b57b1a8956dcbae45d8e7c20f52991dbf0f0"
+      }
+    },
+    {
+      "check": "shadow_sqlite_quick_check",
+      "status": "PASS",
+      "detail": "ok"
+    },
+    {
+      "check": "latest_complete_batch",
+      "status": "FAIL",
+      "detail": {
+        "id": 367,
+        "age_seconds": 59599.339305
+      }
+    },
+    {
+      "check": "five_agent_council_coverage",
+      "status": "PASS",
+      "detail": "7 symbols"
+    },
+    {
+      "check": "option_quote_availability",
+      "status": "PASS",
+      "detail": {
+        "total": 13402,
+        "valid": 11797
+      }
+    },
+    {
+      "check": "shadow_database_writable",
+      "status": "PASS",
+      "detail": "transaction rolled back"
+    },
+    {
+      "check": "outcome_storage",
+      "status": "PASS",
+      "detail": "ok"
+    },
+    {
+      "check": "paper_endpoint",
+      "status": "PASS",
+      "detail": "paper endpoint verified"
+    },
+    {
+      "check": "raw_collector_loaded",
+      "status": "PASS",
+      "detail": "launch agent"
+    },
+    {
+      "check": "council_producer_loaded",
+      "status": "PASS",
+      "detail": "launch agent"
+    },
+    {
+      "check": "read_only_runner",
+      "status": "PASS",
+      "detail": "no execution surface"
+    },
+    {
+      "check": "feature_schema",
+      "status": "PASS",
+      "detail": "forward-features-v2"
+    },
+    {
+      "check": "agent_count_invariant",
+      "status": "PASS",
+      "detail": 5
+    }
+  ]
+}

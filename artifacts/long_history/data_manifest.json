@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "fetched_at": "2026-09-02T12:26:46.839694+00:00",
+  "cutoff": "2026-08-28",
+  "provider_splicing": "PROHIBITED",
+  "instruments": [
+    {
+      "symbol": "SPY",
+      "proxy": "SPY",
+      "provider": "Yahoo Finance chart API",
+      "source_url": "https://query2.finance.yahoo.com/v8/finance/chart/SPY?period1=0&period2=1788048000&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "raw_path": "artifacts/long_history/raw/yahoo_SPY.json",
+      "normalized_path": "artifacts/long_history/normalized/SPY_yahoo.csv",
+      "raw_sha256": "a3d7fffb18c4b48ab523df2ec452efa6478a1fd362aaca7051e8f3e53ffe3972",
+      "normalized_sha256": "1d9316ab377dc85fe9b69447d15ef6989b6db40b66a3ffee8341cd2ee2b9dc80",
+      "start": "1993-01-29",
+      "end": "2026-08-28",
+      "sessions": 8453,
+      "calendar_years": 33.57769153370706,
+      "frequency": "daily",
+      "adjustment": "Yahoo adjusted close; OHLC multiplied by same daily adjclose/raw-close factor",
+      "corporate_actions": "Yahoo events embedded; normalized returns use adjusted OHLC",
+      "timezone": "America/New_York",
+      "missing_weekdays_including_exchange_holidays": 308,
+      "coverage_quality": "PRIMARY_RESEARCH",
+      "limitations": "Free vendor feed; adjusted fields are vendor-derived"
+    },
+    {
+      "symbol": "QQQ",
+      "proxy": "QQQ",
+      "provider": "Yahoo Finance chart API",
+      "source_url": "https://query2.finance.yahoo.com/v8/finance/chart/QQQ?period1=0&period2=1788048000&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "raw_path": "artifacts/long_history/raw/yahoo_QQQ.json",
+      "normalized_path": "artifacts/long_history/normalized/QQQ_yahoo.csv",
+      "raw_sha256": "5521b9c725a3fe2113135651f3d2d547928e37cda23c1227245c881af2471048",
+      "normalized_sha256": "d37896a0b1baa21a5e7f3be7380628c72608d743d0040ed8a92a2d085bd2a1f4",
+      "start": "1999-03-10",
+      "end": "2026-08-28",
+      "sessions": 6911,
+      "calendar_years": 27.4694210011157,
+      "frequency": "daily",
+      "adjustment": "Yahoo adjusted close; OHLC multiplied by same daily adjclose/raw-close factor",
+      "corporate_actions": "Yahoo events embedded; normalized returns use adjusted OHLC",
+      "timezone": "America/New_York",
+      "missing_weekdays_including_exchange_holidays": 257,
+      "coverage_quality": "PRIMARY_RESEARCH",
+      "limitations": "Free vendor feed; adjusted fields are vendor-derived"
+    },
+    {
+      "symbol": "IWM",
+      "proxy": "IWM",
+      "provider": "Yahoo Finance chart API",
+      "source_url": "https://query2.finance.yahoo.com/v8/finance/chart/IWM?period1=0&period2=1788048000&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "raw_path": "artifacts/long_history/raw/yahoo_IWM.json",
+      "normalized_path": "artifacts/long_history/normalized/IWM_yahoo.csv",
+      "raw_sha256": "cff7af7bbd56e04d4b60bf904877bd9e4f56326317a74c105a94b81a29beb9a4",
+      "normalized_sha256": "4de4558be7396e81e94020afb4dca6f7665cddcdd9deb28ea18466e56b05452b",
+      "start": "2000-05-26",
+      "end": "2026-08-28",
+      "sessions": 6603,
+      "calendar_years": 26.256528197019787,
+      "frequency": "daily",
+      "adjustment": "Yahoo adjusted close; OHLC multiplied by same daily adjclose/raw-close factor",
+      "corporate_actions": "Yahoo events embedded; normalized returns use adjusted OHLC",
+      "timezone": "America/New_York",
+      "missing_weekdays_including_exchange_holidays": 248,
+      "coverage_quality": "PRIMARY_RESEARCH",
+      "limitations": "Free vendor feed; adjusted fields are vendor-derived"
+    },
+    {
+      "symbol": "DIA",
+      "proxy": "DIA",
+      "provider": "Yahoo Finance chart API",
+      "source_url": "https://query2.finance.yahoo.com/v8/finance/chart/DIA?period1=0&period2=1788048000&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "raw_path": "artifacts/long_history/raw/yahoo_DIA.json",
+      "normalized_path": "artifacts/long_history/normalized/DIA_yahoo.csv",
+      "raw_sha256": "4dff2b90183350b12fa3e0e0b85800ce27dc2eb51d546a1d6ad1f6fcfcdf26f6",
+      "normalized_sha256": "c24786cccafb3749405d75df2976f82810cc9d0fcc8b61078a99ec6ed5e52790",
+      "start": "1998-01-20",
+      "end": "2026-08-28",
+      "sessions": 7197,
+      "calendar_years": 28.60291450200894,
+      "frequency": "daily",
+      "adjustment": "Yahoo adjusted close; OHLC multiplied by same daily adjclose/raw-close factor",
+      "corporate_actions": "Yahoo events embedded; normalized returns use adjusted OHLC",
+      "timezone": "America/New_York",
+      "missing_weekdays_including_exchange_holidays": 267,
+      "coverage_quality": "PRIMARY_RESEARCH",
+      "limitations": "Free vendor feed; adjusted fields are vendor-derived"
+    },
+    {
+      "symbol": "^GSPC",
+      "proxy": "S&P 500 index",
+      "provider": "Yahoo Finance chart API",
+      "source_url": "https://query2.finance.yahoo.com/v8/finance/chart/%5EGSPC?period1=0&period2=1788048000&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "raw_path": "artifacts/long_history/raw/yahoo_index_GSPC.json",
+      "normalized_path": "artifacts/long_history/normalized/index_GSPC_yahoo.csv",
+      "raw_sha256": "71f9da3512ce4692d1d6841d9eb5a3560c8c963ecb843cdebc6f08453bc1a55b",
+      "normalized_sha256": "41b8d2d7bb83cc74ab33e2a5d5813585e24da8a7c27e910dfa5033ea3925085b",
+      "start": "1970-01-02",
+      "end": "2026-08-28",
+      "sessions": 14286,
+      "calendar_years": 56.6527717886062,
+      "frequency": "daily",
+      "adjustment": "Yahoo adjusted close; OHLC multiplied by same daily adjclose/raw-close factor",
+      "corporate_actions": "Yahoo events embedded; normalized returns use adjusted OHLC",
+      "timezone": "America/New_York",
+      "missing_weekdays_including_exchange_holidays": 495,
+      "coverage_quality": "LONG_PROXY_CLOSE_HISTORY",
+      "limitations": "Free vendor feed; no point-in-time revisions or delisting panel; index is not directly tradeable"
+    }
+  ],
+  "reconciliation": {
+    "SPY": {
+      "primary": "Yahoo raw close",
+      "independent": "Nasdaq official public historical API raw close",
+      "source_url": "https://api.nasdaq.com/api/quote/SPY/historical?assetclass=etf&fromdate=2024-01-01&todate=2026-08-28&limit=5000",
+      "raw_path": "artifacts/long_history/raw/nasdaq_SPY_2024_2026.json",
+      "raw_sha256": "72d0a328e012efdc0b30a52f231c99c33ee09030844cddf951fa5cb04ebf92f2",
+      "overlap_sessions": 667,
+      "max_absolute_close_difference": 1.4200292968749864,
+      "median_absolute_close_difference": 1.464843751364242e-05,
+      "sessions_with_difference_gt_0_01": 1,
+      "anomalies": [
+        {
+          "date": "2026-04-20",
+          "yahoo_raw_close": 708.719970703125,
+          "nasdaq_close": 710.14
+        }
+      ],
+      "status": "FAIL"
+    },
+    "QQQ": {
+      "primary": "Yahoo raw close",
+      "independent": "Nasdaq official public historical API raw close",
+      "source_url": "https://api.nasdaq.com/api/quote/QQQ/historical?assetclass=etf&fromdate=2024-01-01&todate=2026-08-28&limit=5000",
+      "raw_path": "artifacts/long_history/raw/nasdaq_QQQ_2024_2026.json",
+      "raw_sha256": "81b4ecc44e24606ae4ec9a8d846452cebe2f61a4cfcbf4dc2e18912dc57c1caa",
+      "overlap_sessions": 667,
+      "max_absolute_close_difference": 2.929687502728484e-05,
+      "median_absolute_close_difference": 9.765625009094947e-06,
+      "sessions_with_difference_gt_0_01": 0,
+      "anomalies": [],
+      "status": "PASS"
+    }
+  },
+  "unavailable_sources": [
+    {
+      "provider": "Stooq",
+      "status": "BLOCKED_ANTI_BOT_CHALLENGE",
+      "used": false
+    }
+  ],
+  "independent_reconciliation_status": "FAIL",
+  "auxiliary": [
+    {
+      "provider": "CBOE VIX",
+      "source_url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
+      "raw_path": "artifacts/long_history/raw/cboe_vix.csv",
+      "raw_sha256": "b2202f7d5a1f2348f0f2785fc3bb43488f2d42f6b261533d562ad4f3deecb56d"
+    },
+    {
+      "provider": "FRED DGS10",
+      "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10",
+      "raw_path": "artifacts/long_history/raw/fred_dgs10.csv",
+      "raw_sha256": "6d0805093cbcdee752f7d62f91c554f4eca79db6334be9fc50659919f639848e"
+    }
+  ]
+}

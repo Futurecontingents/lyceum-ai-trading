@@ -1,0 +1,2851 @@
+[
+  {
+    "experiment_id": "A01",
+    "parent_experiment": null,
+    "family": "overnight",
+    "hypothesis": "Positive close-to-open drift",
+    "source_research_motivation": "economically motivated preregistered hypothesis",
+    "exact_signal_definition": "Long SPY from prior adjusted close to adjusted open every session",
+    "exact_target": "close-to-open return",
+    "horizon_sessions": 1,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 8452,
+      "effective_n": 8452.0,
+      "mean_return": 0.0004033225203889724,
+      "median_return": 0.0006161059809473013,
+      "hac_standard_error": 6.930172232688722e-05,
+      "hac_t_stat": 5.819805148370663,
+      "annualized_sharpe_event_sequence": 0.95972989952704,
+      "hit_rate": 0.5640085186938003,
+      "expected_magnitude": 0.004204736151380342,
+      "cumulative_return_arithmetic": 3.4088819423275947,
+      "max_sequential_drawdown": -0.38166546205257923,
+      "worst_event": -0.10448552273141876,
+      "best_event": 0.06132576076124985,
+      "mean_without_best_event": 0.000396113617508738,
+      "bootstrap_95_ci_mean": [
+        0.00027006703959792366,
+        0.0005371194838908916
+      ],
+      "block_sign_surrogate_p": 0.001996007984031936,
+      "start": "1993-02-01",
+      "end": "2026-08-28"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 3507,
+        "effective_n": 3507.0,
+        "mean_return": 0.0005102036125512634,
+        "median_return": 0.0006335461868220982,
+        "hac_standard_error": 8.701608364239104e-05,
+        "hac_t_stat": 5.863325389913445,
+        "annualized_sharpe_event_sequence": 1.5143311106099802,
+        "hit_rate": 0.5734245794126034,
+        "expected_magnitude": 0.0035303816546461957,
+        "cumulative_return_arithmetic": 1.7892840692172807,
+        "max_sequential_drawdown": -0.38166546205257923,
+        "worst_event": -0.08223541356034147,
+        "best_event": 0.03196922929047186,
+        "mean_without_best_event": 0.000501230701633431,
+        "bootstrap_95_ci_mean": [
+          0.0003604926408638038,
+          0.000684438634235714
+        ],
+        "block_sign_surrogate_p": 0.001996007984031936,
+        "start": "1993-02-01",
+        "end": "2006-12-29"
+      },
+      "middle_validation": {
+        "n": 2266,
+        "effective_n": 2266.0,
+        "mean_return": 0.000253193606480141,
+        "median_return": 0.0005236833972719346,
+        "hac_standard_error": 0.00015603167036626187,
+        "hac_t_stat": 1.622706504940987,
+        "annualized_sharpe_event_sequence": 0.5187646483820739,
+        "hit_rate": 0.5428067078552515,
+        "expected_magnitude": 0.005002224009871525,
+        "cumulative_return_arithmetic": 0.5737367122839995,
+        "max_sequential_drawdown": -0.23457787067792335,
+        "worst_event": -0.08321515404870738,
+        "best_event": 0.06132576076124985,
+        "mean_without_best_event": 0.00022623000067229564,
+        "bootstrap_95_ci_mean": [
+          -1.8063359680131016e-05,
+          0.0004960136721568011
+        ],
+        "block_sign_surrogate_p": 0.043912175648702596,
+        "start": "2007-01-03",
+        "end": "2015-12-31"
+      },
+      "recent_validation": {
+        "n": 1762,
+        "effective_n": 1762.0,
+        "mean_return": 0.0003364756161524132,
+        "median_return": 0.0006168816707662339,
+        "hac_standard_error": 0.00017162453100658578,
+        "hac_t_stat": 1.9605333467131312,
+        "annualized_sharpe_event_sequence": 0.6832267082671079,
+        "hit_rate": 0.5646992054483542,
+        "expected_magnitude": 0.00461754952660316,
+        "cumulative_return_arithmetic": 0.5928700356605521,
+        "max_sequential_drawdown": -0.32969569698621237,
+        "worst_event": -0.10448552273141876,
+        "best_event": 0.06037640596805982,
+        "mean_without_best_event": 0.0003023813910803477,
+        "bootstrap_95_ci_mean": [
+          1.6586577454680525e-05,
+          0.0006825372010138792
+        ],
+        "block_sign_surrogate_p": 0.09580838323353294,
+        "start": "2016-01-04",
+        "end": "2022-12-30"
+      },
+      "sealed_historical_holdout": {
+        "n": 917,
+        "effective_n": 830.4551000183741,
+        "mean_return": 0.0004939925029070479,
+        "median_return": 0.000801727879782943,
+        "hac_standard_error": 0.00019889172979052608,
+        "hac_t_stat": 2.4837257106030686,
+        "annualized_sharpe_event_sequence": 1.332822198317805,
+        "hit_rate": 0.579062159214831,
+        "expected_magnitude": 0.004019868720151363,
+        "cumulative_return_arithmetic": 0.4529911251657629,
+        "max_sequential_drawdown": -0.1697626332373956,
+        "worst_event": -0.0398949257004535,
+        "best_event": 0.03465633606222407,
+        "mean_without_best_event": 0.0004566973680169638,
+        "bootstrap_95_ci_mean": [
+          0.00010854341763120652,
+          0.0008192951059653171
+        ],
+        "block_sign_surrogate_p": 0.013972055888223553,
+        "start": "2023-01-03",
+        "end": "2026-08-28"
+      }
+    },
+    "failure_reason": null,
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.01497005988023952,
+      "fdr_threshold": 0.1,
+      "passes_fdr": true
+    },
+    "long_history_supported_pre_drop_one": true,
+    "drop_one_era_positive_all": true,
+    "parameter_perturbations": [],
+    "long_history_supported": true
+  },
+  {
+    "experiment_id": "B01",
+    "parent_experiment": null,
+    "family": "intraday",
+    "hypothesis": "Positive open-to-close drift",
+    "source_research_motivation": "economically motivated preregistered hypothesis",
+    "exact_signal_definition": "Long SPY from adjusted open to adjusted close every session",
+    "exact_target": "open-to-close return",
+    "horizon_sessions": 1,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 8453,
+      "effective_n": 8453.0,
+      "mean_return": 7.447370091134549e-05,
+      "median_return": 0.00045387894850912325,
+      "hac_standard_error": 0.00010022488802815926,
+      "hac_t_stat": 0.7430659427668435,
+      "annualized_sharpe_event_sequence": 0.12351386594167324,
+      "hit_rate": 0.5239559919555188,
+      "expected_magnitude": 0.0064605740187127095,
+      "cumulative_return_arithmetic": 0.6295261938036034,
+      "max_sequential_drawdown": -0.9449756298576331,
+      "worst_event": -0.08990574337369572,
+      "best_event": 0.11182715710677238,
+      "mean_without_best_event": 6.125166075447598e-05,
+      "bootstrap_95_ci_mean": [
+        -0.0001226814117779361,
+        0.0002621377164953672
+      ],
+      "block_sign_surrogate_p": 0.44510978043912175,
+      "start": "1993-01-29",
+      "end": "2026-08-28"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 3508,
+        "effective_n": 3508.0,
+        "mean_return": -4.64438612206788e-05,
+        "median_return": 0.00020828128469929652,
+        "hac_standard_error": 0.00015936640462090485,
+        "hac_t_stat": -0.29142817980463204,
+        "annualized_sharpe_event_sequence": -0.07635306090270666,
+        "hit_rate": 0.5048460661345496,
+        "expected_magnitude": 0.0067984284088331,
+        "cumulative_return_arithmetic": -0.16292506516214122,
+        "max_sequential_drawdown": -0.8589739496206857,
+        "worst_event": -0.07469879518072287,
+        "best_event": 0.09296296296296291,
+        "mean_without_best_event": -7.296493530798521e-05,
+        "bootstrap_95_ci_mean": [
+          -0.00035615917921865445,
+          0.00023853333510895374
+        ],
+        "block_sign_surrogate_p": 0.7524950099800399,
+        "start": "1993-01-29",
+        "end": "2006-12-29"
+      },
+      "middle_validation": {
+        "n": 2266,
+        "effective_n": 2266.0,
+        "mean_return": 7.663734414288406e-05,
+        "median_return": 0.0006160913537069934,
+        "hac_standard_error": 0.0002122161873096687,
+        "hac_t_stat": 0.36112864487125024,
+        "annualized_sharpe_event_sequence": 0.11460871422514057,
+        "hit_rate": 0.5339805825242718,
+        "expected_magnitude": 0.006886770660396647,
+        "cumulative_return_arithmetic": 0.1736602218277753,
+        "max_sequential_drawdown": -0.5585723736143381,
+        "worst_event": -0.08990574337369572,
+        "best_event": 0.07968462244251318,
+        "mean_without_best_event": 4.149033085442036e-05,
+        "bootstrap_95_ci_mean": [
+          -0.00030996082258819734,
+          0.0004777251959340887
+        ],
+        "block_sign_surrogate_p": 0.6966067864271457,
+        "start": "2007-01-03",
+        "end": "2015-12-31"
+      },
+      "recent_validation": {
+        "n": 1762,
+        "effective_n": 1762.0,
+        "mean_return": 0.00016060814969004995,
+        "median_return": 0.00048665570594697005,
+        "hac_standard_error": 0.00020010633549238994,
+        "hac_t_stat": 0.802614016666943,
+        "annualized_sharpe_event_sequence": 0.2941800566876996,
+        "hit_rate": 0.5385925085130534,
+        "expected_magnitude": 0.005829843494826988,
+        "cumulative_return_arithmetic": 0.282991559753868,
+        "max_sequential_drawdown": -0.271747628033405,
+        "worst_event": -0.0566115358786331,
+        "best_event": 0.047994072837921564,
+        "mean_without_best_event": 0.00013344547808969134,
+        "bootstrap_95_ci_mean": [
+          -0.00022354881068708802,
+          0.0005488830811593594
+        ],
+        "block_sign_surrogate_p": 0.4171656686626746,
+        "start": "2016-01-04",
+        "end": "2022-12-30"
+      },
+      "sealed_historical_holdout": {
+        "n": 917,
+        "effective_n": 917.0,
+        "mean_return": 0.00036619354131308757,
+        "median_return": 0.0006091056165227204,
+        "hac_standard_error": 0.00024235606527228613,
+        "hac_t_stat": 1.5109732900708324,
+        "annualized_sharpe_event_sequence": 0.7253430377759744,
+        "hit_rate": 0.5441657579062159,
+        "expected_magnitude": 0.005326868885112391,
+        "cumulative_return_arithmetic": 0.3357994773841013,
+        "max_sequential_drawdown": -0.1331533485858445,
+        "worst_event": -0.048633685428356,
+        "best_event": 0.11182715710677238,
+        "mean_without_best_event": 0.0002445112666783067,
+        "bootstrap_95_ci_mean": [
+          -8.630241593760634e-05,
+          0.0008088792749665661
+        ],
+        "block_sign_surrogate_p": 0.0998003992015968,
+        "start": "2023-01-03",
+        "end": "2026-08-28"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero; fails 10% BH-FDR selection-bias control",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.5563872255489022,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "C01",
+    "parent_experiment": null,
+    "family": "momentum",
+    "hypothesis": "21-day momentum continues",
+    "source_research_motivation": "economically motivated preregistered hypothesis",
+    "exact_signal_definition": "Sign of trailing 21-session SPY return times next 5-session return",
+    "exact_target": "signed 5-session return",
+    "horizon_sessions": 5,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 8427,
+      "effective_n": 2332.5531528495494,
+      "mean_return": 3.064153131137241e-05,
+      "median_return": 0.0014082987424341997,
+      "hac_standard_error": 0.00042429817739429845,
+      "hac_t_stat": 0.0722169760415854,
+      "annualized_sharpe_event_sequence": 0.02037361177310787,
+      "hit_rate": 0.5294885487124719,
+      "expected_magnitude": 0.017010434577482098,
+      "cumulative_return_arithmetic": 0.2582161843609353,
+      "max_sequential_drawdown": -3.155684020239388,
+      "worst_event": -0.19403521357208198,
+      "best_event": 0.19793358939289574,
+      "mean_without_best_event": 7.154354968910463e-06,
+      "bootstrap_95_ci_mean": [
+        -0.0007151136360331914,
+        0.0008433389193804173
+      ],
+      "block_sign_surrogate_p": 0.9500998003992016,
+      "start": "1993-03-02",
+      "end": "2026-08-21"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 3487,
+        "effective_n": 1010.1219984021665,
+        "mean_return": -0.00018529803367781423,
+        "median_return": 0.0006658132488457369,
+        "hac_standard_error": 0.0006098394867211389,
+        "hac_t_stat": -0.3038472216256233,
+        "annualized_sharpe_event_sequence": -0.13142187864455018,
+        "hit_rate": 0.511901347863493,
+        "expected_magnitude": 0.016527308179304766,
+        "cumulative_return_arithmetic": -0.6461342434345382,
+        "max_sequential_drawdown": -3.1179659026714024,
+        "worst_event": -0.13746116265765784,
+        "best_event": 0.12128159780582304,
+        "mean_without_best_event": -0.00022014223787732677,
+        "bootstrap_95_ci_mean": [
+          -0.0012974421163228997,
+          0.0009084402159203577
+        ],
+        "block_sign_surrogate_p": 0.780439121756487,
+        "start": "1993-03-02",
+        "end": "2006-12-29"
+      },
+      "middle_validation": {
+        "n": 2266,
+        "effective_n": 635.9377592964739,
+        "mean_return": -1.2662242712760453e-05,
+        "median_return": 0.0017424991270536538,
+        "hac_standard_error": 0.0009142106448084842,
+        "hac_t_stat": -0.013850465190561236,
+        "annualized_sharpe_event_sequence": -0.007499803581126525,
+        "hit_rate": 0.5344218887908209,
+        "expected_magnitude": 0.01866078683659641,
+        "cumulative_return_arithmetic": -0.028692641987115186,
+        "max_sequential_drawdown": -2.0931495842255026,
+        "worst_event": -0.19403521357208198,
+        "best_event": 0.19793358939289574,
+        "mean_without_best_event": -0.00010005573129360306,
+        "bootstrap_95_ci_mean": [
+          -0.0016995170391010611,
+          0.0017011380281921687
+        ],
+        "block_sign_surrogate_p": 0.9900199600798403,
+        "start": "2007-01-03",
+        "end": "2015-12-31"
+      },
+      "recent_validation": {
+        "n": 1762,
+        "effective_n": 460.4671897849357,
+        "mean_return": -3.943230683564793e-05,
+        "median_return": 0.0019621621206834527,
+        "hac_standard_error": 0.0009706251146604191,
+        "hac_t_stat": -0.04062568157371823,
+        "annualized_sharpe_event_sequence": -0.02556591111236041,
+        "hit_rate": 0.5459704880817253,
+        "expected_magnitude": 0.01675716462710722,
+        "cumulative_return_arithmetic": -0.06947972464441166,
+        "max_sequential_drawdown": -1.6168664124068486,
+        "worst_event": -0.1735816004384345,
+        "best_event": 0.17969312194261788,
+        "mean_without_best_event": -0.00014149508608008493,
+        "bootstrap_95_ci_mean": [
+          -0.002106961498113161,
+          0.0018276895717588614
+        ],
+        "block_sign_surrogate_p": 0.9600798403193613,
+        "start": "2016-01-04",
+        "end": "2022-12-30"
+      },
+      "sealed_historical_holdout": {
+        "n": 912,
+        "effective_n": 237.82992940132587,
+        "mean_return": 0.0010992574500296053,
+        "median_return": 0.002754758321443229,
+        "hac_standard_error": 0.0011069370050186813,
+        "hac_t_stat": 0.9930623378256774,
+        "annualized_sharpe_event_sequence": 0.8692057783964766,
+        "hit_rate": 0.5526315789473685,
+        "expected_magnitude": 0.015246427103635479,
+        "cumulative_return_arithmetic": 1.002522794427,
+        "max_sequential_drawdown": -0.6390984066800147,
+        "worst_event": -0.08284314898811584,
+        "best_event": 0.11496151120063336,
+        "mean_without_best_event": 0.0009742714415218077,
+        "bootstrap_95_ci_mean": [
+          -0.0007704935142725936,
+          0.003312032944256284
+        ],
+        "block_sign_surrogate_p": 0.3812375249500998,
+        "start": "2023-01-03",
+        "end": "2026-08-21"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero; fails 10% BH-FDR selection-bias control",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.9500998003992016,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "C02",
+    "parent_experiment": "C01",
+    "family": "momentum",
+    "hypothesis": "63-day momentum continues",
+    "source_research_motivation": "nearby horizon perturbation of C01",
+    "exact_signal_definition": "Sign of trailing 63-session SPY return times next 21-session return",
+    "exact_target": "signed 21-session return",
+    "horizon_sessions": 21,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 8369,
+      "effective_n": 530.0779071139274,
+      "mean_return": 0.0031369995631851466,
+      "median_return": 0.007993714365707172,
+      "hac_standard_error": 0.0016748375229992023,
+      "hac_t_stat": 1.8730172450206328,
+      "annualized_sharpe_event_sequence": 1.0745821696646034,
+      "hit_rate": 0.5772493726849086,
+      "expected_magnitude": 0.034953427756413705,
+      "cumulative_return_arithmetic": 26.25354934429649,
+      "max_sequential_drawdown": -8.098914864803374,
+      "worst_event": -0.3275129700969941,
+      "best_event": 0.305336900224763,
+      "mean_without_best_event": 0.0031008858083259715,
+      "bootstrap_95_ci_mean": [
+        -3.2477865021364197e-06,
+        0.006234539423260685
+      ],
+      "block_sign_surrogate_p": 0.05788423153692615,
+      "start": "1993-04-30",
+      "end": "2026-07-30"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 3445,
+        "effective_n": 229.99005956072813,
+        "mean_return": 0.003438666019761556,
+        "median_return": 0.00608536138092397,
+        "hac_standard_error": 0.0023981863579717352,
+        "hac_t_stat": 1.4338610543468382,
+        "annualized_sharpe_event_sequence": 1.266119132653943,
+        "hit_rate": 0.5680696661828737,
+        "expected_magnitude": 0.03321304621897877,
+        "cumulative_return_arithmetic": 11.84620443807856,
+        "max_sequential_drawdown": -6.864504722366827,
+        "worst_event": -0.1976237231713125,
+        "best_event": 0.194702581481504,
+        "mean_without_best_event": 0.003383130620382421,
+        "bootstrap_95_ci_mean": [
+          -0.0009369586560964536,
+          0.007889527980098017
+        ],
+        "block_sign_surrogate_p": 0.13373253493013973,
+        "start": "1993-04-30",
+        "end": "2006-12-29"
+      },
+      "middle_validation": {
+        "n": 2266,
+        "effective_n": 133.33911794423298,
+        "mean_return": 0.0031151500799423202,
+        "median_return": 0.005816077641687012,
+        "hac_standard_error": 0.0035638173616147233,
+        "hac_t_stat": 0.8741048611230972,
+        "annualized_sharpe_event_sequence": 0.9798632336171329,
+        "hit_rate": 0.5481023830538394,
+        "expected_magnitude": 0.037420050372563476,
+        "cumulative_return_arithmetic": 7.058930081149297,
+        "max_sequential_drawdown": -5.281244990706604,
+        "worst_event": -0.23347526239799032,
+        "best_event": 0.305336900224763,
+        "mean_without_best_event": 0.00298171884367529,
+        "bootstrap_95_ci_mean": [
+          -0.003596978316296123,
+          0.009743834704964496
+        ],
+        "block_sign_surrogate_p": 0.41916167664670656,
+        "start": "2007-01-03",
+        "end": "2015-12-31"
+      },
+      "recent_validation": {
+        "n": 1762,
+        "effective_n": 112.71969579840984,
+        "mean_return": 0.0011668696284546044,
+        "median_return": 0.01065161800509229,
+        "hac_standard_error": 0.003851388531301713,
+        "hac_t_stat": 0.30297375062811943,
+        "annualized_sharpe_event_sequence": 0.37472315345368484,
+        "hit_rate": 0.5987514188422247,
+        "expected_magnitude": 0.03620410725389775,
+        "cumulative_return_arithmetic": 2.056024285337013,
+        "max_sequential_drawdown": -7.953657002960444,
+        "worst_event": -0.3275129700969941,
+        "best_event": 0.17533480467710683,
+        "mean_without_best_event": 0.0010679667692560502,
+        "bootstrap_95_ci_mean": [
+          -0.007152015939240187,
+          0.009272623272297104
+        ],
+        "block_sign_surrogate_p": 0.7504990019960079,
+        "start": "2016-01-04",
+        "end": "2022-12-30"
+      },
+      "sealed_historical_holdout": {
+        "n": 896,
+        "effective_n": 59.375656920144415,
+        "mean_return": 0.005906685870236185,
+        "median_return": 0.013758754865135558,
+        "hac_standard_error": 0.004499438457384846,
+        "hac_t_stat": 1.31276067584426,
+        "annualized_sharpe_event_sequence": 2.319955643145716,
+        "hit_rate": 0.6439732142857143,
+        "expected_magnitude": 0.03294734547259791,
+        "cumulative_return_arithmetic": 5.292390539731622,
+        "max_sequential_drawdown": -2.7547695262190075,
+        "worst_event": -0.15367401587274343,
+        "best_event": 0.12158390867786639,
+        "mean_without_best_event": 0.005777437576596375,
+        "bootstrap_95_ci_mean": [
+          -0.0036906674595126557,
+          0.01553352556847227
+        ],
+        "block_sign_surrogate_p": 0.19560878243512975,
+        "start": "2023-01-03",
+        "end": "2026-07-30"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero; fails 10% BH-FDR selection-bias control",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.1240376390076989,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "C03",
+    "parent_experiment": "C02",
+    "family": "momentum",
+    "hypothesis": "126-day momentum continues",
+    "source_research_motivation": "slower trend hypothesis",
+    "exact_signal_definition": "Sign of trailing 126-session SPY return times next 21-session return",
+    "exact_target": "signed 21-session return",
+    "horizon_sessions": 21,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 8306,
+      "effective_n": 444.9894335053291,
+      "mean_return": 0.005092009896930617,
+      "median_return": 0.01013422944006892,
+      "hac_standard_error": 0.0017807904842695845,
+      "hac_t_stat": 2.8594098755077155,
+      "annualized_sharpe_event_sequence": 1.7448138115455856,
+      "hit_rate": 0.6013725018059234,
+      "expected_magnitude": 0.035129699079938966,
+      "cumulative_return_arithmetic": 42.29423420390571,
+      "max_sequential_drawdown": -13.194954829207251,
+      "worst_event": -0.3275129700969941,
+      "best_event": 0.305336900224763,
+      "mean_without_best_event": 0.005055857592255382,
+      "bootstrap_95_ci_mean": [
+        0.0013532706474641766,
+        0.008380969963270535
+      ],
+      "block_sign_surrogate_p": 0.003992015968063872,
+      "start": "1993-07-30",
+      "end": "2026-07-30"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 3382,
+        "effective_n": 198.3583817328197,
+        "mean_return": 0.00743187563493186,
+        "median_return": 0.009374394365338046,
+        "hac_standard_error": 0.00254940501950827,
+        "hac_t_stat": 2.915141210620713,
+        "annualized_sharpe_event_sequence": 2.7456864102577567,
+        "hit_rate": 0.6014192785334121,
+        "expected_magnitude": 0.03361353870163473,
+        "cumulative_return_arithmetic": 25.13460339733955,
+        "max_sequential_drawdown": -5.312296026220208,
+        "worst_event": -0.1976237231713125,
+        "best_event": 0.194702581481504,
+        "mean_without_best_event": 0.0073764864879793095,
+        "bootstrap_95_ci_mean": [
+          0.002967855561759607,
+          0.0122077843991858
+        ],
+        "block_sign_surrogate_p": 0.001996007984031936,
+        "start": "1993-07-30",
+        "end": "2006-12-29"
+      },
+      "middle_validation": {
+        "n": 2266,
+        "effective_n": 124.59911125404291,
+        "mean_return": 0.005403407736094704,
+        "median_return": 0.009722452461772002,
+        "hac_standard_error": 0.00366514125945284,
+        "hac_t_stat": 1.4742699813161815,
+        "annualized_sharpe_event_sequence": 1.7061730871946572,
+        "hit_rate": 0.586496028243601,
+        "expected_magnitude": 0.037420050372563476,
+        "cumulative_return_arithmetic": 12.2441219299906,
+        "max_sequential_drawdown": -8.55866430610621,
+        "worst_event": -0.23347526239799032,
+        "best_event": 0.305336900224763,
+        "mean_without_best_event": 0.005270986768108536,
+        "bootstrap_95_ci_mean": [
+          -0.001933061292525476,
+          0.01292374763258436
+        ],
+        "block_sign_surrogate_p": 0.14171656686626746,
+        "start": "2007-01-03",
+        "end": "2015-12-31"
+      },
+      "recent_validation": {
+        "n": 1762,
+        "effective_n": 82.21324049184472,
+        "mean_return": -0.0010251240788284918,
+        "median_return": 0.009431644340667678,
+        "hac_standard_error": 0.004292526901575104,
+        "hac_t_stat": -0.2388159940133006,
+        "annualized_sharpe_event_sequence": -0.329182713977889,
+        "hit_rate": 0.5874006810442679,
+        "expected_magnitude": 0.03620410725389775,
+        "cumulative_return_arithmetic": -1.8062686268958026,
+        "max_sequential_drawdown": -13.194954829207209,
+        "worst_event": -0.3275129700969941,
+        "best_event": 0.12801489910999342,
+        "mean_without_best_event": -0.0010984006394127175,
+        "bootstrap_95_ci_mean": [
+          -0.009544145963682797,
+          0.0073291826762047485
+        ],
+        "block_sign_surrogate_p": 0.812375249500998,
+        "start": "2016-01-04",
+        "end": "2022-12-30"
+      },
+      "sealed_historical_holdout": {
+        "n": 896,
+        "effective_n": 50.11163502954747,
+        "mean_return": 0.007501983820838576,
+        "median_return": 0.014917073204634423,
+        "hac_standard_error": 0.0044920850805953705,
+        "hac_t_stat": 1.6700449092661176,
+        "annualized_sharpe_event_sequence": 2.966124213601064,
+        "hit_rate": 0.6662946428571429,
+        "expected_magnitude": 0.03294734547259791,
+        "cumulative_return_arithmetic": 6.7217775034713645,
+        "max_sequential_drawdown": -5.246988558233029,
+        "worst_event": -0.15367401587274343,
+        "best_event": 0.10163621899795872,
+        "mean_without_best_event": 0.00739680590443956,
+        "bootstrap_95_ci_mean": [
+          -0.001706439570819154,
+          0.016469478062799
+        ],
+        "block_sign_surrogate_p": 0.1277445109780439,
+        "start": "2023-01-03",
+        "end": "2026-07-30"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.01497005988023952,
+      "fdr_threshold": 0.1,
+      "passes_fdr": true
+    },
+    "long_history_supported_pre_drop_one": false,
+    "drop_one_era_positive_all": true,
+    "parameter_perturbations": [
+      "C01",
+      "C02"
+    ],
+    "long_history_supported": false
+  },
+  {
+    "experiment_id": "D01",
+    "parent_experiment": null,
+    "family": "reversal",
+    "hypothesis": "One-day moves reverse",
+    "source_research_motivation": "economically motivated preregistered hypothesis",
+    "exact_signal_definition": "Opposite sign of prior one-session SPY return times next one-session return",
+    "exact_target": "signed 1-session return",
+    "horizon_sessions": 1,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 8451,
+      "effective_n": 8451.0,
+      "mean_return": 0.00023760538497273186,
+      "median_return": 4.589630894502594e-05,
+      "hac_standard_error": 0.00012459091268631495,
+      "hac_t_stat": 1.9070843920291018,
+      "annualized_sharpe_event_sequence": 0.3230249530056878,
+      "hit_rate": 0.5007691397467755,
+      "expected_magnitude": 0.007750655361792089,
+      "cumulative_return_arithmetic": 2.008003108404557,
+      "max_sequential_drawdown": -0.5604550229284745,
+      "worst_event": -0.09844785292076086,
+      "best_event": 0.14519750902209205,
+      "mean_without_best_event": 0.00022045036679082424,
+      "bootstrap_95_ci_mean": [
+        2.1747186986891208e-05,
+        0.00048337850648026015
+      ],
+      "block_sign_surrogate_p": 0.0499001996007984,
+      "start": "1993-02-01",
+      "end": "2026-08-27"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 3507,
+        "effective_n": 3507.0,
+        "mean_return": 7.740993997535912e-05,
+        "median_return": 0.0,
+        "hac_standard_error": 0.00017402386580412613,
+        "hac_t_stat": 0.4448237005750031,
+        "annualized_sharpe_event_sequence": 0.11512826310486515,
+        "hit_rate": 0.49700598802395207,
+        "expected_magnitude": 0.007535289591167899,
+        "cumulative_return_arithmetic": 0.27147665949358446,
+        "max_sequential_drawdown": -0.5604550229284745,
+        "worst_event": -0.07247421827992628,
+        "best_event": 0.05966205357479493,
+        "mean_without_best_event": 6.0414890450310764e-05,
+        "bootstrap_95_ci_mean": [
+          -0.0002489396984349608,
+          0.0003959940497403643
+        ],
+        "block_sign_surrogate_p": 0.6227544910179641,
+        "start": "1993-02-01",
+        "end": "2006-12-29"
+      },
+      "middle_validation": {
+        "n": 2266,
+        "effective_n": 2266.0,
+        "mean_return": 0.0004712883837377135,
+        "median_return": 5.720603562586746e-05,
+        "hac_standard_error": 0.00027886049379233463,
+        "hac_t_stat": 1.6900507394521023,
+        "annualized_sharpe_event_sequence": 0.5523703551660991,
+        "hit_rate": 0.500882612533098,
+        "expected_magnitude": 0.008661532880831336,
+        "cumulative_return_arithmetic": 1.067939477549659,
+        "max_sequential_drawdown": -0.37007488953570855,
+        "worst_event": -0.09844785292076086,
+        "best_event": 0.14519750902209205,
+        "mean_without_best_event": 0.00040739159758391476,
+        "bootstrap_95_ci_mean": [
+          -3.9998203475462105e-05,
+          0.0009629390842730536
+        ],
+        "block_sign_surrogate_p": 0.0998003992015968,
+        "start": "2007-01-03",
+        "end": "2015-12-31"
+      },
+      "recent_validation": {
+        "n": 1762,
+        "effective_n": 1731.7924634330861,
+        "mean_return": 0.00027203658496317254,
+        "median_return": 0.0002123167166147022,
+        "hac_standard_error": 0.0002866839782726476,
+        "hac_t_stat": 0.948907527383533,
+        "annualized_sharpe_event_sequence": 0.36044297652199103,
+        "hit_rate": 0.5124858115777525,
+        "expected_magnitude": 0.007617109170394583,
+        "cumulative_return_arithmetic": 0.47932846270511,
+        "max_sequential_drawdown": -0.4334223213532241,
+        "worst_event": -0.0956769845533112,
+        "best_event": 0.10942383546964707,
+        "mean_without_best_event": 0.00021005373494347696,
+        "bootstrap_95_ci_mean": [
+          -0.0002496650207822961,
+          0.0008130522128202554
+        ],
+        "block_sign_surrogate_p": 0.3393213572854291,
+        "start": "2016-01-04",
+        "end": "2022-12-30"
+      },
+      "sealed_historical_holdout": {
+        "n": 916,
+        "effective_n": 916.0,
+        "mean_return": 0.00020661409241943616,
+        "median_return": -0.00011794747573490305,
+        "hac_standard_error": 0.00031133811209001515,
+        "hac_t_stat": 0.6636325088259647,
+        "annualized_sharpe_event_sequence": 0.3446566217149529,
+        "hit_rate": 0.4923580786026201,
+        "expected_magnitude": 0.006578764192227122,
+        "cumulative_return_arithmetic": 0.18925850865620353,
+        "max_sequential_drawdown": -0.27805720893510477,
+        "worst_event": -0.05854299254528794,
+        "best_event": 0.10501937798947614,
+        "mean_without_best_event": 9.206462367948348e-05,
+        "bootstrap_95_ci_mean": [
+          -0.00034371281763810683,
+          0.0007707069953959998
+        ],
+        "block_sign_surrogate_p": 0.5029940119760479,
+        "start": "2023-01-03",
+        "end": "2026-08-27"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero; fails 10% BH-FDR selection-bias control",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.1240376390076989,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "D02",
+    "parent_experiment": "D01",
+    "family": "reversal",
+    "hypothesis": "Five-day moves reverse",
+    "source_research_motivation": "multi-day reversal perturbation",
+    "exact_signal_definition": "Opposite sign of prior 5-session SPY return times next 5-session return",
+    "exact_target": "signed 5-session return",
+    "horizon_sessions": 5,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 8443,
+      "effective_n": 3558.5731265007503,
+      "mean_return": 0.00147815181126094,
+      "median_return": 0.00023903338187736267,
+      "hac_standard_error": 0.00036392614566358583,
+      "hac_t_stat": 4.061680725262721,
+      "annualized_sharpe_event_sequence": 0.9851233625929827,
+      "hit_rate": 0.5043231079000355,
+      "expected_magnitude": 0.016996124892078076,
+      "cumulative_return_arithmetic": 12.480035742476115,
+      "max_sequential_drawdown": -1.3759436766262176,
+      "worst_event": -0.19793358939289574,
+      "best_event": 0.19403521357208198,
+      "mean_without_best_event": 0.0014553423985908592,
+      "bootstrap_95_ci_mean": [
+        0.000731022084188036,
+        0.002213134961457977
+      ],
+      "block_sign_surrogate_p": 0.001996007984031936,
+      "start": "1993-02-05",
+      "end": "2026-08-21"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 3503,
+        "effective_n": 1452.0738027091627,
+        "mean_return": 0.001995396597591766,
+        "median_return": 0.0012086728988406348,
+        "hac_standard_error": 0.0005310948004632158,
+        "hac_t_stat": 3.7571382658075363,
+        "annualized_sharpe_event_sequence": 1.4219203317307745,
+        "hit_rate": 0.521552954610334,
+        "expected_magnitude": 0.016505501563030985,
+        "cumulative_return_arithmetic": 6.9898742813639565,
+        "max_sequential_drawdown": -1.142647257594282,
+        "worst_event": -0.11715980270642301,
+        "best_event": 0.13746116265765784,
+        "mean_without_best_event": 0.0019567141972319526,
+        "bootstrap_95_ci_mean": [
+          0.0010584454533481733,
+          0.003019049155388788
+        ],
+        "block_sign_surrogate_p": 0.001996007984031936,
+        "start": "1993-02-05",
+        "end": "2006-12-29"
+      },
+      "middle_validation": {
+        "n": 2266,
+        "effective_n": 938.4470164251859,
+        "mean_return": 0.0019234365667202904,
+        "median_return": 0.0004352923781827944,
+        "hac_standard_error": 0.0007928593373693704,
+        "hac_t_stat": 2.4259493154259424,
+        "annualized_sharpe_event_sequence": 1.142180116304053,
+        "hit_rate": 0.5061782877316858,
+        "expected_magnitude": 0.018652345855094177,
+        "cumulative_return_arithmetic": 4.358507260188178,
+        "max_sequential_drawdown": -1.0795519388600598,
+        "worst_event": -0.19793358939289574,
+        "best_event": 0.19403521357208198,
+        "mean_without_best_event": 0.0018386190051285188,
+        "bootstrap_95_ci_mean": [
+          0.0005725734387782769,
+          0.0033484299176265663
+        ],
+        "block_sign_surrogate_p": 0.015968063872255488,
+        "start": "2007-01-03",
+        "end": "2015-12-31"
+      },
+      "recent_validation": {
+        "n": 1762,
+        "effective_n": 792.6722706054428,
+        "mean_return": 0.0005673329779413667,
+        "median_return": -0.0009516822676974845,
+        "hac_standard_error": 0.0008017871535665443,
+        "hac_t_stat": 0.7075855174502754,
+        "annualized_sharpe_event_sequence": 0.3679820708883837,
+        "hit_rate": 0.47446083995459704,
+        "expected_magnitude": 0.016747192543903906,
+        "cumulative_return_arithmetic": 0.999640707132688,
+        "max_sequential_drawdown": -1.3759436766262176,
+        "worst_event": -0.14545748940544956,
+        "best_event": 0.17969312194261788,
+        "mean_without_best_event": 0.0004656147559284896,
+        "bootstrap_95_ci_mean": [
+          -0.0009018748426584407,
+          0.0021403138133802777
+        ],
+        "block_sign_surrogate_p": 0.46107784431137727,
+        "start": "2016-01-04",
+        "end": "2022-12-30"
+      },
+      "sealed_historical_holdout": {
+        "n": 912,
+        "effective_n": 380.3092964301514,
+        "mean_return": 0.00014475163792904887,
+        "median_return": -0.0005067393977712387,
+        "hac_standard_error": 0.0009381934974125526,
+        "hac_t_stat": 0.15428761585777342,
+        "annualized_sharpe_event_sequence": 0.11428919177587159,
+        "hit_rate": 0.49122807017543857,
+        "expected_magnitude": 0.015246427103635479,
+        "cumulative_return_arithmetic": 0.13201349379129257,
+        "max_sequential_drawdown": -0.8019771039800129,
+        "worst_event": -0.11496151120063336,
+        "best_event": 0.08284314898811584,
+        "mean_without_best_event": 5.397403381248817e-05,
+        "bootstrap_95_ci_mean": [
+          -0.0017917767782909143,
+          0.0020369266863659603
+        ],
+        "block_sign_surrogate_p": 0.8902195608782435,
+        "start": "2023-01-03",
+        "end": "2026-08-21"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.01497005988023952,
+      "fdr_threshold": 0.1,
+      "passes_fdr": true
+    },
+    "long_history_supported_pre_drop_one": false,
+    "drop_one_era_positive_all": true,
+    "parameter_perturbations": [
+      "D01"
+    ],
+    "long_history_supported": false
+  },
+  {
+    "experiment_id": "E01",
+    "parent_experiment": null,
+    "family": "capitulation",
+    "hypothesis": "Large down days rebound",
+    "source_research_motivation": "economically motivated preregistered hypothesis",
+    "exact_signal_definition": "Long SPY for 5 sessions after adjusted close return <= -2%",
+    "exact_target": "5-session return",
+    "horizon_sessions": 5,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 337,
+      "effective_n": 180.0119328937778,
+      "mean_return": 0.008263817830176526,
+      "median_return": 0.006887070250670035,
+      "hac_standard_error": 0.003115935296657265,
+      "hac_t_stat": 2.652114708236029,
+      "annualized_sharpe_event_sequence": 0.5858262871649025,
+      "hit_rate": 0.5964391691394659,
+      "expected_magnitude": 0.033172242920849,
+      "cumulative_return_arithmetic": 2.7849066087694894,
+      "max_sequential_drawdown": -0.6296928828964303,
+      "worst_event": -0.18909246203252716,
+      "best_event": 0.19403521357208198,
+      "mean_without_best_event": 0.007710926771420856,
+      "bootstrap_95_ci_mean": [
+        0.002600299991229346,
+        0.01397821836546322
+      ],
+      "block_sign_surrogate_p": 0.003992015968063872,
+      "start": "1993-02-16",
+      "end": "2026-06-05"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 126,
+        "effective_n": 80.028208031242,
+        "mean_return": 0.011060297609596393,
+        "median_return": 0.01026280492030085,
+        "hac_standard_error": 0.0037646546399544845,
+        "hac_t_stat": 2.937931541505256,
+        "annualized_sharpe_event_sequence": 1.0471506711934577,
+        "hit_rate": 0.6111111111111112,
+        "expected_magnitude": 0.0298879234557931,
+        "cumulative_return_arithmetic": 1.3935974988091455,
+        "max_sequential_drawdown": -0.24014708053769396,
+        "worst_event": -0.07962470347998662,
+        "best_event": 0.13746116265765784,
+        "mean_without_best_event": 0.0100490906892119,
+        "bootstrap_95_ci_mean": [
+          0.0035278305711848564,
+          0.018410694729354048
+        ],
+        "block_sign_surrogate_p": 0.003992015968063872,
+        "start": "1993-02-16",
+        "end": "2003-08-05"
+      },
+      "middle_validation": {
+        "n": 119,
+        "effective_n": 68.46260313667753,
+        "mean_return": 0.007423058043662198,
+        "median_return": 0.006768837708824416,
+        "hac_standard_error": 0.005487865349058982,
+        "hac_t_stat": 1.3526312275382355,
+        "annualized_sharpe_event_sequence": 0.5566270336191982,
+        "hit_rate": 0.5798319327731093,
+        "expected_magnitude": 0.036014181600119474,
+        "cumulative_return_arithmetic": 0.8833439071958016,
+        "max_sequential_drawdown": -0.46826003733314847,
+        "worst_event": -0.18909246203252716,
+        "best_event": 0.19403521357208198,
+        "mean_without_best_event": 0.0058415990985060985,
+        "bootstrap_95_ci_mean": [
+          -0.0032253515186961824,
+          0.018326248901015977
+        ],
+        "block_sign_surrogate_p": 0.2874251497005988,
+        "start": "2007-02-27",
+        "end": "2015-09-28"
+      },
+      "recent_validation": {
+        "n": 77,
+        "effective_n": 25.81578341296866,
+        "mean_return": 0.004198634328528087,
+        "median_return": 0.0053418378461533855,
+        "hac_standard_error": 0.008459497383195012,
+        "hac_t_stat": 0.49632196079033863,
+        "annualized_sharpe_event_sequence": 0.2758673723844302,
+        "hit_rate": 0.5714285714285714,
+        "expected_magnitude": 0.03493779866902131,
+        "cumulative_return_arithmetic": 0.3232948432966627,
+        "max_sequential_drawdown": -0.6296928828964301,
+        "worst_event": -0.17969312194261788,
+        "best_event": 0.1735816004384345,
+        "mean_without_best_event": 0.0019699110902398446,
+        "bootstrap_95_ci_mean": [
+          -0.011924843006620497,
+          0.020025106277075298
+        ],
+        "block_sign_surrogate_p": 0.6067864271457086,
+        "start": "2016-01-07",
+        "end": "2022-12-15"
+      },
+      "sealed_historical_holdout": {
+        "n": 15,
+        "effective_n": 8.79804207917348,
+        "mean_return": 0.01231135729785866,
+        "median_return": 0.01741146850294606,
+        "hac_standard_error": 0.00940928802026362,
+        "hac_t_stat": 1.3084260223882203,
+        "annualized_sharpe_event_sequence": 0.6990377315306403,
+        "hit_rate": 0.7333333333333333,
+        "expected_magnitude": 0.029151293397821722,
+        "cumulative_return_arithmetic": 0.1846703594678799,
+        "max_sequential_drawdown": -0.11324936081931947,
+        "worst_event": -0.09066691810661709,
+        "best_event": 0.07194296724609384,
+        "mean_without_best_event": 0.008051956587270434,
+        "bootstrap_95_ci_mean": [
+          -0.005689343966000308,
+          0.030547952065529245
+        ],
+        "block_sign_surrogate_p": 0.4870259481037924,
+        "start": "2023-02-21",
+        "end": "2026-06-05"
+      }
+    },
+    "failure_reason": "fewer than 30 sealed-holdout decisions; sealed-holdout block-bootstrap CI includes zero",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.01497005988023952,
+      "fdr_threshold": 0.1,
+      "passes_fdr": true
+    },
+    "long_history_supported_pre_drop_one": false,
+    "drop_one_era_positive_all": true,
+    "parameter_perturbations": [
+      "E02"
+    ],
+    "long_history_supported": false
+  },
+  {
+    "experiment_id": "E02",
+    "parent_experiment": "E01",
+    "family": "capitulation",
+    "hypothesis": "Extreme down days rebound more",
+    "source_research_motivation": "rarer fixed-threshold perturbation",
+    "exact_signal_definition": "Long SPY for 5 sessions after adjusted close return <= -3%",
+    "exact_target": "5-session return",
+    "horizon_sessions": 5,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 103,
+      "effective_n": 55.25269433294702,
+      "mean_return": 0.009315383675988899,
+      "median_return": 0.011932432817217231,
+      "hac_standard_error": 0.007379108076634332,
+      "hac_t_stat": 1.2623996801843451,
+      "annualized_sharpe_event_sequence": 0.29518137975012665,
+      "hit_rate": 0.6213592233009708,
+      "expected_magnitude": 0.04403844289457629,
+      "cumulative_return_arithmetic": 0.9594845186268565,
+      "max_sequential_drawdown": -0.5930750471736839,
+      "worst_event": -0.18909246203252716,
+      "best_event": 0.19403521357208198,
+      "mean_without_best_event": 0.007504404951517397,
+      "bootstrap_95_ci_mean": [
+        -0.005047073744431395,
+        0.022007518458736844
+      ],
+      "block_sign_surrogate_p": 0.28542914171656686,
+      "start": "1996-03-08",
+      "end": "2025-04-10"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 25,
+        "effective_n": 23.703239513939607,
+        "mean_return": 0.016662621950132624,
+        "median_return": 0.021770374867910558,
+        "hac_standard_error": 0.0062142423289074655,
+        "hac_t_stat": 2.6813601833036502,
+        "annualized_sharpe_event_sequence": 0.7942409860617645,
+        "hit_rate": 0.6,
+        "expected_magnitude": 0.03629522087885153,
+        "cumulative_return_arithmetic": 0.41656554875331564,
+        "max_sequential_drawdown": -0.06832507623765594,
+        "worst_event": -0.050000319482083166,
+        "best_event": 0.08177110241230712,
+        "mean_without_best_event": 0.013949768597542022,
+        "bootstrap_95_ci_mean": [
+          0.005061576636316619,
+          0.02786526048656119
+        ],
+        "block_sign_surrogate_p": 0.21756487025948104,
+        "start": "1996-03-08",
+        "end": "2003-03-24"
+      },
+      "middle_validation": {
+        "n": 45,
+        "effective_n": 27.354992503992538,
+        "mean_return": 0.013948469133164883,
+        "median_return": 0.01545706579289674,
+        "hac_standard_error": 0.010858328064049003,
+        "hac_t_stat": 1.2845871897485832,
+        "annualized_sharpe_event_sequence": 0.48660491105126435,
+        "hit_rate": 0.6666666666666666,
+        "expected_magnitude": 0.04764257837438619,
+        "cumulative_return_arithmetic": 0.6276811109924197,
+        "max_sequential_drawdown": -0.2828681212601174,
+        "worst_event": -0.18909246203252716,
+        "best_event": 0.19403521357208198,
+        "mean_without_best_event": 0.009855588577734949,
+        "bootstrap_95_ci_mean": [
+          -0.007370157093570114,
+          0.03492572892720239
+        ],
+        "block_sign_surrogate_p": 0.25349301397205587,
+        "start": "2007-02-27",
+        "end": "2015-08-24"
+      },
+      "recent_validation": {
+        "n": 30,
+        "effective_n": 10.29228942618995,
+        "mean_return": -0.004079637541923113,
+        "median_return": 0.005081851178637131,
+        "hac_standard_error": 0.017357454417281894,
+        "hac_t_stat": -0.235036627137055,
+        "annualized_sharpe_event_sequence": -0.13956971980482083,
+        "hit_rate": 0.5666666666666667,
+        "expected_magnitude": 0.04672903995861575,
+        "cumulative_return_arithmetic": -0.12238912625769338,
+        "max_sequential_drawdown": -0.5930750471736838,
+        "worst_event": -0.17969312194261788,
+        "best_event": 0.11326425755345793,
+        "mean_without_best_event": -0.008125978752108666,
+        "bootstrap_95_ci_mean": [
+          -0.03802070090200144,
+          0.02528082956818033
+        ],
+        "block_sign_surrogate_p": 0.8483033932135728,
+        "start": "2016-06-24",
+        "end": "2022-09-13"
+      },
+      "sealed_historical_holdout": {
+        "n": 3,
+        "effective_n": 2.511183961543037,
+        "mean_return": 0.01254232837960482,
+        "median_return": 0.0034884180532654963,
+        "hac_standard_error": 0.007646997483353623,
+        "hac_t_stat": 1.640163790678316,
+        "annualized_sharpe_event_sequence": 3.8822995469666535,
+        "hit_rate": 0.6666666666666666,
+        "expected_magnitude": 0.02759729018807307,
+        "cumulative_return_arithmetic": 0.03762698513881446,
+        "max_sequential_drawdown": -0.022582442712702377,
+        "worst_event": -0.022582442712702377,
+        "best_event": 0.05672100979825134,
+        "mean_without_best_event": -0.00954701232971844,
+        "bootstrap_95_ci_mean": [
+          null,
+          null
+        ],
+        "block_sign_surrogate_p": 1.0,
+        "start": "2025-04-03",
+        "end": "2025-04-10"
+      }
+    },
+    "failure_reason": "fewer than 30 sealed-holdout decisions; fails 10% BH-FDR selection-bias control",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.4640718562874252,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "H01",
+    "parent_experiment": null,
+    "family": "trend_conditioned_reversal",
+    "hypothesis": "Selloffs above trend rebound",
+    "source_research_motivation": "economically motivated preregistered hypothesis",
+    "exact_signal_definition": "Long SPY 5 sessions after <=-2% day only when prior close is above trailing 200-day MA",
+    "exact_target": "5-session return",
+    "horizon_sessions": 5,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 137,
+      "effective_n": 108.563462071519,
+      "mean_return": 0.007527791649476777,
+      "median_return": 0.01015741258228231,
+      "hac_standard_error": 0.002906187920297386,
+      "hac_t_stat": 2.5902632093751423,
+      "annualized_sharpe_event_sequence": 0.49593783054082385,
+      "hit_rate": 0.635036496350365,
+      "expected_magnitude": 0.02438545110826867,
+      "cumulative_return_arithmetic": 1.0313074559783184,
+      "max_sequential_drawdown": -0.28346004088290067,
+      "worst_event": -0.17969312194261788,
+      "best_event": 0.07813714692170026,
+      "mean_without_best_event": 0.0070086052136516044,
+      "bootstrap_95_ci_mean": [
+        0.0018643982298788564,
+        0.012582680864236355
+      ],
+      "block_sign_surrogate_p": 0.021956087824351298,
+      "start": "1994-02-04",
+      "end": "2026-06-05"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 51,
+        "effective_n": 32.70555582463086,
+        "mean_return": 0.01225220926257119,
+        "median_return": 0.013194061004623281,
+        "hac_standard_error": 0.004411088092781577,
+        "hac_t_stat": 2.7775934202314017,
+        "annualized_sharpe_event_sequence": 0.9821326903422342,
+        "hit_rate": 0.6470588235294118,
+        "expected_magnitude": 0.025941674589285865,
+        "cumulative_return_arithmetic": 0.6248626723911307,
+        "max_sequential_drawdown": -0.12822492547728903,
+        "worst_event": -0.053293555487362365,
+        "best_event": 0.07813714692170026,
+        "mean_without_best_event": 0.01093451050938861,
+        "bootstrap_95_ci_mean": [
+          0.0037697039082733724,
+          0.020735017493109537
+        ],
+        "block_sign_surrogate_p": 0.04590818363273453,
+        "start": "1994-02-04",
+        "end": "2003-08-05"
+      },
+      "middle_validation": {
+        "n": 41,
+        "effective_n": 24.812340388044376,
+        "mean_return": 0.003403035452995939,
+        "median_return": 0.004483178323959391,
+        "hac_standard_error": 0.004363583144072947,
+        "hac_t_stat": 0.7798718027450171,
+        "annualized_sharpe_event_sequence": 0.296696354596953,
+        "hit_rate": 0.5609756097560976,
+        "expected_magnitude": 0.020909376104418693,
+        "cumulative_return_arithmetic": 0.1395244535728335,
+        "max_sequential_drawdown": -0.13149441008735385,
+        "worst_event": -0.06382976870779311,
+        "best_event": 0.04729918241842457,
+        "mean_without_best_event": 0.002305631778860223,
+        "bootstrap_95_ci_mean": [
+          -0.00449445412967403,
+          0.011391972860040974
+        ],
+        "block_sign_surrogate_p": 0.5768463073852296,
+        "start": "2007-02-27",
+        "end": "2015-08-20"
+      },
+      "recent_validation": {
+        "n": 36,
+        "effective_n": 22.140744535134477,
+        "mean_return": 0.0039211100334666914,
+        "median_return": 0.012222926249488064,
+        "hac_standard_error": 0.0069657325947287034,
+        "hac_t_stat": 0.5629142348119965,
+        "annualized_sharpe_event_sequence": 0.2365746447302694,
+        "hit_rate": 0.6666666666666666,
+        "expected_magnitude": 0.02801767468965838,
+        "cumulative_return_arithmetic": 0.1411599612048009,
+        "max_sequential_drawdown": -0.28346004088290067,
+        "worst_event": -0.17969312194261788,
+        "best_event": 0.05977559493558848,
+        "mean_without_best_event": 0.0023252676076917834,
+        "bootstrap_95_ci_mean": [
+          -0.012331822493488059,
+          0.015355105463069748
+        ],
+        "block_sign_surrogate_p": 0.6067864271457086,
+        "start": "2016-06-24",
+        "end": "2022-02-17"
+      },
+      "sealed_historical_holdout": {
+        "n": 9,
+        "effective_n": 5.233794515553375,
+        "mean_return": 0.013973374312172592,
+        "median_return": 0.01741146850294606,
+        "hac_standard_error": 0.0023423320738286957,
+        "hac_t_stat": 5.965582108659851,
+        "annualized_sharpe_event_sequence": 1.632399020849862,
+        "hit_rate": 0.7777777777777778,
+        "expected_magnitude": 0.016873409852262253,
+        "cumulative_return_arithmetic": 0.12576036880955332,
+        "max_sequential_drawdown": -0.00709119411099246,
+        "worst_event": -0.00709119411099246,
+        "best_event": 0.030712360028048336,
+        "mean_without_best_event": 0.011881001097688124,
+        "bootstrap_95_ci_mean": [
+          null,
+          null
+        ],
+        "block_sign_surrogate_p": 0.5229540918163673,
+        "start": "2023-02-21",
+        "end": "2026-06-05"
+      }
+    },
+    "failure_reason": "fewer than 30 sealed-holdout decisions",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.06586826347305388,
+      "fdr_threshold": 0.1,
+      "passes_fdr": true
+    },
+    "long_history_supported_pre_drop_one": false,
+    "drop_one_era_positive_all": true,
+    "parameter_perturbations": [],
+    "long_history_supported": false
+  },
+  {
+    "experiment_id": "I01",
+    "parent_experiment": null,
+    "family": "gap",
+    "hypothesis": "Large gaps continue intraday",
+    "source_research_motivation": "economically motivated preregistered hypothesis",
+    "exact_signal_definition": "For absolute gap >= 1 trailing daily sigma, follow gap sign open-to-close",
+    "exact_target": "signed open-to-close return",
+    "horizon_sessions": 1,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 680,
+      "effective_n": 680.0,
+      "mean_return": -0.0004304711143150361,
+      "median_return": 0.0002933981394398488,
+      "hac_standard_error": 0.00048065230805447817,
+      "hac_t_stat": -0.8955977264676852,
+      "annualized_sharpe_event_sequence": -0.14814280871636634,
+      "hit_rate": 0.513235294117647,
+      "expected_magnitude": 0.008735683304630877,
+      "cumulative_return_arithmetic": -0.29272035773422456,
+      "max_sequential_drawdown": -0.4830187435456865,
+      "worst_event": -0.09296296296296291,
+      "best_event": 0.07968462244251318,
+      "mean_without_best_event": -0.0005484609428228832,
+      "bootstrap_95_ci_mean": [
+        -0.001196804619118336,
+        0.0004920078433072573
+      ],
+      "block_sign_surrogate_p": 0.3592814371257485,
+      "start": "1993-03-22",
+      "end": "2026-07-30"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 178,
+        "effective_n": 178.0,
+        "mean_return": -0.0022939520732662626,
+        "median_return": -0.0011605752974164774,
+        "hac_standard_error": 0.001160821325781272,
+        "hac_t_stat": -1.9761457015982673,
+        "annualized_sharpe_event_sequence": -0.5162151788795917,
+        "hit_rate": 0.43258426966292135,
+        "expected_magnitude": 0.010721750527605703,
+        "cumulative_return_arithmetic": -0.4083234690413947,
+        "max_sequential_drawdown": -0.42090793720485853,
+        "worst_event": -0.09296296296296291,
+        "best_event": 0.06265748362170331,
+        "mean_without_best_event": -0.0026609093370796497,
+        "bootstrap_95_ci_mean": [
+          -0.004379949236471448,
+          -0.0002877241002985416
+        ],
+        "block_sign_surrogate_p": 0.027944111776447105,
+        "start": "1993-03-22",
+        "end": "2006-11-24"
+      },
+      "middle_validation": {
+        "n": 208,
+        "effective_n": 208.0,
+        "mean_return": 0.0009937827766111304,
+        "median_return": 0.0014288650769325728,
+        "hac_standard_error": 0.0008087989215093712,
+        "hac_t_stat": 1.2287142702373346,
+        "annualized_sharpe_event_sequence": 0.37590211338328877,
+        "hit_rate": 0.5673076923076923,
+        "expected_magnitude": 0.008615286308156441,
+        "cumulative_return_arithmetic": 0.2067068175351151,
+        "max_sequential_drawdown": -0.14556167923802776,
+        "worst_event": -0.05326937184309677,
+        "best_event": 0.07968462244251318,
+        "mean_without_best_event": 0.0006136337927178837,
+        "bootstrap_95_ci_mean": [
+          -0.0005295706869145506,
+          0.002364975263982972
+        ],
+        "block_sign_surrogate_p": 0.20159680638722555,
+        "start": "2007-02-27",
+        "end": "2015-12-11"
+      },
+      "recent_validation": {
+        "n": 193,
+        "effective_n": 193.0,
+        "mean_return": 0.00012259334145700703,
+        "median_return": 0.0011420664359518273,
+        "hac_standard_error": 0.0007648085550833563,
+        "hac_t_stat": 0.16029284798421956,
+        "annualized_sharpe_event_sequence": 0.05704363119655636,
+        "hit_rate": 0.5492227979274611,
+        "expected_magnitude": 0.007843956555706105,
+        "cumulative_return_arithmetic": 0.023660514901202356,
+        "max_sequential_drawdown": -0.11821411746622001,
+        "worst_event": -0.047994072837921564,
+        "best_event": 0.03724083182206761,
+        "mean_without_best_event": -7.07308172961732e-05,
+        "bootstrap_95_ci_mean": [
+          -0.001290158071504855,
+          0.001527075369219128
+        ],
+        "block_sign_surrogate_p": 0.8483033932135728,
+        "start": "2016-01-04",
+        "end": "2022-12-15"
+      },
+      "sealed_historical_holdout": {
+        "n": 101,
+        "effective_n": 92.78309371635352,
+        "mean_return": -0.0011362794171202704,
+        "median_return": -0.0004985313383966128,
+        "hac_standard_error": 0.001077635082717393,
+        "hac_t_stat": -1.0544194740347523,
+        "annualized_sharpe_event_sequence": -0.5742985278135715,
+        "hit_rate": 0.4752475247524752,
+        "expected_magnitude": 0.007187424612746171,
+        "cumulative_return_arithmetic": -0.1147642211291473,
+        "max_sequential_drawdown": -0.16302738833829178,
+        "worst_event": -0.048633685428356,
+        "best_event": 0.03511750669507907,
+        "mean_without_best_event": -0.0014988172782422638,
+        "bootstrap_95_ci_mean": [
+          -0.0029745136255170624,
+          0.0006371816894682285
+        ],
+        "block_sign_surrogate_p": 0.17564870259481039,
+        "start": "2023-02-03",
+        "end": "2026-07-30"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero; fails 10% BH-FDR selection-bias control; mean nonpositive after removing best event",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.48992923244420256,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "I02",
+    "parent_experiment": "I01",
+    "family": "gap",
+    "hypothesis": "Large gaps reverse intraday",
+    "source_research_motivation": "opposite economically plausible gap hypothesis",
+    "exact_signal_definition": "For absolute gap >= 1 trailing daily sigma, fade gap sign open-to-close",
+    "exact_target": "signed open-to-close return",
+    "horizon_sessions": 1,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 680,
+      "effective_n": 680.0,
+      "mean_return": 0.0004304711143150361,
+      "median_return": -0.0002933981394398488,
+      "hac_standard_error": 0.00048065230805447817,
+      "hac_t_stat": 0.8955977264676852,
+      "annualized_sharpe_event_sequence": 0.14814280871636634,
+      "hit_rate": 0.47794117647058826,
+      "expected_magnitude": 0.008735683304630877,
+      "cumulative_return_arithmetic": 0.29272035773422456,
+      "max_sequential_drawdown": -0.387683182224128,
+      "worst_event": -0.07968462244251318,
+      "best_event": 0.09296296296296291,
+      "mean_without_best_event": 0.0002941935121815341,
+      "bootstrap_95_ci_mean": [
+        -0.00037052217567759387,
+        0.0012531549684474854
+      ],
+      "block_sign_surrogate_p": 0.3093812375249501,
+      "start": "1993-03-22",
+      "end": "2026-07-30"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 178,
+        "effective_n": 178.0,
+        "mean_return": 0.0022939520732662626,
+        "median_return": 0.0011605752974164774,
+        "hac_standard_error": 0.001160821325781272,
+        "hac_t_stat": 1.9761457015982673,
+        "annualized_sharpe_event_sequence": 0.5162151788795917,
+        "hit_rate": 0.5449438202247191,
+        "expected_magnitude": 0.010721750527605703,
+        "cumulative_return_arithmetic": 0.4083234690413947,
+        "max_sequential_drawdown": -0.1306398195285836,
+        "worst_event": -0.06265748362170331,
+        "best_event": 0.09296296296296291,
+        "mean_without_best_event": 0.0017816977744544169,
+        "bootstrap_95_ci_mean": [
+          0.0005394016558246242,
+          0.0044946526592849366
+        ],
+        "block_sign_surrogate_p": 0.033932135728542916,
+        "start": "1993-03-22",
+        "end": "2006-11-24"
+      },
+      "middle_validation": {
+        "n": 208,
+        "effective_n": 208.0,
+        "mean_return": -0.0009937827766111304,
+        "median_return": -0.0014288650769325728,
+        "hac_standard_error": 0.0008087989215093712,
+        "hac_t_stat": -1.2287142702373346,
+        "annualized_sharpe_event_sequence": -0.37590211338328877,
+        "hit_rate": 0.4230769230769231,
+        "expected_magnitude": 0.008615286308156441,
+        "cumulative_return_arithmetic": -0.2067068175351151,
+        "max_sequential_drawdown": -0.2946821466778048,
+        "worst_event": -0.07968462244251318,
+        "best_event": 0.05326937184309677,
+        "mean_without_best_event": -0.0012559236201845985,
+        "bootstrap_95_ci_mean": [
+          -0.002547594780463123,
+          0.00030799295925942514
+        ],
+        "block_sign_surrogate_p": 0.2215568862275449,
+        "start": "2007-02-27",
+        "end": "2015-12-11"
+      },
+      "recent_validation": {
+        "n": 193,
+        "effective_n": 193.0,
+        "mean_return": -0.00012259334145700703,
+        "median_return": -0.0011420664359518273,
+        "hac_standard_error": 0.0007648085550833563,
+        "hac_t_stat": -0.16029284798421956,
+        "annualized_sharpe_event_sequence": -0.05704363119655636,
+        "hit_rate": 0.45077720207253885,
+        "expected_magnitude": 0.007843956555706105,
+        "cumulative_return_arithmetic": -0.023660514901202356,
+        "max_sequential_drawdown": -0.21235195799920514,
+        "worst_event": -0.03724083182206761,
+        "best_event": 0.047994072837921564,
+        "mean_without_best_event": -0.00037320097780793707,
+        "bootstrap_95_ci_mean": [
+          -0.0017456945741850386,
+          0.0011962136817447446
+        ],
+        "block_sign_surrogate_p": 0.8762475049900199,
+        "start": "2016-01-04",
+        "end": "2022-12-15"
+      },
+      "sealed_historical_holdout": {
+        "n": 101,
+        "effective_n": 92.78309371635352,
+        "mean_return": 0.0011362794171202704,
+        "median_return": 0.0004985313383966128,
+        "hac_standard_error": 0.001077635082717393,
+        "hac_t_stat": 1.0544194740347523,
+        "annualized_sharpe_event_sequence": 0.5742985278135715,
+        "hit_rate": 0.5247524752475248,
+        "expected_magnitude": 0.007187424612746171,
+        "cumulative_return_arithmetic": 0.1147642211291473,
+        "max_sequential_drawdown": -0.06183922974239364,
+        "worst_event": -0.03511750669507907,
+        "best_event": 0.048633685428356,
+        "mean_without_best_event": 0.0006613053570079131,
+        "bootstrap_95_ci_mean": [
+          -0.00046294018543003104,
+          0.002989098281295592
+        ],
+        "block_sign_surrogate_p": 0.17964071856287425,
+        "start": "2023-02-03",
+        "end": "2026-07-30"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero; fails 10% BH-FDR selection-bias control",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.4640718562874252,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "I03",
+    "parent_experiment": "I01",
+    "family": "gap",
+    "hypothesis": "Extreme gaps continue intraday",
+    "source_research_motivation": "rarer event perturbation",
+    "exact_signal_definition": "For absolute gap >= 1.5 trailing daily sigma, follow gap sign open-to-close",
+    "exact_target": "signed open-to-close return",
+    "horizon_sessions": 1,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 199,
+      "effective_n": 199.0,
+      "mean_return": -0.0012094475631432555,
+      "median_return": 0.0006644518272426181,
+      "hac_standard_error": 0.001159826104240386,
+      "hac_t_stat": -1.0427835334292364,
+      "annualized_sharpe_event_sequence": -0.17841230932058622,
+      "hit_rate": 0.5175879396984925,
+      "expected_magnitude": 0.010861352097754965,
+      "cumulative_return_arithmetic": -0.24068006506550788,
+      "max_sequential_drawdown": -0.32417066188159327,
+      "worst_event": -0.09296296296296291,
+      "best_event": 0.07968462244251318,
+      "mean_without_best_event": -0.0016180034722627326,
+      "bootstrap_95_ci_mean": [
+        -0.0035137276453905747,
+        0.00081569562031143
+      ],
+      "block_sign_surrogate_p": 0.2994011976047904,
+      "start": "1993-04-12",
+      "end": "2026-04-08"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 46,
+        "effective_n": 46.0,
+        "mean_return": -0.0053381008901746616,
+        "median_return": -0.0018779427324152609,
+        "hac_standard_error": 0.002847918594162644,
+        "hac_t_stat": -1.8743867542829786,
+        "annualized_sharpe_event_sequence": -0.528386832526469,
+        "hit_rate": 0.45652173913043476,
+        "expected_magnitude": 0.01344821595905218,
+        "cumulative_return_arithmetic": -0.24555264094803442,
+        "max_sequential_drawdown": -0.25313304694077376,
+        "worst_event": -0.09296296296296291,
+        "best_event": 0.0387527839643651,
+        "mean_without_best_event": -0.006317898331386656,
+        "bootstrap_95_ci_mean": [
+          -0.011161999454969705,
+          0.00040974272377015795
+        ],
+        "block_sign_surrogate_p": 0.033932135728542916,
+        "start": "1993-04-12",
+        "end": "2005-07-07"
+      },
+      "middle_validation": {
+        "n": 69,
+        "effective_n": 69.0,
+        "mean_return": 0.00043395667967858017,
+        "median_return": 0.0014944610350218213,
+        "hac_standard_error": 0.0018161030776790794,
+        "hac_t_stat": 0.23894936637250935,
+        "annualized_sharpe_event_sequence": 0.07295609330813838,
+        "hit_rate": 0.5652173913043478,
+        "expected_magnitude": 0.010467790071921513,
+        "cumulative_return_arithmetic": 0.02994301089782203,
+        "max_sequential_drawdown": -0.10147968287360798,
+        "worst_event": -0.05326937184309677,
+        "best_event": 0.07968462244251318,
+        "mean_without_best_event": -0.0007314942874219286,
+        "bootstrap_95_ci_mean": [
+          -0.002390723733381437,
+          0.0035558894486200847
+        ],
+        "block_sign_surrogate_p": 0.8243512974051896,
+        "start": "2007-02-27",
+        "end": "2015-08-26"
+      },
+      "recent_validation": {
+        "n": 59,
+        "effective_n": 52.68729842603478,
+        "mean_return": 0.0011242827500174341,
+        "median_return": 0.0019315588862655053,
+        "hac_standard_error": 0.0017883589392151539,
+        "hac_t_stat": 0.6286672800208896,
+        "annualized_sharpe_event_sequence": 0.24372584290744082,
+        "hit_rate": 0.559322033898305,
+        "expected_magnitude": 0.009482124132183968,
+        "cumulative_return_arithmetic": 0.06633268225102862,
+        "max_sequential_drawdown": -0.10910583853817957,
+        "worst_event": -0.042041747947012986,
+        "best_event": 0.034835954540506475,
+        "mean_without_best_event": 0.0005430470294917611,
+        "bootstrap_95_ci_mean": [
+          -0.002507925932289062,
+          0.004674918802175697
+        ],
+        "block_sign_surrogate_p": 0.6067864271457086,
+        "start": "2016-01-07",
+        "end": "2022-12-13"
+      },
+      "sealed_historical_holdout": {
+        "n": 25,
+        "effective_n": 20.666350506356938,
+        "mean_return": -0.0036561246906529643,
+        "median_return": -0.000561813265398392,
+        "hac_standard_error": 0.003291604514712827,
+        "hac_t_stat": -1.1107423976090698,
+        "annualized_sharpe_event_sequence": -0.7802900169059896,
+        "hit_rate": 0.4,
+        "expected_magnitude": 0.01044273178301597,
+        "cumulative_return_arithmetic": -0.09140311726632411,
+        "max_sequential_drawdown": -0.1216459152407342,
+        "worst_event": -0.048633685428356,
+        "best_event": 0.03511750669507907,
+        "mean_without_best_event": -0.0052716926650584655,
+        "bootstrap_95_ci_mean": [
+          -0.008759556242409953,
+          0.0003790350748541109
+        ],
+        "block_sign_surrogate_p": 0.281437125748503,
+        "start": "2024-02-13",
+        "end": "2026-04-08"
+      }
+    },
+    "failure_reason": "fewer than 30 sealed-holdout decisions; sealed-holdout block-bootstrap CI includes zero; fails 10% BH-FDR selection-bias control; mean nonpositive after removing best event",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.4640718562874252,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "J01",
+    "parent_experiment": null,
+    "family": "cross_sectional",
+    "hypothesis": "Worst broad ETF reverses",
+    "source_research_motivation": "economically motivated preregistered hypothesis",
+    "exact_signal_definition": "Among SPY/QQQ/IWM/DIA, long prior-session worst performer for one session; score selected return minus contemporaneous equal-weight universe return",
+    "exact_target": "selected ETF next-session return minus equal-weight baseline",
+    "horizon_sessions": 1,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 6601,
+      "effective_n": 6601.0,
+      "mean_return": 3.604156757446442e-05,
+      "median_return": 2.663280783618549e-05,
+      "hac_standard_error": 7.141088869231574e-05,
+      "hac_t_stat": 0.5047068904261196,
+      "annualized_sharpe_event_sequence": 0.09614346224353112,
+      "hit_rate": 0.504469019845478,
+      "expected_magnitude": 0.0038978675873799543,
+      "cumulative_return_arithmetic": 0.23791038755903962,
+      "max_sequential_drawdown": -0.3548124778778552,
+      "worst_event": -0.04930253227107159,
+      "best_event": 0.09660848561196761,
+      "mean_without_best_event": 2.140937908288969e-05,
+      "bootstrap_95_ci_mean": [
+        -8.798101131969446e-05,
+        0.0001660742570009462
+      ],
+      "block_sign_surrogate_p": 0.5668662674650699,
+      "start": "2000-05-30",
+      "end": "2026-08-27"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 1657,
+        "effective_n": 1657.0,
+        "mean_return": 3.248434523564418e-05,
+        "median_return": 7.976009120855276e-05,
+        "hac_standard_error": 0.0002002439207416826,
+        "hac_t_stat": 0.162223877335829,
+        "annualized_sharpe_event_sequence": 0.0609839974131494,
+        "hit_rate": 0.5075437537718769,
+        "expected_magnitude": 0.005276685124584432,
+        "cumulative_return_arithmetic": 0.05382656005546241,
+        "max_sequential_drawdown": -0.3548124778778552,
+        "worst_event": -0.04930253227107159,
+        "best_event": 0.09660848561196761,
+        "mean_without_best_event": -2.5834496109000744e-05,
+        "bootstrap_95_ci_mean": [
+          -0.00032710212704638476,
+          0.0004040163877987442
+        ],
+        "block_sign_surrogate_p": 0.8502994011976048,
+        "start": "2000-05-30",
+        "end": "2006-12-29"
+      },
+      "middle_validation": {
+        "n": 2266,
+        "effective_n": 2216.3175176032987,
+        "mean_return": 6.83356343004632e-05,
+        "median_return": 4.077499963173192e-06,
+        "hac_standard_error": 9.444029175190106e-05,
+        "hac_t_stat": 0.7235855907771231,
+        "annualized_sharpe_event_sequence": 0.24260707454301658,
+        "hit_rate": 0.5026478375992939,
+        "expected_magnitude": 0.0031237764017335813,
+        "cumulative_return_arithmetic": 0.15484854732484962,
+        "max_sequential_drawdown": -0.15573847886022618,
+        "worst_event": -0.030706574173741286,
+        "best_event": 0.04981767049988384,
+        "mean_without_best_event": 4.637124804634251e-05,
+        "bootstrap_95_ci_mean": [
+          -0.00010151656377987039,
+          0.00024553242874653265
+        ],
+        "block_sign_surrogate_p": 0.47305389221556887,
+        "start": "2007-01-03",
+        "end": "2015-12-31"
+      },
+      "recent_validation": {
+        "n": 1762,
+        "effective_n": 1762.0,
+        "mean_return": 1.3511561803177562e-05,
+        "median_return": 6.102731490430224e-05,
+        "hac_standard_error": 0.00011774184729758464,
+        "hac_t_stat": 0.11475581633289643,
+        "annualized_sharpe_event_sequence": 0.04209588551132454,
+        "hit_rate": 0.5062429057888763,
+        "expected_magnitude": 0.003630579722467791,
+        "cumulative_return_arithmetic": 0.023807371897198865,
+        "max_sequential_drawdown": -0.30107678238642377,
+        "worst_event": -0.023560882290991403,
+        "best_event": 0.024819490376389808,
+        "mean_without_best_event": -5.747407604718587e-07,
+        "bootstrap_95_ci_mean": [
+          -0.00020324020178736897,
+          0.000242750182205816
+        ],
+        "block_sign_surrogate_p": 0.9161676646706587,
+        "start": "2016-01-04",
+        "end": "2022-12-30"
+      },
+      "sealed_historical_holdout": {
+        "n": 916,
+        "effective_n": 916.0,
+        "mean_return": 5.925664062804286e-06,
+        "median_return": -6.059698808513758e-06,
+        "hac_standard_error": 0.00016653715767696428,
+        "hac_t_stat": 0.03558163322505134,
+        "annualized_sharpe_event_sequence": 0.018350605034793053,
+        "hit_rate": 0.5,
+        "expected_magnitude": 0.0038327487942599707,
+        "cumulative_return_arithmetic": 0.005427908281528726,
+        "max_sequential_drawdown": -0.12001832727427969,
+        "worst_event": -0.018502700830602653,
+        "best_event": 0.03436356525105505,
+        "mean_without_best_event": -3.1623668819154456e-05,
+        "bootstrap_95_ci_mean": [
+          -0.0003037637925029871,
+          0.00031287640960976735
+        ],
+        "block_sign_surrogate_p": 0.9680638722554891,
+        "start": "2023-01-03",
+        "end": "2026-08-27"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero; fails 10% BH-FDR selection-bias control",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.654076462459696,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "J02",
+    "parent_experiment": null,
+    "family": "cross_sectional",
+    "hypothesis": "Strongest broad ETF momentum continues",
+    "source_research_motivation": "economically motivated preregistered hypothesis",
+    "exact_signal_definition": "Among SPY/QQQ/IWM/DIA, long strongest trailing-63-session performer for one session; score selected return minus contemporaneous equal-weight universe return",
+    "exact_target": "selected ETF next-session return minus equal-weight baseline",
+    "horizon_sessions": 1,
+    "code": "scripts/long_history_campaign.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "splits": {
+      "early_discovery_train": [
+        "1993-01-29",
+        "2006-12-29"
+      ],
+      "middle_validation": [
+        "2007-01-01",
+        "2015-12-31"
+      ],
+      "recent_validation": [
+        "2016-01-01",
+        "2022-12-30"
+      ],
+      "sealed_historical_holdout": [
+        "2023-01-01",
+        "2026-08-28"
+      ]
+    },
+    "full_history_metrics": {
+      "n": 6539,
+      "effective_n": 6539.0,
+      "mean_return": -1.858537429106779e-05,
+      "median_return": 8.290199101168572e-05,
+      "hac_standard_error": 6.426558642966886e-05,
+      "hac_t_stat": -0.2891963696839101,
+      "annualized_sharpe_event_sequence": -0.05651589039686495,
+      "hit_rate": 0.5063465361676097,
+      "expected_magnitude": 0.0037132589902480117,
+      "cumulative_return_arithmetic": -0.12152976248929229,
+      "max_sequential_drawdown": -0.39693889627483525,
+      "worst_event": -0.042444662392708776,
+      "best_event": 0.03176757484996698,
+      "mean_without_best_event": -2.3447130214019466e-05,
+      "bootstrap_95_ci_mean": [
+        -0.00014670240185904042,
+        9.943063750629373e-05
+      ],
+      "block_sign_surrogate_p": 0.7624750499001997,
+      "start": "2000-08-25",
+      "end": "2026-08-27"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 1595,
+        "effective_n": 1595.0,
+        "mean_return": 1.4060793894496132e-05,
+        "median_return": 0.00016218940212023303,
+        "hac_standard_error": 0.00015699828097491696,
+        "hac_t_stat": 0.08956017739291408,
+        "annualized_sharpe_event_sequence": 0.03534091094789739,
+        "hit_rate": 0.5141065830721003,
+        "expected_magnitude": 0.004451414644125455,
+        "cumulative_return_arithmetic": 0.02242696626172133,
+        "max_sequential_drawdown": -0.25203236938232754,
+        "worst_event": -0.042444662392708776,
+        "best_event": 0.03176757484996698,
+        "mean_without_best_event": -5.859854823240682e-06,
+        "bootstrap_95_ci_mean": [
+          -0.00027027782573338426,
+          0.0003136533308328329
+        ],
+        "block_sign_surrogate_p": 0.9261477045908184,
+        "start": "2000-08-25",
+        "end": "2006-12-29"
+      },
+      "middle_validation": {
+        "n": 2266,
+        "effective_n": 2266.0,
+        "mean_return": -6.212266783467053e-05,
+        "median_return": 2.6324534962679502e-05,
+        "hac_standard_error": 8.732870801737005e-05,
+        "hac_t_stat": -0.7113659327504772,
+        "annualized_sharpe_event_sequence": -0.23164879549249884,
+        "hit_rate": 0.5026478375992939,
+        "expected_magnitude": 0.0030844860335094188,
+        "cumulative_return_arithmetic": -0.14076996531336342,
+        "max_sequential_drawdown": -0.34506145447454706,
+        "worst_event": -0.03560702966658319,
+        "best_event": 0.027354035735947746,
+        "mean_without_best_event": -7.422693203060095e-05,
+        "bootstrap_95_ci_mean": [
+          -0.00022675718689791773,
+          0.00010757668148882288
+        ],
+        "block_sign_surrogate_p": 0.4351297405189621,
+        "start": "2007-01-03",
+        "end": "2015-12-31"
+      },
+      "recent_validation": {
+        "n": 1762,
+        "effective_n": 1626.3631381643554,
+        "mean_return": 9.277049387833772e-05,
+        "median_return": 0.0002029262162532991,
+        "hac_standard_error": 0.00012556749300194958,
+        "hac_t_stat": 0.7388097959150729,
+        "annualized_sharpe_event_sequence": 0.28518777482838176,
+        "hit_rate": 0.5192962542565267,
+        "expected_magnitude": 0.003669560947134939,
+        "cumulative_return_arithmetic": 0.16346161021363106,
+        "max_sequential_drawdown": -0.20540829336493252,
+        "worst_event": -0.03503034674839478,
+        "best_event": 0.02906149436701022,
+        "mean_without_best_event": 7.632033835696811e-05,
+        "bootstrap_95_ci_mean": [
+          -0.00014762496903680466,
+          0.00034996913765892516
+        ],
+        "block_sign_surrogate_p": 0.3972055888223553,
+        "start": "2016-01-04",
+        "end": "2022-12-30"
+      },
+      "sealed_historical_holdout": {
+        "n": 916,
+        "effective_n": 916.0,
+        "mean_return": -0.00018193053892061274,
+        "median_return": -0.00016204116637515142,
+        "hac_standard_error": 0.00017495946993618117,
+        "hac_t_stat": -1.0398439077746084,
+        "annualized_sharpe_event_sequence": -0.5382999566921027,
+        "hit_rate": 0.47707423580786024,
+        "expected_magnitude": 0.004067448077584653,
+        "cumulative_return_arithmetic": -0.16664837365128127,
+        "max_sequential_drawdown": -0.2807792779045707,
+        "worst_event": -0.02351093531191556,
+        "best_event": 0.018677927239653475,
+        "mean_without_best_event": -0.00020254240534528387,
+        "bootstrap_95_ci_mean": [
+          -0.0005231836232481592,
+          0.00014562871454635784
+        ],
+        "block_sign_surrogate_p": 0.30538922155688625,
+        "start": "2023-01-03",
+        "end": "2026-08-27"
+      }
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero; fails 10% BH-FDR selection-bias control; mean nonpositive after removing best event",
+    "next_hypothesis": null,
+    "selection_bias_control": {
+      "family": "all registered directional/event hypotheses",
+      "benjamini_hochberg_q": 0.8169375534644996,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "long_history_supported_pre_drop_one": false,
+    "long_history_supported": false,
+    "drop_one_era_positive_all": null
+  },
+  {
+    "experiment_id": "G01",
+    "parent_experiment": null,
+    "family": "volatility_shock",
+    "hypothesis": "RV shock continuation",
+    "source_research_motivation": "causal volatility-state forecast hypothesis",
+    "exact_signal_definition": "Trailing 5-day RMS / trailing 22-day RMS >= 1.5",
+    "exact_target": "next 5-session realized magnitude minus expanding historical mean known with a 5-session publication lag",
+    "horizon_sessions": 5,
+    "code": "scripts/long_history_regimes.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "full_history_metrics": {
+      "n": 452,
+      "effective_n": 69.61440741615772,
+      "mean_return": 0.01048292088426412,
+      "median_return": 0.0028492369366704667,
+      "hac_standard_error": 0.002661646750442133,
+      "hac_t_stat": 3.9385094519108423,
+      "annualized_sharpe_event_sequence": 1.375092484398665,
+      "hit_rate": 0.5597345132743363,
+      "expected_magnitude": 0.01686901318759063,
+      "cumulative_return_arithmetic": 4.738280239687382,
+      "max_sequential_drawdown": -0.4275810642551412,
+      "worst_event": -0.016714710118197286,
+      "best_event": 0.16817870777784696,
+      "mean_without_best_event": 0.010133262820198528,
+      "bootstrap_95_ci_mean": [
+        0.005881700485745972,
+        0.015950682534965697
+      ],
+      "block_sign_surrogate_p": 0.001996007984031936,
+      "start": "1994-02-04",
+      "end": "2026-08-05"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 120,
+        "effective_n": 25.03016780516445,
+        "mean_return": 0.011152790070456988,
+        "median_return": 0.007450381335672925,
+        "hac_standard_error": 0.0029567983623939808,
+        "hac_t_stat": 3.771914315261964,
+        "annualized_sharpe_event_sequence": 1.8664439853862898,
+        "hit_rate": 0.6666666666666666,
+        "expected_magnitude": 0.0146415363098224,
+        "cumulative_return_arithmetic": 1.3383348084548385,
+        "max_sequential_drawdown": -0.1436351301453962,
+        "worst_event": -0.015283602807498332,
+        "best_event": 0.08153089975066354,
+        "mean_without_best_event": 0.010561377384068696,
+        "bootstrap_95_ci_mean": [
+          0.004865533671419406,
+          0.016986390445423553
+        ],
+        "block_sign_surrogate_p": 0.003992015968063872,
+        "start": "1994-02-04",
+        "end": "2006-11-30"
+      },
+      "middle_validation": {
+        "n": 136,
+        "effective_n": 26.216645120535897,
+        "mean_return": 0.007812461077627605,
+        "median_return": -0.0002610614305832773,
+        "hac_standard_error": 0.0038096733779827666,
+        "hac_t_stat": 2.050690519239297,
+        "annualized_sharpe_event_sequence": 1.2950119480615057,
+        "hit_rate": 0.4852941176470588,
+        "expected_magnitude": 0.015430150915135969,
+        "cumulative_return_arithmetic": 1.0624947065573542,
+        "max_sequential_drawdown": -0.304348370196741,
+        "worst_event": -0.016714710118197286,
+        "best_event": 0.1083149497638833,
+        "mean_without_best_event": 0.007067998198470153,
+        "bootstrap_95_ci_mean": [
+          0.0008249658337897331,
+          0.015375965357251052
+        ],
+        "block_sign_surrogate_p": 0.04590818363273453,
+        "start": "2007-02-27",
+        "end": "2015-08-28"
+      },
+      "recent_validation": {
+        "n": 140,
+        "effective_n": 18.523341492052552,
+        "mean_return": 0.013647642286450925,
+        "median_return": 0.0022793721393121434,
+        "hac_standard_error": 0.00681058802483518,
+        "hac_t_stat": 2.0038860428327268,
+        "annualized_sharpe_event_sequence": 1.6920253776012877,
+        "hit_rate": 0.5642857142857143,
+        "expected_magnitude": 0.021064369586265373,
+        "cumulative_return_arithmetic": 1.9106699201031294,
+        "max_sequential_drawdown": -0.2990730512581635,
+        "worst_event": -0.016632103231862257,
+        "best_event": 0.16817870777784696,
+        "mean_without_best_event": 0.012535908002340163,
+        "bootstrap_95_ci_mean": [
+          0.002265401783615208,
+          0.027555997615448944
+        ],
+        "block_sign_surrogate_p": 0.033932135728542916,
+        "start": "2016-06-24",
+        "end": "2022-08-26"
+      },
+      "sealed_historical_holdout": {
+        "n": 56,
+        "effective_n": 11.076987832325889,
+        "mean_return": 0.007621085795929654,
+        "median_return": 0.00094258911757273,
+        "hac_standard_error": 0.006423305846371236,
+        "hac_t_stat": 1.1864740646337257,
+        "annualized_sharpe_event_sequence": 1.1993569068505776,
+        "hit_rate": 0.5,
+        "expected_magnitude": 0.01464816673351131,
+        "cumulative_return_arithmetic": 0.42678080457206063,
+        "max_sequential_drawdown": -0.11549615214902775,
+        "worst_event": -0.014427736787001075,
+        "best_event": 0.10476808664960066,
+        "mean_without_best_event": 0.005854776689499272,
+        "bootstrap_95_ci_mean": [
+          -0.002143650120430221,
+          0.021277755051172832
+        ],
+        "block_sign_surrogate_p": 0.4311377245508982,
+        "start": "2023-05-01",
+        "end": "2026-08-05"
+      }
+    },
+    "selection_bias_control": {
+      "family": "four registered volatility-state hypotheses",
+      "benjamini_hochberg_q": 0.002661343978709248,
+      "fdr_threshold": 0.1,
+      "passes_fdr": true
+    },
+    "failure_reason": "sealed-holdout block-bootstrap CI includes zero",
+    "long_history_supported": false
+  },
+  {
+    "experiment_id": "G02",
+    "parent_experiment": null,
+    "family": "volatility_shock",
+    "hypothesis": "Extreme RV shock continuation",
+    "source_research_motivation": "causal volatility-state forecast hypothesis",
+    "exact_signal_definition": "Trailing 5-day RMS / trailing 22-day RMS >= 2.0",
+    "exact_target": "next 5-session realized magnitude minus expanding historical mean known with a 5-session publication lag",
+    "horizon_sessions": 5,
+    "code": "scripts/long_history_regimes.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "full_history_metrics": {
+      "n": 0
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 0
+      },
+      "middle_validation": {
+        "n": 0
+      },
+      "recent_validation": {
+        "n": 0
+      },
+      "sealed_historical_holdout": {
+        "n": 0
+      }
+    },
+    "selection_bias_control": {
+      "family": "four registered volatility-state hypotheses",
+      "benjamini_hochberg_q": 1.0,
+      "fdr_threshold": 0.1,
+      "passes_fdr": false
+    },
+    "failure_reason": "fewer than 30 sealed-holdout events; sealed-holdout block-bootstrap CI includes zero; fails volatility-family BH-FDR",
+    "long_history_supported": false
+  },
+  {
+    "experiment_id": "K01",
+    "parent_experiment": null,
+    "family": "volatility_transition",
+    "hypothesis": "VIX jump forecasts movement",
+    "source_research_motivation": "causal volatility-state forecast hypothesis",
+    "exact_signal_definition": "CBOE VIX one-session increase >=20%",
+    "exact_target": "next 5-session realized magnitude minus expanding historical mean known with a 5-session publication lag",
+    "horizon_sessions": 5,
+    "code": "scripts/long_history_regimes.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "full_history_metrics": {
+      "n": 122,
+      "effective_n": 38.386143642984514,
+      "mean_return": 0.01645652380034043,
+      "median_return": 0.005009033137641875,
+      "hac_standard_error": 0.00456247699030796,
+      "hac_t_stat": 3.606927516631627,
+      "annualized_sharpe_event_sequence": 1.0023698311261457,
+      "hit_rate": 0.6475409836065574,
+      "expected_magnitude": 0.02018885617080232,
+      "cumulative_return_arithmetic": 2.0076959036415323,
+      "max_sequential_drawdown": -0.033920124161678,
+      "worst_event": -0.013392461413144747,
+      "best_event": 0.16708593719627313,
+      "mean_without_best_event": 0.01521165261525008,
+      "bootstrap_95_ci_mean": [
+        0.0083794576414191,
+        0.026247197173093192
+      ],
+      "block_sign_surrogate_p": 0.001996007984031936,
+      "start": "1994-02-04",
+      "end": "2026-06-05"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 12,
+        "effective_n": 5.283378465456268,
+        "mean_return": 0.01246221763658025,
+        "median_return": 0.0034717213401761074,
+        "hac_standard_error": 0.008877822096245182,
+        "hac_t_stat": 1.4037471692354664,
+        "annualized_sharpe_event_sequence": 0.48895952146377775,
+        "hit_rate": 0.6666666666666666,
+        "expected_magnitude": 0.01567457744681479,
+        "cumulative_return_arithmetic": 0.149546611638963,
+        "max_sequential_drawdown": -0.01868607585196,
+        "worst_event": -0.00969973805346297,
+        "best_event": 0.06903328813640816,
+        "mean_without_best_event": 0.007319393045686803,
+        "bootstrap_95_ci_mean": [
+          -0.002476695997948522,
+          0.031540640545659165
+        ],
+        "block_sign_surrogate_p": 0.5189620758483033,
+        "start": "1994-02-04",
+        "end": "2006-07-13"
+      },
+      "middle_validation": {
+        "n": 47,
+        "effective_n": 15.88256285808999,
+        "mean_return": 0.015947445358546017,
+        "median_return": 0.006019258912428438,
+        "hac_standard_error": 0.005895871377390558,
+        "hac_t_stat": 2.7048496036906706,
+        "annualized_sharpe_event_sequence": 1.3843229888495132,
+        "hit_rate": 0.6170212765957447,
+        "expected_magnitude": 0.019601741387354047,
+        "cumulative_return_arithmetic": 0.7495299318516628,
+        "max_sequential_drawdown": -0.03303663832315318,
+        "worst_event": -0.010991949008753192,
+        "best_event": 0.10676215320754667,
+        "mean_without_best_event": 0.013973212579219917,
+        "bootstrap_95_ci_mean": [
+          0.005988632930189367,
+          0.02785203235070116
+        ],
+        "block_sign_surrogate_p": 0.017964071856287425,
+        "start": "2007-02-27",
+        "end": "2015-12-11"
+      },
+      "recent_validation": {
+        "n": 48,
+        "effective_n": 12.037703776466163,
+        "mean_return": 0.018991681670620267,
+        "median_return": 0.009784975648240888,
+        "hac_standard_error": 0.009268246096100762,
+        "hac_t_stat": 2.0491127958514443,
+        "annualized_sharpe_event_sequence": 1.3889709784799313,
+        "hit_rate": 0.75,
+        "expected_magnitude": 0.02271157941675364,
+        "cumulative_return_arithmetic": 0.9116007201897728,
+        "max_sequential_drawdown": -0.03392012416167786,
+        "worst_event": -0.013392461413144747,
+        "best_event": 0.16708593719627313,
+        "mean_without_best_event": 0.01584074006369148,
+        "bootstrap_95_ci_mean": [
+          0.005462497200048562,
+          0.040985700200545414
+        ],
+        "block_sign_surrogate_p": 0.007984031936127744,
+        "start": "2016-01-07",
+        "end": "2022-06-13"
+      },
+      "sealed_historical_holdout": {
+        "n": 15,
+        "effective_n": 8.265015901843263,
+        "mean_return": 0.013134575997408936,
+        "median_return": -0.0003337030712738942,
+        "hac_standard_error": 0.009466416524987965,
+        "hac_t_stat": 1.3874918732699262,
+        "annualized_sharpe_event_sequence": 1.0612040935855958,
+        "hit_rate": 0.4,
+        "expected_magnitude": 0.017567191084419342,
+        "cumulative_return_arithmetic": 0.19701863996113403,
+        "max_sequential_drawdown": -0.021577049667486692,
+        "worst_event": -0.0072028691229052665,
+        "best_event": 0.10476808664960066,
+        "mean_without_best_event": 0.006589325236538096,
+        "bootstrap_95_ci_mean": [
+          -0.0024380303213825854,
+          0.037680162971614375
+        ],
+        "block_sign_surrogate_p": 0.49700598802395207,
+        "start": "2024-07-24",
+        "end": "2026-06-05"
+      }
+    },
+    "selection_bias_control": {
+      "family": "four registered volatility-state hypotheses",
+      "benjamini_hochberg_q": 0.002661343978709248,
+      "fdr_threshold": 0.1,
+      "passes_fdr": true
+    },
+    "failure_reason": "fewer than 30 sealed-holdout events; sealed-holdout block-bootstrap CI includes zero",
+    "long_history_supported": false
+  },
+  {
+    "experiment_id": "K02",
+    "parent_experiment": null,
+    "family": "volatility_transition",
+    "hypothesis": "High VIX forecasts movement",
+    "source_research_motivation": "causal volatility-state forecast hypothesis",
+    "exact_signal_definition": "CBOE VIX close >30",
+    "exact_target": "next 5-session realized magnitude minus expanding historical mean known with a 5-session publication lag",
+    "horizon_sessions": 5,
+    "code": "scripts/long_history_regimes.py",
+    "random_seed": 20260902,
+    "data_cutoff": "2026-08-28",
+    "full_history_metrics": {
+      "n": 703,
+      "effective_n": 96.79399749061238,
+      "mean_return": 0.027677611131095736,
+      "median_return": 0.01936396033410746,
+      "hac_standard_error": 0.0021947181869792685,
+      "hac_t_stat": 12.61100914700589,
+      "annualized_sharpe_event_sequence": 4.897528535472257,
+      "hit_rate": 0.968705547652916,
+      "expected_magnitude": 0.027914952399051354,
+      "cumulative_return_arithmetic": 19.4573606251603,
+      "max_sequential_drawdown": -0.031933766954869824,
+      "worst_event": -0.014457275254489274,
+      "best_event": 0.16817870777784696,
+      "mean_without_best_event": 0.02747746711877843,
+      "bootstrap_95_ci_mean": [
+        0.023810754818826958,
+        0.03176946593762119
+      ],
+      "block_sign_surrogate_p": 0.001996007984031936,
+      "start": "1997-10-27",
+      "end": "2026-03-30"
+    },
+    "period_metrics": {
+      "early_discovery_train": {
+        "n": 254,
+        "effective_n": 40.70179535716378,
+        "mean_return": 0.019522144377547738,
+        "median_return": 0.014390370716079522,
+        "hac_standard_error": 0.0020463980056230433,
+        "hac_t_stat": 9.53975928627044,
+        "annualized_sharpe_event_sequence": 8.042889240942396,
+        "hit_rate": 0.952755905511811,
+        "expected_magnitude": 0.019726867542580132,
+        "cumulative_return_arithmetic": 4.958624671897125,
+        "max_sequential_drawdown": -0.013286879852264732,
+        "worst_event": -0.0049319948805846454,
+        "best_event": 0.08138756274832033,
+        "mean_without_best_event": 0.019277617032208715,
+        "bootstrap_95_ci_mean": [
+          0.01579615672064438,
+          0.023638571311138664
+        ],
+        "block_sign_surrogate_p": 0.001996007984031936,
+        "start": "1997-10-27",
+        "end": "2003-03-24"
+      },
+      "middle_validation": {
+        "n": 295,
+        "effective_n": 40.22599712958045,
+        "mean_return": 0.032997710044085075,
+        "median_return": 0.02410851968397942,
+        "hac_standard_error": 0.0036438433644041734,
+        "hac_t_stat": 9.055743275474391,
+        "annualized_sharpe_event_sequence": 6.619111096176311,
+        "hit_rate": 0.976271186440678,
+        "expected_magnitude": 0.03328421311610936,
+        "cumulative_return_arithmetic": 9.734324463005098,
+        "max_sequential_drawdown": -0.031933766954868936,
+        "worst_event": -0.014457275254489274,
+        "best_event": 0.16653492803414982,
+        "mean_without_best_event": 0.032543501819629075,
+        "bootstrap_95_ci_mean": [
+          0.026070626693594785,
+          0.040512478222861956
+        ],
+        "block_sign_surrogate_p": 0.001996007984031936,
+        "start": "2007-08-15",
+        "end": "2015-09-01"
+      },
+      "recent_validation": {
+        "n": 139,
+        "effective_n": 17.765747588106287,
+        "mean_return": 0.03037027692229615,
+        "median_return": 0.018451624270015055,
+        "hac_standard_error": 0.006317166339948305,
+        "hac_t_stat": 4.807579108728151,
+        "annualized_sharpe_event_sequence": 4.70497578989184,
+        "hit_rate": 0.9784172661870504,
+        "expected_magnitude": 0.030588498657601264,
+        "cumulative_return_arithmetic": 4.221468492199165,
+        "max_sequential_drawdown": -0.010671553665368094,
+        "worst_event": -0.0106715536653681,
+        "best_event": 0.16817870777784696,
+        "mean_without_best_event": 0.029371665104502294,
+        "bootstrap_95_ci_mean": [
+          0.01912055900043898,
+          0.044480774143425744
+        ],
+        "block_sign_surrogate_p": 0.001996007984031936,
+        "start": "2018-02-05",
+        "end": "2022-10-19"
+      },
+      "sealed_historical_holdout": {
+        "n": 15,
+        "effective_n": 5.036369555924488,
+        "mean_return": 0.036196199870594324,
+        "median_return": 0.02060961113076008,
+        "hac_standard_error": 0.014097680790461916,
+        "hac_t_stat": 2.5675286884835433,
+        "annualized_sharpe_event_sequence": 2.943038830744257,
+        "hit_rate": 1.0,
+        "expected_magnitude": 0.036196199870594324,
+        "cumulative_return_arithmetic": 0.5429429980589149,
+        "max_sequential_drawdown": 0.0,
+        "worst_event": 0.004650858574046075,
+        "best_event": 0.10476808664960066,
+        "mean_without_best_event": 0.03129820795780817,
+        "bootstrap_95_ci_mean": [
+          0.01400521180479819,
+          0.06237260511473869
+        ],
+        "block_sign_surrogate_p": 0.2754491017964072,
+        "start": "2024-08-05",
+        "end": "2026-03-30"
+      }
+    },
+    "selection_bias_control": {
+      "family": "four registered volatility-state hypotheses",
+      "benjamini_hochberg_q": 0.002661343978709248,
+      "fdr_threshold": 0.1,
+      "passes_fdr": true
+    },
+    "failure_reason": "fewer than 30 sealed-holdout events",
+    "long_history_supported": false
+  }
+]
